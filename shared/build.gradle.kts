@@ -18,6 +18,21 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java).all {
+        binaries.withType(org.jetbrains.kotlin.gradle.plugin.mpp.Framework::class.java).all {
+            export(Deps.Multiplatform.mokoCore)
+            export(Deps.Multiplatform.mokoFLow)
+            export(Deps.Multiplatform.mokoState)
+            export(Deps.Multiplatform.mokoFlowRes)
+        }
+        binaries
+            .filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
+            .forEach {
+                it.transitiveExport = true
+                it.export(Deps.Multiplatform.sharedStorage)
+            }
+    }
+
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
@@ -30,15 +45,9 @@ kotlin {
     }
     
     sourceSets {
+
         val commonMain by getting {
             dependencies {
-
-                // ViewModel
-                //implementation(Deps.Multiplatform.viewModel)
-                //implementation(Deps.Multiplatform.viewModelCompose)
-                //implementation(Deps.Multiplatform.viewModelSavedstate)
-                //implementation(Deps.Multiplatform.lifecycleRuntime)
-                //implementation(Deps.Multiplatform.lifeData)
 
                 // Coroutines
                 implementation(Deps.Multiplatform.coroutines_core)
@@ -52,8 +61,7 @@ kotlin {
                 implementation(Deps.Multiplatform.ktorSerializationJson)
 
                 // Shared Storage
-                // implementation(Deps.Multiplatform.sharedStorage)
-                // api(Deps.Multiplatform.sharedStorage)
+                implementation(Deps.Multiplatform.sharedStorage)
 
                 // SQLDelight
                 implementation(Deps.Multiplatform.sqlDelightRuntime)
@@ -62,6 +70,12 @@ kotlin {
                 // Koin
                 api(Deps.Multiplatform.koinCore)
                 api(Deps.Multiplatform.koinTest)
+
+                // MOKO-MVVM
+                api(Deps.Multiplatform.mokoCore)
+                api(Deps.Multiplatform.mokoFLow)
+                api(Deps.Multiplatform.mokoState)
+                api(Deps.Multiplatform.mokoFlowRes)
             }
         }
         val commonTest by getting {
@@ -80,6 +94,13 @@ kotlin {
 
                 // Coroutines
                 implementation(Deps.Android.coroutines)
+
+                // Shared Storage
+                implementation(Deps.Android.sharedStorage)
+                api(Deps.Android.sharedStorage)
+
+                // MOKO-MVVM
+                api(Deps.Android.mokoFlowCompose)
             }
         }
         val androidUnitTest by getting
@@ -101,8 +122,8 @@ kotlin {
                 implementation(Deps.IOS.sqlDelightIOSDriver)
 
                 // Shared Storage
-                // implementation(Deps.IOS.sharedStorage)
-                // api(Deps.IOS.sharedStorage)
+                implementation(Deps.IOS.sharedStorage)
+                api(Deps.IOS.sharedStorage)
             }
         }
         val iosX64Test by getting
