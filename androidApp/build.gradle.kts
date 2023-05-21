@@ -66,6 +66,13 @@ dependencies {
     implementation(Deps.Android.koinAndroid)
     implementation(Deps.Android.koinCore)
 
+    // ViewModel
+    implementation(Deps.Android.viewModel)
+    implementation(Deps.Android.viewModelCompose)
+    implementation(Deps.Android.viewModelSavedstate)
+    implementation(Deps.Android.lifecycleRuntime)
+    implementation(Deps.Android.lifeData)
+
     // ???
-    //implementation("androidx.work:work-runtime:2.8.1")
+    implementation("androidx.work:work-runtime:2.8.1")
 }

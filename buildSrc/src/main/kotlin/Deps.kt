@@ -27,22 +27,30 @@ object Deps {
         // SQLdelight
         const val sqlDelightAndroidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelightVersion}"
 
-        // Koin
-        const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
-        const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
-    }
-
-    object Multiplatform {
-
-        // Coroutines
-        const val coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines_version}"
-
         // ViewModel
         const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle_version}"
         const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.lifecycle_version}"
         const val lifeData = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle_version}"
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle_version}"
         const val viewModelSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle_version}"
+
+
+        // Koin
+        const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
+        //const val koinAndroidCompose = "io.insert-koin:koin-androidx-compose${Versions.koinVersion}"
+        const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
+
+        // Shared Storage
+        const val sharedStorage = "com.linecorp.abc:kmm-shared-storage:${Versions.sharedStorageVersion}"
+
+        // MOKO-MVVM
+        const val mokoFlowCompose = "dev.icerock.moko:mvvm-flow-compose:${Versions.mokoMvvmVersion}"
+    }
+
+    object Multiplatform {
+
+        // Coroutines
+        const val coroutines_core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines_version}"
 
         // Ktor
         const val ktorCore = "io.ktor:ktor-client-core:${Versions.ktorVersion}"
@@ -62,6 +70,12 @@ object Deps {
         // Koin
         const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
         const val koinTest = "io.insert-koin:koin-test:${Versions.koinVersion}"
+
+        // MOKO-MVVM
+        const val mokoCore = "dev.icerock.moko:mvvm-core:${Versions.mokoMvvmVersion}"
+        const val mokoFLow = "dev.icerock.moko:mvvm-flow:${Versions.mokoMvvmVersion}"
+        const val mokoState = "dev.icerock.moko:mvvm-state:${Versions.mokoMvvmVersion}"
+        const val mokoFlowRes = "dev.icerock.moko:mvvm-flow-resources:${Versions.mokoMvvmVersion}"
     }
 
     object IOS {
