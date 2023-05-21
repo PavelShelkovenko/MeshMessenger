@@ -41,7 +41,7 @@ kotlin {
                 //implementation(Deps.Multiplatform.lifeData)
 
                 // Coroutines
-                // implementation(Deps.Multiplatform.coroutines_core)
+                implementation(Deps.Multiplatform.coroutines_core)
 
                 // Kotlin Date Time
                 implementation(Deps.Multiplatform.kotlinDateTime)
@@ -60,8 +60,8 @@ kotlin {
                 implementation(Deps.Multiplatform.sqlDelightCoroutinesExtensions)
 
                 // Koin
-                // implementation(Deps.Multiplatform.koin)
-                // implementation(Deps.Multiplatform.koinTest)
+                api(Deps.Multiplatform.koinCore)
+                api(Deps.Multiplatform.koinTest)
             }
         }
         val commonTest by getting {
@@ -79,10 +79,10 @@ kotlin {
                 implementation(Deps.Android.sqlDelightAndroidDriver)
 
                 // Coroutines
-                // implementation(Deps.Android.coroutines)
+                implementation(Deps.Android.coroutines)
             }
         }
-        val androidTest by getting
+        val androidUnitTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting

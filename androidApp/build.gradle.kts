@@ -60,7 +60,11 @@ dependencies {
     implementation(Deps.Android.ktorAndroid)
 
     // Coroutines
-    //implementation(Deps.Android.coroutines)
+    implementation(Deps.Android.coroutines)
+
+    // Koin
+    implementation(Deps.Android.koinAndroid)
+    implementation(Deps.Android.koinCore)
 
     // ???
     //implementation("androidx.work:work-runtime:2.8.1")

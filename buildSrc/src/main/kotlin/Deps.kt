@@ -26,6 +26,10 @@ object Deps {
 
         // SQLdelight
         const val sqlDelightAndroidDriver = "com.squareup.sqldelight:android-driver:${Versions.sqlDelightVersion}"
+
+        // Koin
+        const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
+        const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
     }
 
     object Multiplatform {
@@ -56,7 +60,7 @@ object Deps {
         const val sharedStorage = "com.linecorp.abc:kmm-shared-storage:${Versions.sharedStorageVersion}"
 
         // Koin
-        const val koin = "io.insert-koin:koin-android:${Versions.koinVersion}"
+        const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
         const val koinTest = "io.insert-koin:koin-test:${Versions.koinVersion}"
     }
 
