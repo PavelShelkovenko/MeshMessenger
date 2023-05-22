@@ -138,9 +138,8 @@ fun Root(
             ChannelListScreen(navController, channelsListExample)
         }
         composable(
-            route = "messagesList/{channelID}/{channelName}",
+            route = "messagesList/{channelName}",
             arguments = listOf(
-                navArgument("channelID") { type = NavType.IntType },
                 navArgument("channelName") { type = NavType.StringType}
             )) {
                 backStackEntry ->

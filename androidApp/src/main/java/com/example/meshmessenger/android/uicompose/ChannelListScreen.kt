@@ -60,7 +60,7 @@ fun ChanelOnly(channel: Channel, navController: NavController) {
                 .fillMaxWidth(0.95F)
                 .background(White)
                 .clickable {
-                    navController.navigate("messagesList/${channel.id}/${channel.name + " " + channel.surname}"){
+                    navController.navigate("messagesList/${channel.name + " " + channel.surname}"){
                         launchSingleTop = true
                     }
                 }
