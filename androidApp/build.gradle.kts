@@ -51,6 +51,7 @@ dependencies {
     implementation(Deps.Android.compose_foundation)
     implementation(Deps.Android.compose_material)
     implementation(Deps.Android.compose_activity)
+    implementation(Deps.Android.compose_navigation)
     implementation(Deps.Android.coil_compose)
 
     // SQLDelight
@@ -65,6 +66,7 @@ dependencies {
     // Koin
     implementation(Deps.Android.koinAndroid)
     implementation(Deps.Android.koinCore)
+    //implementation(Deps.Android.koinAndroidCompose)
 
     // ViewModel
     implementation(Deps.Android.viewModel)
@@ -72,6 +74,9 @@ dependencies {
     implementation(Deps.Android.viewModelSavedstate)
     implementation(Deps.Android.lifecycleRuntime)
     implementation(Deps.Android.lifeData)
+
+    // Kotlin date Time
+    implementation(Deps.Android.kotlinDateTime)
 
     // ???
     implementation("androidx.work:work-runtime:2.8.1")

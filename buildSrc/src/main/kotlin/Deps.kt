@@ -34,6 +34,8 @@ object Deps {
         const val lifecycleRuntime = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle_version}"
         const val viewModelSavedstate = "androidx.lifecycle:lifecycle-viewmodel-savedstate:${Versions.lifecycle_version}"
 
+        // Kotlin Date Time
+        const val kotlinDateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.dateTimeVersion}"
 
         // Koin
         const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
