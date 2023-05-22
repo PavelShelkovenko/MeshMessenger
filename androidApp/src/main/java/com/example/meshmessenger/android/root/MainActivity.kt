@@ -13,14 +13,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.MeshAppTheme
-import com.example.meshmessenger.android.uicompose.HelloWorld
+import com.example.meshmessenger.android.uicompose.ChannelListScreen
+import com.example.meshmessenger.android.uicompose.DialogMessagesList
 import com.example.meshmessenger.android.uicompose.Registration
 import com.example.meshmessenger.android.uicompose.loginScreen.LoginByPin
+import com.example.meshmessenger.data.channelsListExample
 import com.linecorp.abc.sharedstorage.SharedStorage
 import kotlinx.datetime.Clock
 import kotlin.math.abs
@@ -41,7 +45,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     Root(
                         startDestination = startDestination,
-                        onStart = { pullOutTime() },
+                        onStart = { isTimeOut() },
                         onStop = { saveTime() },
                         callPin = {
                             navController.navigate("pin") {
@@ -108,6 +112,7 @@ fun Root(
         }
     }
 
+
     NavHost(navController, startDestination) {
         composable("register") {
             Registration(
@@ -122,15 +127,27 @@ fun Root(
         composable("pin") {
             LoginByPin(
                 loginSuccess = {
-                    navController.navigate("hello") {
+                    navController.navigate("channelListScreen") {
                         popUpTo(0)
                         launchSingleTop = true
                     }
                 }
             )
         }
-        composable("hello") {
-            HelloWorld()
+        composable("channelListScreen") {
+            ChannelListScreen(navController, channelsListExample)
+        }
+        composable(
+            route = "messagesList/{channelName}",
+            arguments = listOf(
+                navArgument("channelName") { type = NavType.StringType}
+            )) {
+                backStackEntry ->
+            DialogMessagesList(
+                navController,
+                backStackEntry.arguments?.getString("channelName")
+            )
+
         }
     }
 }
@@ -140,10 +157,13 @@ fun saveTime() {
     SharedStorage.save(currentMoment, "timeOfLastExitFromApp")
 }
 
-fun pullOutTime(): Boolean {
+fun isTimeOut(): Boolean {
     val time = SharedStorage.load("timeOfLastExitFromApp", Clock.System.now().epochSeconds.toInt())
     if ( abs(time + 5) < Clock.System.now().epochSeconds) {
         return true
     }
     return false
 }
+
+
+
