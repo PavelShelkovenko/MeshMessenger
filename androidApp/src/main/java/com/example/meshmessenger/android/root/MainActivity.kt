@@ -146,7 +146,6 @@ fun Root(
                 backStackEntry ->
             DialogMessagesList(
                 navController,
-                backStackEntry.arguments?.getInt("channelID"),
                 backStackEntry.arguments?.getString("channelName")
             )
 
