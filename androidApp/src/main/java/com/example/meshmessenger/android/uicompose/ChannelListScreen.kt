@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -22,6 +23,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.meshmessenger.android.theme.BackgroundColor
+import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.White
 import com.example.meshmessenger.data.Channel
 import com.example.meshmessenger.data.channelsListExample
@@ -36,14 +38,16 @@ fun ChannelListScreen(navController: NavController, channelListExample: ArrayLis
     ) {
         item {
             TopAppBar(
-                title = { Text(text = "Mesh-App") },
+                backgroundColor = Color.White,
+                title = { Text(text = "Mesh-App", fontSize = 20.sp, color = Color.Black) },
                 navigationIcon = {
                     IconButton(onClick = { /*TODO*/ }) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = IconsBlue)
                     }
                 }
             )
         }
+        item { Spacer(modifier = Modifier.height(5.dp)) }
         items(channelListExample) { channel ->
             ChanelOnly(channel, navController)
         }
@@ -60,7 +64,7 @@ fun ChanelOnly(channel: Channel, navController: NavController) {
                 .fillMaxWidth(0.95F)
                 .background(White)
                 .clickable {
-                    navController.navigate("messagesList/${channel.name + " " + channel.surname}"){
+                    navController.navigate("messagesList/${channel.name + " " + channel.surname}") {
                         launchSingleTop = true
                     }
                 }

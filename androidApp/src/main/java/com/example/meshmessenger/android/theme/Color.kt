@@ -2,6 +2,7 @@ package com.example.meshmessenger.android.theme
 
 import androidx.compose.ui.graphics.Color
 
+val IconsBlue = Color(0xFF0E5E99)
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)
 val Purple700 = Color(0xFF3700B3)

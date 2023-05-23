@@ -8,8 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,12 +22,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.data.Message
-import com.example.meshmessenger.android.theme.BackgroundColor
-import com.example.meshmessenger.android.theme.PlaceholderColor
-import com.example.meshmessenger.android.theme.PrimaryColor
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
+import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.data.messagesListExample
+
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -39,16 +36,18 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = BackgroundColor),
+            .background(color = Color.White),
         topBar = {
-            TopAppBar {
+            TopAppBar(backgroundColor = Color.White) {
                 IconButton(onClick = {
                     navController.navigate("channelListScreen") {
+                        popUpTo(0)
                         launchSingleTop = true
                     }
                 }) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Close")
+                    Icon( painter =painterResource(id = R.drawable.back_arrow), contentDescription = "Back", tint = IconsBlue)
                 }
+                
                 Spacer(modifier = Modifier.width(5.dp))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -62,7 +61,8 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                     contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(20.dp))
-                Text(channelName!!, fontSize = 25.sp)
+                Text(channelName!!, fontSize = 20.sp, color = Color.Black, fontFamily = Poppins)
+                
             }
         },
         bottomBar = {
