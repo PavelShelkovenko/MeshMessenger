@@ -8,7 +8,7 @@
         android:name=".root.Application"
         android:supportsRtl="true"
 
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".root.MainActivity"
             android:exported="true">
