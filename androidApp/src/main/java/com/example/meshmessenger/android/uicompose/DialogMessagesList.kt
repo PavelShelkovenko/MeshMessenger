@@ -51,7 +51,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 Spacer(modifier = Modifier.width(5.dp))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://randart.ru/art/JD99/wallpapers")
+                        .data("https://randart.ru/art/JD99/")
                         .crossfade(true)
                         .build(),
                     null,
@@ -78,10 +78,9 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                     Icon(
                         painter = painterResource(id = R.drawable.paperclip),
                         contentDescription = "",
-
-                        //tint = PrimaryColor,
                         modifier = Modifier
                             .rotate(220f)
+                            .clip(CircleShape)
                             .size(30.dp)
                             .clickable {
                                 //открыть photo picker
@@ -97,6 +96,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                         //tint = PrimaryColor,
                         modifier = Modifier
                             .size(30.dp)
+                            .clip(CircleShape)
                             .clickable {
                                 //запись звука
                             }
@@ -117,9 +117,11 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
         },
 
         ) {
+            innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(PaddingValues(bottom = innerPadding.calculateBottomPadding()))
                 .background(BackgroundColor)
         ) {
             items(messagesListExample) { message ->
@@ -134,12 +136,12 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
 fun MessageCard(message: Message) {
     Row(modifier = Modifier.padding(all = 8.dp), horizontalArrangement = Arrangement.End) {
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(10.dp))
 
-        Column(horizontalAlignment = Alignment.End) {
+        Column(horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxSize() ) {
             Text(
                 text = message.authorName,
-                color = Color.Black,
+                color = Color.Black,                      //автор
                 modifier = Modifier.padding(end = 45.dp)
             )
 
@@ -154,10 +156,11 @@ fun MessageCard(message: Message) {
                 Surface(
                     shape = MaterialTheme.shapes.medium,
                     elevation = 5.dp,
+                    modifier = Modifier.fillMaxSize(0.8f)
                 ) {
                     Text(
                         text = message.text,
-                        modifier = Modifier.padding(all = 4.dp),
+                        modifier = Modifier.padding(all = 8.dp),   //текст
                         maxLines = Int.MAX_VALUE
                     )
                 }
@@ -169,7 +172,7 @@ fun MessageCard(message: Message) {
                         .data("https://randart.ru/art/JD99/wallpapers")
                         .crossfade(true)
                         .build(),
-                    null,
+                    contentDescription = "Ваша аватарка",
                     modifier = Modifier
                         .size(30.dp)
                         .clip(CircleShape),

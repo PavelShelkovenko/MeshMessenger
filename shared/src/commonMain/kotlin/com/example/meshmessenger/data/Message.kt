@@ -14,5 +14,10 @@ val messagesListExample = arrayListOf(
     Message(1,"Первое сообщение3faaaaaa", "11:36", "Артур", "Рахимзянов"),
     Message(1,"Первое сообщение4", "11:37", "Артур", "Рахимзянов"),
     Message(1,"Первое сообщение5dawffffffff", "11:38", "Артур", "Рахимзянов"),
-    Message(1,"Первое сообщениеfAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW", "11:39", "Артур", "Рахимзянов"),
+    Message(1,"asdfrtyuioplkjhgfdxzxcvbnmmnbvcxzxcvbn123", "11:34", "Артур", "Рахимзянов"),
+    Message(1,"Первое dfkjbhvhgvsafkjbasljhablha", "11:34", "Артур", "Рахимзянов"),
+    Message(1,"Первое сообщенalkjrsgnkjlbglkbwgelbwlegb lkdn ие", "11:34", "Артур", "Рахимзянов"),
+    Message(1,"Первое hvgvgvskebflbklFBLWhbglBсообщение", "11:34", "Артур", "Рахимзянов"),
+
+    Message(1,"Первое сообщениеfAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "11:39", "Артур", "Рахимзянов"),
 )
