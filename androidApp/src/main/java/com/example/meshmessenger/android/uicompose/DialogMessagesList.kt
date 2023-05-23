@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +28,7 @@ import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.android.theme.PrimaryColor
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.rotate
 import com.example.meshmessenger.data.messagesListExample
 
 
@@ -46,7 +47,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                         launchSingleTop = true
                     }
                 }) {
-                    Icon(Icons.Default.Close, contentDescription = "Close")
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Close")
                 }
                 Spacer(modifier = Modifier.width(5.dp))
                 AsyncImage(
@@ -78,8 +79,9 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                         painter = painterResource(id = R.drawable.paperclip),
                         contentDescription = "",
 
-                        tint = PrimaryColor,
+                        //tint = PrimaryColor,
                         modifier = Modifier
+                            .rotate(220f)
                             .size(30.dp)
                             .clickable {
                                 //открыть photo picker
@@ -87,6 +89,20 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
 
                     )
                 },
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.microphone),
+                        contentDescription = null,
+
+                        //tint = PrimaryColor,
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable {
+                                //запись звука
+                            }
+
+                    )
+                }  ,
                 placeholder = {
                     Text(text = "Message", color = PlaceholderColor)
                 },

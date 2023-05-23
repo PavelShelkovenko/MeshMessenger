@@ -28,7 +28,6 @@ import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit) {
     val login: String by viewModel.login.collectAsState()
     val password: String by viewModel.password.collectAsState()
-    //val isLoading: Boolean by viewModel.isLoading.collectAsState() //предложить включить
     val textOfState: String by viewModel.textOfState.collectAsState()
     val isGoodLogin: Boolean by viewModel.isGoodLogin.collectAsState()
     val isGoodPassword: Boolean by viewModel.isGoodPassword.collectAsState()
