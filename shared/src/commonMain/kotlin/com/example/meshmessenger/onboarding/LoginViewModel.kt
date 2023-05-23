@@ -81,7 +81,7 @@ class LoginVM: ViewModel() {
     }
 
     fun changePinValue(newValue: String) {
-        if (newValue == "") {
+        if (newValue == "<-") {
             _pin.value = pin.value.dropLast(1)
         } else {
             _pin.value = _pin.value.plus(newValue)

@@ -1,15 +1,11 @@
 package com.example.meshmessenger.android.uicompose.loginScreen
 
-
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Modifier
@@ -19,13 +15,10 @@ import androidx.compose.ui.unit.dp
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.onboarding.LoginVM
 
 
 @Composable
-fun Keyboard(viewModel: LoginVM) {
-
-    val isKeyboardEnabled: Boolean by viewModel.isKeyboardEnabled.collectAsState()
+fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
 
     Box(contentAlignment = BottomCenter, modifier = Modifier
         .padding(bottom = 20.dp)
@@ -33,48 +26,28 @@ fun Keyboard(viewModel: LoginVM) {
         .fillMaxHeight(1f)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row() {
-                SingleKeyboardButton(btnText = "1", viewModel) {
-                    viewModel.changePinValue("1")
-                }
-                SingleKeyboardButton(btnText = "2", viewModel){
-                    viewModel.changePinValue("2")
-                }
-                SingleKeyboardButton(btnText = "3", viewModel){
-                    viewModel.changePinValue("3")
-                }
+                SingleKeyboardButton(btnText = "1", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "2", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "3", isKeyboardEnabled, onButtonClick = onButtonClick)
             }
             Row() {
-                SingleKeyboardButton(btnText = "4", viewModel){
-                    viewModel.changePinValue("4")
-                }
-                SingleKeyboardButton(btnText = "5", viewModel){
-                    viewModel.changePinValue("5")
-                }
-                SingleKeyboardButton(btnText = "6", viewModel){
-                    viewModel.changePinValue("6")
-                }
+                SingleKeyboardButton(btnText = "4", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "5", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "6", isKeyboardEnabled, onButtonClick = onButtonClick)
             }
             Row() {
-                SingleKeyboardButton(btnText = "7", viewModel){
-                    viewModel.changePinValue("7")
-                }
-                SingleKeyboardButton(btnText = "8", viewModel){
-                    viewModel.changePinValue("8")
-                }
-                SingleKeyboardButton(btnText = "9", viewModel){
-                    viewModel.changePinValue("9")
-                }
+                SingleKeyboardButton(btnText = "7", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "8", isKeyboardEnabled, onButtonClick = onButtonClick)
+                SingleKeyboardButton(btnText = "9", isKeyboardEnabled, onButtonClick = onButtonClick)
             }
             Row() {
                 Spacer(modifier = Modifier.fillMaxWidth(0.19f))
 
-                SingleKeyboardButton(btnText = "0", viewModel){
-                    viewModel.changePinValue("0")
-                }
+                SingleKeyboardButton(btnText = "0", isKeyboardEnabled, onButtonClick = onButtonClick)
 
                 Button(
                     onClick = {
-                        viewModel.changePinValue("")
+                        onButtonClick("<-")
                     },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = BackgroundColor
@@ -106,5 +79,7 @@ fun Keyboard(viewModel: LoginVM) {
 @Preview
 @Composable
 fun KeyboardPreview() {
-//    Keyboard()
+    Keyboard(true) {
+
+    }
 }

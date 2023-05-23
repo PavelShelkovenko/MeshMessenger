@@ -19,6 +19,7 @@ import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
 
     val textOfState by viewModel.textState.collectAsState()
+    val isKeyboardEnabled by viewModel.isKeyboardEnabled.collectAsState()
 
     viewModel.actions.observeAsActions { action ->
         when(action){
@@ -48,9 +49,12 @@ fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
+
         PinState(viewModel)
     }
 
-    Keyboard(viewModel)
+    Keyboard(isKeyboardEnabled) { value ->
+        viewModel.changePinValue(value)
+    }
 }
 

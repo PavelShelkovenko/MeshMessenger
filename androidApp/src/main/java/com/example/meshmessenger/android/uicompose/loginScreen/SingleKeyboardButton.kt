@@ -7,24 +7,19 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.onboarding.LoginVM
 
 
 @Composable
-fun SingleKeyboardButton(btnText: String, viewModel: LoginVM, onButtonClick: () -> Unit) {
-
-    val isKeyboardEnabled: Boolean by viewModel.isKeyboardEnabled.collectAsState()
+fun SingleKeyboardButton(btnText: String, isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
 
     Button(
-        onClick = { onButtonClick() },
+        onClick = { onButtonClick(btnText) },
         colors = ButtonDefaults.buttonColors(
             backgroundColor = BackgroundColor
         ),
@@ -51,6 +46,6 @@ fun SingleKeyboardButton(btnText: String, viewModel: LoginVM, onButtonClick: () 
 @Preview
 @Composable
 fun KeyboardButtonPreview() {
-//    SingleKeyboardButton("0",) {
-//    }
+    SingleKeyboardButton("0",true) {
+    }
 }
