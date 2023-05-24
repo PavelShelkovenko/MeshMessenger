@@ -27,8 +27,6 @@ import androidx.compose.ui.draw.rotate
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.data.messagesListExample
 
-
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun DialogMessagesList(navController: NavController, channelName: String?) {
@@ -45,9 +43,13 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                         launchSingleTop = true
                     }
                 }) {
-                    Icon( painter =painterResource(id = R.drawable.back_arrow), contentDescription = "Back", tint = IconsBlue)
+                    Icon(
+                        painter = painterResource(id = R.drawable.back_arrow),
+                        contentDescription = "Back",
+                        tint = IconsBlue
+                    )
                 }
-                
+
                 Spacer(modifier = Modifier.width(5.dp))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
@@ -62,7 +64,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(channelName!!, fontSize = 20.sp, color = Color.Black, fontFamily = Poppins)
-                
+
             }
         },
         bottomBar = {
@@ -102,7 +104,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                             }
 
                     )
-                }  ,
+                },
                 placeholder = {
                     Text(text = "Message", color = PlaceholderColor)
                 },
@@ -116,8 +118,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 )
         },
 
-        ) {
-            innerPadding ->
+        ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -134,52 +135,73 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
 
 @Composable
 fun MessageCard(message: Message) {
-    Row(modifier = Modifier.padding(all = 8.dp), horizontalArrangement = Arrangement.End) {
 
-        Spacer(modifier = Modifier.width(10.dp))
+    Spacer(modifier = Modifier.height(2.5.dp))
 
-        Column(horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxSize() ) {
-            Text(
-                text = message.authorName,
-                color = Color.Black,                      //автор
-                modifier = Modifier.padding(end = 45.dp)
-            )
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.End
+    ) {
 
-            Spacer(modifier = Modifier.height(4.dp))
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            elevation = 5.dp,
+            modifier = Modifier.fillMaxSize(0.8f),
+        ) {
+            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.End) {
+                Text(
+                    text = message.authorName,
+                    color = PlaceholderColor,                      //автор
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 1.dp, end = 5.dp)
+                )
 
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.Bottom,
-                horizontalArrangement = Arrangement.End
-            ) {
-
-                Surface(
-                    shape = MaterialTheme.shapes.medium,
-                    elevation = 5.dp,
-                    modifier = Modifier.fillMaxSize(0.8f)
-                ) {
+                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
                     Text(
                         text = message.text,
-                        modifier = Modifier.padding(all = 8.dp),   //текст
-                        maxLines = Int.MAX_VALUE
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
                     )
                 }
 
-                Spacer(modifier = Modifier.width(5.dp))
-
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data("https://randart.ru/art/JD99/wallpapers")
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "Ваша аватарка",
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                    alignment = Alignment.BottomEnd
-                )
+                Row(
+                    modifier = Modifier.padding(end = 10.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        text = message.time,
+                        maxLines = 1,
+                        fontSize = 10.sp,
+                        color = PlaceholderColor,
+                        modifier = Modifier.padding(5.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.check_all),
+                        contentDescription = "status icon",
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
             }
         }
+
+        Spacer(modifier = Modifier.width(5.dp))
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data("https://randart.ru/art/JD99/")
+                .crossfade(true)
+                .build(),
+            contentDescription = "Ваша аватарка",
+            modifier = Modifier
+                .padding(end = 2.dp)
+                .size(30.dp)
+                .clip(CircleShape)
+            ,
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.BottomEnd
+        )
     }
+    Spacer(modifier = Modifier.height(2.5.dp))
 }
+
+
