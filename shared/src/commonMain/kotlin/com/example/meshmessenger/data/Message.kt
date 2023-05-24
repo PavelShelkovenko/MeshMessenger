@@ -11,6 +11,8 @@ data class Message(
 val messagesListExample = arrayListOf(
     Message(1,"1Первое", "11:34", "Артур", "Рахимзянов"),
     Message(1,"1Первое сообщение2", "11:35","Артур", "Рахимзянов"),
+    Message(1,"2Первое сообщениеfAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "11:39", "Артур", "Рахимзянов"),
+
     Message(1,"1Первое сообщение3faaaaaa", "11:36", "Артур", "Рахимзянов"),
     Message(1,"1Первое сообщение4", "11:37", "Артур", "Рахимзянов"),
     Message(1,"1Первое сообщение5dawffffffff", "11:38", "Артур", "Рахимзянов"),

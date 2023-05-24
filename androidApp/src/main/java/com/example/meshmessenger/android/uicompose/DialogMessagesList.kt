@@ -24,6 +24,7 @@ import com.example.meshmessenger.android.R
 import com.example.meshmessenger.data.Message
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
+import coil.transform.CircleCropTransformation
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.data.messagesListExample
 
@@ -53,6 +54,7 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 Spacer(modifier = Modifier.width(5.dp))
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
+                        .transformations(CircleCropTransformation())
                         .data("https://randart.ru/art/JD99/")
                         .crossfade(true)
                         .build(),
@@ -125,18 +127,20 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 .padding(PaddingValues(bottom = innerPadding.calculateBottomPadding()))
                 .background(BackgroundColor)
         ) {
-            items(messagesListExample) { message ->
-                MessageCard(message)
+            items(messagesListExample.shuffled()) { message ->
+                Spacer(modifier = Modifier.height(2.5.dp))
+                if(message.id == 1) { MessageCard(message) }
+                else { MessageCard2(message) }
+                Spacer(modifier = Modifier.height(2.5.dp))
             }
         }
     }
 }
 
 
+
 @Composable
 fun MessageCard(message: Message) {
-
-    Spacer(modifier = Modifier.height(2.5.dp))
 
     Row(
         modifier = Modifier.fillMaxSize(),
@@ -147,19 +151,21 @@ fun MessageCard(message: Message) {
         Surface(
             shape = MaterialTheme.shapes.medium,
             elevation = 5.dp,
-            modifier = Modifier.fillMaxSize(0.8f),
+            modifier = Modifier.fillMaxSize(0.7f),
         ) {
             Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.End) {
                 Text(
                     text = message.authorName,
                     color = PlaceholderColor,                      //автор
                     fontSize = 12.sp,
+                    maxLines = 1,
                     modifier = Modifier.padding(top = 1.dp, end = 5.dp)
                 )
 
                 Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
                     Text(
                         text = message.text,
+                        maxLines = Int.MAX_VALUE,
                         modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
                     )
                 }
@@ -188,12 +194,13 @@ fun MessageCard(message: Message) {
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data("https://randart.ru/art/JD99/")
+                .transformations(CircleCropTransformation())
+                .data("https://plus.unsplash.com/premium_photo-1683135218463-12fd419b0b85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODQ2NzI1NDF8&ixlib=rb-4.0.3&q=80&w=1080")
                 .crossfade(true)
                 .build(),
             contentDescription = "Ваша аватарка",
             modifier = Modifier
-                .padding(end = 2.dp)
+                .padding(end = 5.dp)
                 .size(30.dp)
                 .clip(CircleShape)
             ,
@@ -201,7 +208,78 @@ fun MessageCard(message: Message) {
             alignment = Alignment.BottomEnd
         )
     }
-    Spacer(modifier = Modifier.height(2.5.dp))
+}
+
+
+@Composable
+fun MessageCard2(message: Message) {
+
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.Start
+    ) {
+
+        Spacer(modifier = Modifier.width(5.dp))
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .transformations(CircleCropTransformation())
+                .data("https://img-webcalypt.ru/api/img/get_processed_image_by_name/random-person/thumbnails/aXxkXTfcHInasBL51QtqJxejveZniHmxoXQdSgo2tV3TNyIgpUWvInZYnqqRH8Tk.jpg")
+                .crossfade(true)
+                .build(),
+            contentDescription = "Ваша аватарка",
+            modifier = Modifier
+                .padding(start = 5.dp)
+                .size(30.dp)
+                .clip(CircleShape)
+            ,
+            contentScale = ContentScale.Crop,
+            alignment = Alignment.BottomStart
+        )
+
+        Spacer(modifier = Modifier.width(5.dp))
+
+        Surface(
+            shape = MaterialTheme.shapes.medium,
+            elevation = 5.dp,
+            modifier = Modifier.fillMaxSize(0.8f),
+        ) {
+            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Start) {
+                Text(
+                    text = message.authorName,
+                    color = PlaceholderColor,                      //автор
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(top = 1.dp, start = 5.dp)
+                )
+
+                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
+                    Text(
+                        text = message.text,
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
+                    )
+                }
+
+                Row(
+                    modifier = Modifier.padding(end = 10.dp),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Text(
+                        text = message.time,
+                        maxLines = 1,
+                        fontSize = 10.sp,
+                        color = PlaceholderColor,
+                        modifier = Modifier.padding(5.dp)
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.check_all),
+                        contentDescription = "status icon",
+                        modifier = Modifier.size(18.dp)
+                    )
+                }
+            }
+        }
+    }
 }
 
 
