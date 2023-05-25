@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -143,35 +144,43 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
 fun MessageCard(message: Message) {
 
     Row(
-        modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.End
-    ) {
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
+        ) {
 
         Surface(
-            shape = MaterialTheme.shapes.medium,
+            shape = RoundedCornerShape(
+                topEnd = 16.dp,
+                topStart = 16.dp,
+                bottomEnd = 0.dp,
+                bottomStart = 16.dp
+            ),
             elevation = 5.dp,
-            modifier = Modifier.fillMaxSize(0.7f),
+            modifier = Modifier
+                .wrapContentWidth()
+                .widthIn(max = 300.dp, min = 60.dp)    //чтобы задать макс и мин длину, через fraction не работает
+                .padding(bottom = 15.dp), //чтобы фотка была ниже чем текст сообщения
         ) {
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.End) {
-                Text(
-                    text = message.authorName,
-                    color = PlaceholderColor,                      //автор
-                    fontSize = 12.sp,
-                    maxLines = 1,
-                    modifier = Modifier.padding(top = 1.dp, end = 5.dp)
-                )
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
 
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
+                Box(
+                    contentAlignment = Alignment.CenterStart,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
                     Text(
                         text = message.text,
                         maxLines = Int.MAX_VALUE,
-                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp )
                     )
                 }
 
                 Row(
-                    modifier = Modifier.padding(end = 10.dp),
+                    modifier = Modifier.wrapContentWidth().padding(end = 2.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
                     Text(
@@ -179,12 +188,12 @@ fun MessageCard(message: Message) {
                         maxLines = 1,
                         fontSize = 10.sp,
                         color = PlaceholderColor,
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(end = 2.dp)
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.check_all),
                         contentDescription = "status icon",
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
