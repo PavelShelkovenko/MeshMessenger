@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -128,50 +129,301 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                 .background(BackgroundColor)
         ) {
             items(messagesListExample.shuffled()) { message ->
-                Spacer(modifier = Modifier.height(2.5.dp))
-                if(message.id == 1) { MessageCard(message) }
-                else { MessageCard2(message) }
-                Spacer(modifier = Modifier.height(2.5.dp))
+                println()
+                when (channelName) {
+                    "Артур Рахимзянов" -> {
+                        Spacer(modifier = Modifier.height(1.dp))
+                        if (message.id == 1) {
+                            MessageCard(message)
+                        } else {                    // у каждого есть фото
+                            MessageCard2(message)
+                        }
+                        Spacer(modifier = Modifier.height(1.dp))
+                    }
+                    "Артур2 Рахимзянов2" -> {
+                        Spacer(modifier = Modifier.height(1.dp))
+                        OneMessageOnPrivateDialog(message)       //для приватных сообщений
+                        Spacer(modifier = Modifier.height(1.dp))
+                    }
+                    "Дмитрий Кургаев" -> {
+                        Spacer(modifier = Modifier.height(1.dp))
+                        OneMessageOnPublicChat(message)            //чат
+                        Spacer(modifier = Modifier.height(1.dp))
+                    }
+                    else -> {
+                        Spacer(modifier = Modifier.height(1.dp))
+                        OneMessageOnPublicChat(message)            //чат
+                        Spacer(modifier = Modifier.height(1.dp))
+                    }
+                }
             }
         }
     }
 }
 
+@Composable
+fun OneMessageOnPrivateDialog(message: Message) {
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = if (message.id == 1) Arrangement.End else Arrangement.Start, //
+        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
+    ) {
+
+        Surface(
+            shape = roundedCornerShapeDefine(id = message.id),
+            elevation = 5.dp,
+            modifier = Modifier
+                .wrapContentWidth()
+                .widthIn(
+                    max = 340.dp,
+                    min = 80.dp
+                )    //чтобы задать макс и мин длину, через fraction не работает
+                .padding(
+                    bottom = 15.dp,
+                    start = 15.dp,
+                    end = 15.dp
+                ), //чтобы фотка была ниже чем текст сообщения
+        ) {
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = if (message.id == 1) Alignment.End else Alignment.Start, //
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                Box(
+                    contentAlignment = if (message.id == 1) Alignment.CenterEnd else Alignment.CenterStart,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
+                    Text(
+                        text = message.text,
+                        maxLines = Int.MAX_VALUE,
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
+                    )
+                }
+
+                Row(
+                    modifier = if (message.id == 1) {
+                        Modifier
+                            .wrapContentWidth()
+                            .padding(end = 2.dp)
+                    } else {
+                        Modifier
+                            .wrapContentWidth()
+                            .padding(start = 2.dp)
+                    },
+                    horizontalArrangement = if (message.id == 1) {
+                        Arrangement.End
+                    } else {
+                        Arrangement.Start
+                    }
+                ) {
+                    Text(
+                        text = message.time,
+                        maxLines = 1,
+                        fontSize = 10.sp,
+                        color = PlaceholderColor,
+                        modifier = if (message.id == 1) {
+                            Modifier.padding(end = 2.dp)
+                        } else {
+                            Modifier.padding(start = 2.dp)
+                        }
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Icon(
+                        painter = painterResource(id = R.drawable.check_all),
+                        contentDescription = "status icon",
+                        modifier = Modifier
+                            .size(16.dp)
+                            .padding()
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun OneMessageOnPublicChat(message: Message) {
+    Row(
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = if (message.id == 1) Arrangement.End else Arrangement.Start, //
+        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
+    ) {
+        if (message.id != 1) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .transformations(CircleCropTransformation())
+                    .data("https://images.unsplash.com/photo-1639091435585-508ff02f0b07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODUwMjU2Nzd8&ixlib=rb-4.0.3&q=80&w=1080")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Ваша аватарка",
+                modifier = Modifier
+                    .padding(start = 5.dp)   //
+                    .size(30.dp)
+                    .clip(CircleShape),
+                contentScale = ContentScale.Crop,
+                alignment = Alignment.BottomStart
+            )
+        }
+
+        Surface(
+            shape = roundedCornerShapeDefine(id = message.id),
+            elevation = 5.dp,
+
+            modifier = Modifier
+                .wrapContentWidth()
+                .widthIn(max = 300.dp, min = 80.dp)
+                .padding(end = 15.dp, bottom = 15.dp, start = 5.dp)
+
+        ) {
+
+            Spacer(modifier = Modifier.width(5.dp))
+
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = if (message.id == 1) Alignment.End else Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+                if (message.id != 1) {
+                    Box(
+                        modifier = Modifier
+                            .wrapContentWidth()
+                            .padding(start = 10.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = message.authorName,
+                            maxLines = 1,
+                            fontSize = 10.sp,
+                            color = PlaceholderColor,
+                            modifier = Modifier.padding(end = 10.dp, top = 2.dp)
+                        )
+                    }
+                }
+
+                Box(
+                    contentAlignment = if (message.id == 1) Alignment.CenterEnd else Alignment.CenterStart,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
+                    Text(
+                        text = message.text,
+                        maxLines = Int.MAX_VALUE,
+                        modifier = if(message.id == 1) { Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp) }
+                                    else { Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp) }
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    modifier = if (message.id == 1) {
+                        Modifier
+                            .wrapContentWidth()
+                            .padding(end = 2.dp)
+                    } else {
+                        Modifier
+                            .wrapContentWidth()
+                            .padding(start = 2.dp)
+                    },
+                    horizontalArrangement = if (message.id == 1) {
+                        Arrangement.End
+                    } else {
+                        Arrangement.Start
+                    }
+                ) {
+                    Text(
+                        text = message.time,
+                        maxLines = 1,
+                        fontSize = 10.sp,
+                        color = PlaceholderColor,
+                        modifier = if (message.id == 1) {
+                            Modifier.padding(end = 2.dp)
+                        } else {
+                            Modifier.padding(start = 2.dp)
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.width(2.dp))
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.check_all),
+                        contentDescription = "status icon",
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+        }
+
+    }
+}
+
+
+@Composable
+fun roundedCornerShapeDefine(id: Int): RoundedCornerShape {
+    return if (id == 1) {
+        RoundedCornerShape(
+            topEnd = 16.dp,
+            topStart = 16.dp,
+            bottomEnd = 0.dp,   //
+            bottomStart = 16.dp
+        )
+    } else {
+        RoundedCornerShape(
+            topEnd = 16.dp,
+            topStart = 16.dp,
+            bottomEnd = 16.dp,   //
+            bottomStart = 0.dp
+        )
+    }
+}
 
 
 @Composable
 fun MessageCard(message: Message) {
 
     Row(
-        modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.End
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
     ) {
 
         Surface(
-            shape = MaterialTheme.shapes.medium,
+            shape = RoundedCornerShape(
+                topEnd = 16.dp,
+                topStart = 16.dp,
+                bottomEnd = 0.dp,
+                bottomStart = 16.dp
+            ),
             elevation = 5.dp,
-            modifier = Modifier.fillMaxSize(0.7f),
+            modifier = Modifier
+                .wrapContentWidth()
+                .widthIn(
+                    max = 300.dp,
+                    min = 60.dp
+                )    //чтобы задать макс и мин длину, через fraction не работает
+                .padding(bottom = 15.dp), //чтобы фотка была ниже чем текст сообщения
         ) {
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.End) {
-                Text(
-                    text = message.authorName,
-                    color = PlaceholderColor,                      //автор
-                    fontSize = 12.sp,
-                    maxLines = 1,
-                    modifier = Modifier.padding(top = 1.dp, end = 5.dp)
-                )
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = Alignment.End,
+                verticalArrangement = Arrangement.Center
+            ) {
 
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
                     Text(
                         text = message.text,
                         maxLines = Int.MAX_VALUE,
-                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
                     )
                 }
 
                 Row(
-                    modifier = Modifier.padding(end = 10.dp),
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .padding(end = 2.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
                     Text(
@@ -179,12 +431,12 @@ fun MessageCard(message: Message) {
                         maxLines = 1,
                         fontSize = 10.sp,
                         color = PlaceholderColor,
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(end = 2.dp)
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.check_all),
                         contentDescription = "status icon",
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
@@ -202,38 +454,33 @@ fun MessageCard(message: Message) {
             modifier = Modifier
                 .padding(end = 5.dp)
                 .size(30.dp)
-                .clip(CircleShape)
-            ,
+                .clip(CircleShape),
             contentScale = ContentScale.Crop,
-            alignment = Alignment.BottomEnd
+            //alignment = Alignment.BottomEnd
         )
     }
 }
-
 
 @Composable
 fun MessageCard2(message: Message) {
 
     Row(
-        modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Start, //
+        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
     ) {
-
-        Spacer(modifier = Modifier.width(5.dp))
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .transformations(CircleCropTransformation())
-                .data("https://img-webcalypt.ru/api/img/get_processed_image_by_name/random-person/thumbnails/aXxkXTfcHInasBL51QtqJxejveZniHmxoXQdSgo2tV3TNyIgpUWvInZYnqqRH8Tk.jpg")
+                .data("https://images.unsplash.com/photo-1639091435585-508ff02f0b07?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODUwMjU2Nzd8&ixlib=rb-4.0.3&q=80&w=1080")
                 .crossfade(true)
                 .build(),
             contentDescription = "Ваша аватарка",
             modifier = Modifier
-                .padding(start = 5.dp)
+                .padding(start = 5.dp)   //
                 .size(30.dp)
-                .clip(CircleShape)
-            ,
+                .clip(CircleShape),
             contentScale = ContentScale.Crop,
             alignment = Alignment.BottomStart
         )
@@ -241,45 +488,59 @@ fun MessageCard2(message: Message) {
         Spacer(modifier = Modifier.width(5.dp))
 
         Surface(
-            shape = MaterialTheme.shapes.medium,
+            shape = RoundedCornerShape(
+                topEnd = 16.dp,
+                topStart = 16.dp,
+                bottomEnd = 16.dp,   //
+                bottomStart = 0.dp
+            ),
             elevation = 5.dp,
-            modifier = Modifier.fillMaxSize(0.8f),
+            modifier = Modifier
+                .wrapContentWidth()
+                .widthIn(
+                    max = 300.dp,
+                    min = 60.dp
+                )    //чтобы задать макс и мин длину, через fraction не работает
+                .padding(bottom = 15.dp), //чтобы фотка была ниже чем текст сообщения
         ) {
-            Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.Start) {
-                Text(
-                    text = message.authorName,
-                    color = PlaceholderColor,                      //автор
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(top = 1.dp, start = 5.dp)
-                )
+            Column(
+                modifier = Modifier.wrapContentWidth(),
+                horizontalAlignment = Alignment.Start, //
+                verticalArrangement = Arrangement.Center
+            ) {
 
-                Box(contentAlignment = Alignment.CenterStart, modifier = Modifier.fillMaxSize()) {
+                Box(
+                    contentAlignment = Alignment.CenterEnd,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
                     Text(
                         text = message.text,
-                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, bottom = 1.dp),
+                        maxLines = Int.MAX_VALUE,
+                        modifier = Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
                     )
                 }
 
                 Row(
-                    modifier = Modifier.padding(end = 10.dp),
-                    horizontalArrangement = Arrangement.Start
+                    modifier = Modifier
+                        .wrapContentWidth()
+                        .padding(start = 2.dp), //
+                    horizontalArrangement = Arrangement.Start                         //
                 ) {
                     Text(
                         text = message.time,
                         maxLines = 1,
                         fontSize = 10.sp,
                         color = PlaceholderColor,
-                        modifier = Modifier.padding(5.dp)
+                        modifier = Modifier.padding(end = 2.dp)
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.check_all),
                         contentDescription = "status icon",
-                        modifier = Modifier.size(18.dp)
+                        modifier = Modifier.size(16.dp)
                     )
                 }
             }
         }
     }
 }
-
 
