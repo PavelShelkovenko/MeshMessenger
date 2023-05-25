@@ -65,7 +65,6 @@ kotlin {
 
                 // SQLDelight
                 implementation(Deps.Multiplatform.sqlDelightRuntime)
-                implementation(Deps.Multiplatform.sqlDelightCoroutinesExtensions)
 
                 // Koin
                 api(Deps.Multiplatform.koinCore)
@@ -103,7 +102,7 @@ kotlin {
                 api(Deps.Android.mokoFlowCompose)
             }
         }
-        val androidUnitTest by getting
+        val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
@@ -135,6 +134,13 @@ kotlin {
             iosArm64Test.dependsOn(this)
             iosSimulatorArm64Test.dependsOn(this)
         }
+    }
+}
+
+sqldelight {
+    database("UserDatabase") {
+        packageName = "com.example.meshmessenger.database"
+        sourceFolders = listOf("sqldelight")
     }
 }
 
