@@ -138,7 +138,7 @@ kotlin {
 }
 
 sqldelight {
-    database("UserDatabase") {
+    database("AppDatabase") {
         packageName = "com.example.meshmessenger.database"
         sourceFolders = listOf("sqldelight")
     }

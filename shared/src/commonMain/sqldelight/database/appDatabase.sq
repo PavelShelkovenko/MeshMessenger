@@ -1,0 +1,64 @@
+
+CREATE TABLE userEntity(
+    id_peer TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    is_active INTEGER AS Boolean NOT NULL
+);
+
+getAllUsers:
+SELECT *
+FROM userEntity;
+
+getUserById:
+SELECT *
+FROM userEntity
+WHERE id_peer = ?;
+
+insertUser:
+INSERT OR REPLACE
+INTO userEntity(
+    id_peer,
+    name,
+    surname,
+    is_active
+) VALUES(?, ?,?,?);
+
+deleteUserById:
+DELETE FROM userEntity
+WHERE id_peer = ?;
+
+
+CREATE TABLE messageEntity(
+    message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    from_id INTEGER NOT NULL,
+    to_chat_id INTEGER NOT NULL,
+    text_content TEXT,
+    created_at INTEGER NOT NULL,
+    sent_at INTEGER NOT NULL,
+    status TEXT NOT NULL,
+    has_attachments INTEGER AS Boolean
+);
+
+CREATE TABLE chatEntity(
+    chat_id INTEGER NOT NULL PRIMARY KEY,
+    chat_name TEXT NOT NULL,
+    type TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    id_peer_admin INTEGER
+);
+
+CREATE TABLE chatMemberEntity(
+    kod INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_peer TEXT NOT NULL,
+    chat_id INTEGER NOT NULL,
+    time_add_at INTEGER NOT NULL,
+    is_admin INTEGER AS Boolean NOT NULL
+);
+
+CREATE TABLE attachmentsEntity(
+    id_attachment INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id_message INTEGER NOT NULL,
+    content_type TEXT NOT NULL,
+    file_path TEXT NOT NULL
+);
