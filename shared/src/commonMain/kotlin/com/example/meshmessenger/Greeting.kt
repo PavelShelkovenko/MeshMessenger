@@ -1,6 +1,5 @@
 package com.example.meshmessenger
 
-import com.example.meshmessenger.database.UserDatabase
 
 class Greeting {
     private val platform: Platform = getPlatform()
