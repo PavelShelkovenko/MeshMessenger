@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPrefs = this.getSharedPreferences("currenttime", MODE_PRIVATE)
-        val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()){
+        val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()){
                 uri -> println("$uri")
         }
         setContent {
@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                         navController = navController,
-                        pickMedia = pickMedia,
+                        pickMultiMedia = pickMultiMedia,
                     )
                 }
             }
@@ -96,7 +96,7 @@ fun Root(
     callPin: () -> Unit,
     callRegister: () -> Unit,
     navController: NavHostController,
-    pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
+    pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -152,7 +152,7 @@ fun Root(
                 navArgument("channelName") { type = NavType.StringType}
             )) {
                 backStackEntry ->
-                    DialogMessagesList(navController, backStackEntry.arguments?.getString("channelName"), pickMedia)
+                    DialogMessagesList(navController, backStackEntry.arguments?.getString("channelName"), pickMultiMedia)
 
         }
     }
