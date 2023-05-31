@@ -2,7 +2,6 @@ package com.example.meshmessenger.android.uicompose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -80,33 +79,41 @@ fun DialogMessagesList(navController: NavController, channelName: String?) {
                     unfocusedIndicatorColor = Color.Transparent
                 ),
                 leadingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.paperclip),
-                        contentDescription = "",
-                        modifier = Modifier
-                            .rotate(220f)
-                            .clip(CircleShape)
-                            .size(30.dp)
-                            .clickable {
-                                //открыть photo picker
-                            }
 
-                    )
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.emoticon_outline),
+                            contentDescription = "emoji",
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .size(30.dp)
+
+                        )
+                    }
                 },
                 trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.microphone),
-                        contentDescription = null,
+                    Row {
 
-                        //tint = PrimaryColor,
-                        modifier = Modifier
-                            .size(30.dp)
-                            .clip(CircleShape)
-                            .clickable {
-                                //запись звука
-                            }
-
-                    )
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.paperclip),
+                                contentDescription = "",
+                                modifier = Modifier
+                                    .rotate(220f)
+                                    .clip(CircleShape)
+                                    .size(30.dp)
+                            )
+                        }
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.microphone),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .clip(CircleShape)
+                            )
+                        }
+                    }
                 },
                 placeholder = {
                     Text(text = "Message", color = PlaceholderColor)
