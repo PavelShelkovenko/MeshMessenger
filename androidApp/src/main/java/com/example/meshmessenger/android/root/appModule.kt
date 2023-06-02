@@ -1,5 +1,6 @@
 package com.example.meshmessenger.android.root
 
+import com.example.meshmessenger.chat.DialogViewModel
 import com.example.meshmessenger.onboarding.LoginVM
 import com.example.meshmessenger.onboarding.RegisterVM
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -9,4 +10,5 @@ import org.koin.dsl.module
 val androidModule = module {
     viewModel { LoginVM() }
     viewModel { RegisterVM() }
+    viewModel { DialogViewModel() }
 }

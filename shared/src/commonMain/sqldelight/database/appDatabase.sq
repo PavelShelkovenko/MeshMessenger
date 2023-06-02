@@ -1,6 +1,5 @@
-
 CREATE TABLE userEntity(
-    id_peer TEXT NOT NULL PRIMARY KEY,
+    id_peer TEXT NOT NULL PRIMARY KEY, --пир в тексте так как 16-чный формат
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
     is_active INTEGER AS Boolean NOT NULL
@@ -28,37 +27,136 @@ deleteUserById:
 DELETE FROM userEntity
 WHERE id_peer = ?;
 
+CREATE TABLE chatEntity(
+    chat_id INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT,    --добавил автоинкремент
+    chat_name TEXT NOT NULL,
+    type TEXT NOT NULL,   --должен быть или ENUM или просто boolean, но пока оставим чтоб тестить проще было
+    created_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
+    id_peer_created TEXT,
+    FOREIGN KEY(id_peer_created) REFERENCES userEntity(id_peer) --добавил внешний ключ
+);
+
+getAllChats:
+SELECT *
+FROM chatEntity;
+
+getChatById:
+SELECT *
+FROM chatEntity
+WHERE chat_id = ?;
+
+insertChat:
+INSERT OR REPLACE
+INTO chatEntity(
+    chat_id,
+    chat_name,
+    type,
+    created_at,
+    id_peer_created
+) VALUES(?, ?,?,?, ?);
+
+deleteChatById:
+DELETE FROM chatEntity
+WHERE chat_id = ?;
+
+CREATE TABLE chatMemberEntity(
+    id_chat_members INTEGER PRIMARY KEY AUTOINCREMENT, --имя поменял
+    id_peer TEXT NOT NULL,
+    chat_id INTEGER NOT NULL,
+    time_add_at TEXT NOT NULL,                   --время в тексте так как использовать будет формат UTC
+    is_admin INTEGER AS Boolean NOT NULL,
+    FOREIGN KEY(id_peer) REFERENCES userEntity(id_peer), --добавил внешний ключ
+    FOREIGN KEY(chat_id) REFERENCES chatEntity(chat_id)  --добавил внешний ключ
+);
+
+getAllChatsMemebers:
+SELECT *
+FROM chatMemberEntity;
+
+getChatsMembersById:
+SELECT *
+FROM chatMemberEntity
+WHERE id_chat_members = ?;
+
+insertChatsMembers:
+INSERT OR REPLACE
+INTO chatMemberEntity(
+    id_chat_members,
+        id_peer,
+        chat_id,
+        time_add_at,
+        is_admin
+) VALUES(?, ?,?,?, ?);
+
+deleteChatsMembersById:
+DELETE FROM chatMemberEntity
+WHERE id_chat_members = ?;
 
 CREATE TABLE messageEntity(
     message_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    from_id INTEGER NOT NULL,
+    from_id TEXT NOT NULL,   --пир в тексте так как 16-чный формат
     to_chat_id INTEGER NOT NULL,
     text_content TEXT,
-    created_at INTEGER NOT NULL,
-    sent_at INTEGER NOT NULL,
-    status TEXT NOT NULL,
-    has_attachments INTEGER AS Boolean
+    created_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
+    sent_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
+    status TEXT NOT NULL,       --потом ENUM сделаем, но пока оставим чтоб тестить проще было
+    has_attachments INTEGER AS Boolean,
+    FOREIGN KEY(from_id) REFERENCES userEntity(id_peer), --добавил внешний ключ
+    FOREIGN KEY(to_chat_id) REFERENCES chatEntity(chat_id) --добавил внешний ключ
 );
 
-CREATE TABLE chatEntity(
-    chat_id INTEGER NOT NULL PRIMARY KEY,
-    chat_name TEXT NOT NULL,
-    type TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    id_peer_admin INTEGER
-);
+getAllMessageEntity:
+SELECT *
+FROM messageEntity;
 
-CREATE TABLE chatMemberEntity(
-    kod INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_peer TEXT NOT NULL,
-    chat_id INTEGER NOT NULL,
-    time_add_at INTEGER NOT NULL,
-    is_admin INTEGER AS Boolean NOT NULL
-);
+getMessagesById:
+SELECT *
+FROM messageEntity
+WHERE message_id = ?;
 
-CREATE TABLE attachmentsEntity(
+insertMessage:
+INSERT OR REPLACE
+INTO messageEntity(
+    message_id,
+        from_id,
+        to_chat_id,
+        text_content,
+        created_at,
+        sent_at,
+        status,
+        has_attachments
+) VALUES(?, ?,?,?, ?,?,?,?);
+
+deleteMessagesById:
+DELETE FROM messageEntity
+WHERE message_id = ?;
+
+CREATE TABLE attachmentEntity(
     id_attachment INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     id_message INTEGER NOT NULL,
-    content_type TEXT NOT NULL,
-    file_path TEXT NOT NULL
+    content_type TEXT NOT NULL, --потом ENUM сделаем, но пока оставим чтоб тестить проще было
+    file_path TEXT NOT NULL,
+    FOREIGN KEY(id_message) REFERENCES messageEntity(message_id)  --добавил внешний ключ
 );
+
+getAllattachmentsEntity:
+SELECT *
+FROM attachmentEntity;
+
+getAttachmentById:
+SELECT *
+FROM attachmentEntity
+WHERE id_attachment = ?;
+
+insertAttachment:
+INSERT OR REPLACE
+INTO attachmentEntity(
+         id_attachment,
+         id_message,
+         content_type,
+         file_path
+) VALUES(?, ?,?,?);
+
+deleteAttachmentsById:
+DELETE FROM attachmentEntity
+WHERE id_attachment = ?;

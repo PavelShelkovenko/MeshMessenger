@@ -4,6 +4,9 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -37,7 +40,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPrefs = this.getSharedPreferences("currenttime", MODE_PRIVATE)
+        val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()){
+                uri -> println("$uri")
+        }
         setContent {
+
             startDestination = startDestinationDefine()
 
             MeshAppTheme {
@@ -59,7 +66,8 @@ class MainActivity : ComponentActivity() {
                                 launchSingleTop = true
                             }
                         },
-                        navController = navController
+                        navController = navController,
+                        pickMultiMedia = pickMultiMedia,
                     )
                 }
             }
@@ -87,10 +95,12 @@ fun Root(
     onStop: () -> Unit,
     callPin: () -> Unit,
     callRegister: () -> Unit,
-    navController: NavHostController
+    navController: NavHostController,
+    pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
+
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -111,7 +121,6 @@ fun Root(
             lifecycleOwner.lifecycle.removeObserver(observer)
         }
     }
-
 
     NavHost(navController, startDestination) {
         composable("register") {
@@ -143,10 +152,7 @@ fun Root(
                 navArgument("channelName") { type = NavType.StringType}
             )) {
                 backStackEntry ->
-            DialogMessagesList(
-                navController,
-                backStackEntry.arguments?.getString("channelName")
-            )
+                    DialogMessagesList(navController, backStackEntry.arguments?.getString("channelName"), pickMultiMedia)
 
         }
     }
