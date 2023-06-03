@@ -8,7 +8,7 @@ data class Message(
     val authorSurname: String,
 ) //добавить статус
 
-val messagesListExample = arrayListOf(
+val messagesListExample = mutableListOf<Message>(
     Message(1,"1Первое", "11:34", "Артур", "Рахимзянов"),
     Message(1,"1Первое сообщение2", "11:35","Артур", "Рахимзянов"),
     Message(1,"2Первое сообщениеfAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "11:39", "Артур", "Рахимзянов"),
