@@ -4,9 +4,9 @@ data class Message(
     val message_id: Long,
     val from_id: String,
     val to_chat_id: Long,
-    val text_content: String?,
-    val created_at: String,
-    val sent_at: String,
+    val text_content: String,
+    val created_at: Long,
+    val sent_at: Long,
     val status: String,
-    val has_attachment: Boolean,
+    val has_attachment: Boolean?,
 )

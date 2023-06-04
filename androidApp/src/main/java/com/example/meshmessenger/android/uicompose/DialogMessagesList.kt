@@ -35,10 +35,9 @@ import com.example.meshmessenger.data.Message
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.transform.CircleCropTransformation
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.chat.DialogViewModel
+import com.example.meshmessenger.presentation.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -55,8 +54,9 @@ fun DialogMessagesList(
     navController: NavController,
     channelName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    viewModel: DialogViewModel = viewModel()
+    viewModel: DialogViewModel
 ) {
+
     val textOfMessage = viewModel.textMessage.collectAsState()
     val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
 

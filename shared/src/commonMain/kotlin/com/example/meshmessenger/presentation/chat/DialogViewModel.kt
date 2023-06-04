@@ -1,15 +1,18 @@
-package com.example.meshmessenger.chat
+package com.example.meshmessenger.presentation.chat
 
+import com.example.meshmessenger.data.Message
 import com.example.meshmessenger.data.messagesListExample
+import com.example.meshmessenger.domain.database_repository.DatabaseRepository
 import dev.icerock.moko.mvvm.flow.CMutableStateFlow
+import dev.icerock.moko.mvvm.flow.CStateFlow
 import dev.icerock.moko.mvvm.flow.cMutableStateFlow
+import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import com.example.meshmessenger.data.Message
-import dev.icerock.moko.mvvm.flow.CStateFlow
-import dev.icerock.moko.mvvm.flow.cStateFlow
 
-class DialogViewModel: ViewModel() {
+class DialogViewModel(databaseRepository: DatabaseRepository): ViewModel() {
+
+
     val textMessage: CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
     private val _listOfMessages: CMutableStateFlow<MutableList<Message>> =
                 MutableStateFlow(messagesListExample).cMutableStateFlow()

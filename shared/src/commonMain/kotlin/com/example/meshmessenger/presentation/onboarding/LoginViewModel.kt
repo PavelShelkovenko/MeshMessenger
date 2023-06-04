@@ -1,4 +1,4 @@
-package com.example.meshmessenger.onboarding
+package com.example.meshmessenger.presentation.onboarding
 
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.*

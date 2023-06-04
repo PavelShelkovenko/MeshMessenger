@@ -1,4 +1,4 @@
-package com.example.meshmessenger.data.chatmembers
+package com.example.meshmessenger.data.chat_members
 
 import com.example.meshmessenger.data.user.toUser
 import com.example.meshmessenger.database.AppDatabase

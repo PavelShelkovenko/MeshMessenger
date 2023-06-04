@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.onboarding.LoginVM
+import com.example.meshmessenger.presentation.onboarding.LoginVM
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
