@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.onboarding.RegisterVM
+import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable

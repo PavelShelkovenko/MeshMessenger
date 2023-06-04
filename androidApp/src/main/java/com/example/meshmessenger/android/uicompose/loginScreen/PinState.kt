@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.onboarding.LoginVM
+import com.example.meshmessenger.presentation.onboarding.LoginVM
 
 @Composable
 fun PinState(viewModel: LoginVM) {

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.data.chatmembers
+package com.example.meshmessenger.data.chat_members
 
 import com.example.meshmessenger.domain.chat_members.ChatMembers
 import database.ChatMemberEntity

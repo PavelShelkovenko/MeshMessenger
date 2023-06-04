@@ -9,10 +9,10 @@ fun MessageEntity.toMessage(): Message {
         message_id = message_id,
         from_id = from_id,
         to_chat_id = to_chat_id,
-        text_content = text_content,
+        text_content = text_content!!,
         created_at = created_at,
         sent_at = sent_at,
         status = status,
-        has_attachment = has_attachments!!
+        has_attachment = has_attachments ?: false
     )
 }

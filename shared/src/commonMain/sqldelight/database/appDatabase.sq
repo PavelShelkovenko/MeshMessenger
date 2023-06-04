@@ -28,11 +28,11 @@ DELETE FROM userEntity
 WHERE id_peer = ?;
 
 CREATE TABLE chatEntity(
-    chat_id INTEGER NOT NULL  PRIMARY KEY AUTOINCREMENT,    --добавил автоинкремент
+    chat_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,    --добавил автоинкремент
     chat_name TEXT NOT NULL,
     type TEXT NOT NULL,   --должен быть или ENUM или просто boolean, но пока оставим чтоб тестить проще было
-    created_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
-    id_peer_created TEXT,
+    created_at INTEGER AS Long NOT NULL,   --время в тексте так как использовать будет формат UTC
+    id_peer_created TEXT DEFAULT NULL,
     FOREIGN KEY(id_peer_created) REFERENCES userEntity(id_peer) --добавил внешний ключ
 );
 
@@ -60,10 +60,10 @@ DELETE FROM chatEntity
 WHERE chat_id = ?;
 
 CREATE TABLE chatMemberEntity(
-    id_chat_members INTEGER PRIMARY KEY AUTOINCREMENT, --имя поменял
+    id_chat_members INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, --имя поменял
     id_peer TEXT NOT NULL,
     chat_id INTEGER NOT NULL,
-    time_add_at TEXT NOT NULL,                   --время в тексте так как использовать будет формат UTC
+    time_add_at INTEGER AS Long NOT NULL,                   --время в тексте так как использовать будет формат UTC
     is_admin INTEGER AS Boolean NOT NULL,
     FOREIGN KEY(id_peer) REFERENCES userEntity(id_peer), --добавил внешний ключ
     FOREIGN KEY(chat_id) REFERENCES chatEntity(chat_id)  --добавил внешний ключ
@@ -94,21 +94,21 @@ WHERE id_chat_members = ?;
 
 fetchAllUsersFromChat:
 SELECT userEntity.id_peer, userEntity.name, userEntity.surname, userEntity.is_active FROM
- chatMemberEntity INNER JOIN userEntity ON
+chatMemberEntity INNER JOIN userEntity ON
 chatMemberEntity.id_peer = userEntity.id_peer
 WHERE chatMemberEntity.chat_id = ?;
 
 CREATE TABLE messageEntity(
-    message_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    from_id TEXT NOT NULL,   --пир в тексте так как 16-чный формат
+    message_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    from_id TEXT NOT NULL,                                  --пир в тексте так как 16-чный формат
     to_chat_id INTEGER NOT NULL,
-    text_content TEXT,
-    created_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
-    sent_at TEXT NOT NULL,   --время в тексте так как использовать будет формат UTC
-    status TEXT NOT NULL,       --потом ENUM сделаем, но пока оставим чтоб тестить проще было
-    has_attachments INTEGER AS Boolean,
-    FOREIGN KEY(from_id) REFERENCES userEntity(id_peer), --добавил внешний ключ
-    FOREIGN KEY(to_chat_id) REFERENCES chatEntity(chat_id) --добавил внешний ключ
+    text_content TEXT DEFAULT "",
+    created_at INTEGER AS Long NOT NULL,                    --время в тексте так как использовать будет формат UTC
+    sent_at INTEGER AS Long NOT NULL,                       --время в тексте так как использовать будет формат UTC
+    status TEXT NOT NULL,                                   --потом ENUM сделаем, но пока оставим чтоб тестить проще было
+    has_attachments INTEGER AS Boolean DEFAULT NULL,
+    FOREIGN KEY(from_id) REFERENCES userEntity(id_peer),    --добавил внешний ключ
+    FOREIGN KEY(to_chat_id) REFERENCES chatEntity(chat_id)  --добавил внешний ключ
 );
 
 getAllMessageEntity:
