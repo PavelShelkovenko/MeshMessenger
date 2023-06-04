@@ -5,11 +5,18 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -27,21 +34,33 @@ import com.example.meshmessenger.android.R
 import com.example.meshmessenger.data.Message
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.transform.CircleCropTransformation
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.chat.DialogViewModel
-import com.example.meshmessenger.data.messagesListExample
+import kotlinx.coroutines.launch
+import androidx.compose.runtime.getValue
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@SuppressLint(
+    "UnusedMaterialScaffoldPaddingParameter",
+    "MutableCollectionMutableState",
+    "CoroutineCreationDuringComposition"
+)
 @Composable
 fun DialogMessagesList(
     navController: NavController,
     channelName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    viewModel: DialogViewModel = viewModel()) {
-
+    viewModel: DialogViewModel = viewModel()
+) {
     val textOfMessage = viewModel.textMessage.collectAsState()
+    val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
+
+    val messagesList by viewModel.listOfMessages.collectAsState()
+
+    val listState = rememberLazyListState()
+    val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
         modifier = Modifier
@@ -69,7 +88,7 @@ fun DialogMessagesList(
                         .data("https://randart.ru/art/JD99/")
                         .crossfade(true)
                         .build(),
-                    null,
+                    contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)
                         .clip(CircleShape),
@@ -81,76 +100,153 @@ fun DialogMessagesList(
             }
         },
         bottomBar = {
-            TextField(
-                colors = TextFieldDefaults.textFieldColors(
-                    textColor = PrimaryColor,
-                    backgroundColor = Color.White,
-                    cursorColor = PrimaryColor,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                leadingIcon = {
+            Column {
 
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.emoticon_outline),
-                            contentDescription = "emoji",
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .size(30.dp)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.Bottom
+                ) {
 
-                        )
-                    }
-                },
-                trailingIcon = {
-                    Row {
-
-                        IconButton(onClick = {
-                            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
-                        }) {
+                    if (!isEmojiKeyboardEnabled.value) {
+                        IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
                             Icon(
-                                painter = painterResource(id = R.drawable.paperclip),
-                                contentDescription = "",
+                                painter = painterResource(id = R.drawable.baseline_keyboard_24),
+                                contentDescription = "emoji",
                                 modifier = Modifier
-                                    .rotate(220f)
                                     .clip(CircleShape)
                                     .size(30.dp)
-                            )
-                        }
-                        IconButton(onClick = { /*TODO*/ }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.microphone),
-                                contentDescription = null,
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .clip(CircleShape)
+
                             )
                         }
                     }
-                },
-                placeholder = {
-                    Text(text = "Message", color = PlaceholderColor)
-                },
-                value = "",
-                onValueChange = {},
-                modifier = Modifier
-                    .background(Color.White)
-                    .fillMaxWidth()
-                    .padding(start = 15.dp, end = 5.dp),
+                    else {
+                        IconButton(onClick = { isEmojiKeyboardEnabled.value = true }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.emoticon_outline),
+                                contentDescription = "emoji",
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .size(30.dp)
 
-                )
+                            )
+                        }
+                    }
+
+                    TextField(
+                        value = textOfMessage.value,
+                        onValueChange = { viewModel.textMessage.value = it },
+
+                        modifier = Modifier
+                            .background(Color.White)
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState())
+                            .padding(start = 15.dp, end = 5.dp),
+
+                        colors = TextFieldDefaults.textFieldColors(
+                            textColor = Color.Black,
+                            backgroundColor = Color.White,
+                            cursorColor = PrimaryColor,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        ),
+                        maxLines = 4,
+//                        leadingIcon = {
+//                            if (isEmojiKeyboardEnabled.value) {
+//                                IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
+//                                    Icon(
+//                                        painter = painterResource(id = R.drawable.keyboard),
+//                                        contentDescription = "emoji",
+//                                        modifier = Modifier
+//                                            .clip(CircleShape)
+//                                            .size(30.dp)
+//
+//                                    )
+//                                }
+//                            } else {
+//                                IconButton(onClick = { isEmojiKeyboardEnabled.value = true }) {
+//                                    Icon(
+//                                        painter = painterResource(id = R.drawable.emoticon_outline),
+//                                        contentDescription = "emoji",
+//                                        modifier = Modifier
+//                                            .clip(CircleShape)
+//                                            .size(30.dp)
+//
+//                                    )
+//                                }
+//                            }
+//                        },
+
+                        trailingIcon = {
+                            Row {
+                                IconButton(onClick = {
+                                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+                                }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.paperclip),
+                                        contentDescription = "",
+                                        modifier = Modifier
+                                            .rotate(220f)
+                                            .clip(CircleShape)
+                                            .size(30.dp)
+                                    )
+                                }
+                                if (textOfMessage.value.isBlank()) {
+                                    IconButton(onClick = { /*TODO*/ }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.microphone),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(30.dp)
+                                                .clip(CircleShape)
+                                        )
+                                    }
+                                } else {
+                                    IconButton(
+                                        onClick = {
+                                            viewModel.sendMessage(
+                                                Message(
+                                                    1, textOfMessage.value,
+                                                    authorName = "Артур",
+                                                    time = "12.23",
+                                                    authorSurname = "Рахимзянов"
+                                                )
+                                            )
+                                        }) {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.send),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(30.dp)
+                                                .clip(CircleShape)
+                                        )
+                                    }
+                                }
+                            }
+                        },
+                        placeholder = {
+                            Text(text = "Message", color = PlaceholderColor)
+                        },
+                    )
+                }
+                if (isEmojiKeyboardEnabled.value) {
+                    EmojiPicker(viewModel)
+                }
+            }
+
         },
 
-        ) {
-            innerPadding ->
+        ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(PaddingValues(bottom = innerPadding.calculateBottomPadding()))
-                .background(BackgroundColor)
+                .background(BackgroundColor),
+            state = listState
         ) {
-            items(messagesListExample.shuffled()) { message ->
-                println()
+            coroutineScope.launch {
+                listState.scrollToItem(messagesList.lastIndex)
+            }
+            items(messagesList) { message ->
                 when (channelName) {
                     "Артур Рахимзянов" -> {
                         Spacer(modifier = Modifier.height(1.dp))
@@ -181,6 +277,32 @@ fun DialogMessagesList(
         }
     }
 }
+
+@Composable
+fun EmojiPicker(viewModel: DialogViewModel) {
+    LazyVerticalGrid(
+        modifier = Modifier.height(150.dp),
+        columns = GridCells.Adaptive(minSize = 42.dp)
+    ) {
+        items(emojis) { emoji ->
+            Text(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable(onClick = {
+                        viewModel.textMessage.value = viewModel.textMessage.value + emoji
+                    })
+                    .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
+                    .padding(8.dp),
+                text = emoji,
+                style = LocalTextStyle.current.copy(
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
+            )
+        }
+    }
+}
+
 
 @Composable
 fun OneMessageOnPrivateDialog(message: Message) {
@@ -279,7 +401,7 @@ fun OneMessageOnPublicChat(message: Message) {
                     .build(),
                 contentDescription = "Ваша аватарка",
                 modifier = Modifier
-                    .padding(start = 5.dp)   //
+                    .padding(start = 5.dp)
                     .size(30.dp)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop,
@@ -295,7 +417,6 @@ fun OneMessageOnPublicChat(message: Message) {
                 .wrapContentWidth()
                 .widthIn(max = 300.dp, min = 80.dp)
                 .padding(end = 15.dp, bottom = 15.dp, start = 5.dp)
-
         ) {
 
             Spacer(modifier = Modifier.width(5.dp))
@@ -329,8 +450,11 @@ fun OneMessageOnPublicChat(message: Message) {
                     Text(
                         text = message.text,
                         maxLines = Int.MAX_VALUE,
-                        modifier = if(message.id == 1) { Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp) }
-                                    else { Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp) }
+                        modifier = if (message.id == 1) {
+                            Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
+                        } else {
+                            Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp)
+                        }
                     )
                 }
 
@@ -420,9 +544,10 @@ fun MessageCard(message: Message) {
                 .wrapContentWidth()
                 .widthIn(
                     max = 300.dp,
-                    min = 60.dp
-                )    //чтобы задать макс и мин длину, через fraction не работает
-                .padding(bottom = 15.dp), //чтобы фотка была ниже чем текст сообщения
+                    min = 60.dp,
+
+                    )    //чтобы задать макс и мин длину, через fraction не работает
+                .padding(bottom = 15.dp) //чтобы фотка была ниже чем текст сообщения
         ) {
             Column(
                 modifier = Modifier.wrapContentWidth(),
@@ -544,8 +669,8 @@ fun MessageCard2(message: Message) {
                 Row(
                     modifier = Modifier
                         .wrapContentWidth()
-                        .padding(start = 2.dp), //
-                    horizontalArrangement = Arrangement.Start                         //
+                        .padding(start = 2.dp),
+                    horizontalArrangement = Arrangement.Start
                 ) {
                     Text(
                         text = message.time,

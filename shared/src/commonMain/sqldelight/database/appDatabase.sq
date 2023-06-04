@@ -92,6 +92,12 @@ deleteChatsMembersById:
 DELETE FROM chatMemberEntity
 WHERE id_chat_members = ?;
 
+fetchAllUsersFromChat:
+SELECT userEntity.id_peer, userEntity.name, userEntity.surname, userEntity.is_active FROM
+ chatMemberEntity INNER JOIN userEntity ON
+chatMemberEntity.id_peer = userEntity.id_peer
+WHERE chatMemberEntity.chat_id = ?;
+
 CREATE TABLE messageEntity(
     message_id INTEGER PRIMARY KEY AUTOINCREMENT,
     from_id TEXT NOT NULL,   --пир в тексте так как 16-чный формат

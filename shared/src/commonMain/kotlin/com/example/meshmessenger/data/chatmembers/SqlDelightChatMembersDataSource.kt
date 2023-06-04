@@ -1,8 +1,10 @@
 package com.example.meshmessenger.data.chatmembers
 
+import com.example.meshmessenger.data.user.toUser
 import com.example.meshmessenger.database.AppDatabase
 import com.example.meshmessenger.domain.chat_members.ChatMembers
 import com.example.meshmessenger.domain.chat_members.ChatMembersDataSource
+import com.example.meshmessenger.domain.user.User
 
 class SqlDelightChatMembersDataSource(db: AppDatabase): ChatMembersDataSource {
 
@@ -35,5 +37,12 @@ class SqlDelightChatMembersDataSource(db: AppDatabase): ChatMembersDataSource {
 
     override suspend fun deleteChatMembersById(id: Long) {
         queries.deleteChatsMembersById(id)
+    }
+
+    override suspend fun deleteChatsMembersById(id: Long): List<User> {
+       return queries
+           .fetchAllUsersFromChat(id)
+           .executeAsList()
+           .map { it.toUser() }
     }
 }
