@@ -41,7 +41,10 @@ import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
+@OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
     "UnusedMaterialScaffoldPaddingParameter",
     "MutableCollectionMutableState",
@@ -61,6 +64,10 @@ fun DialogMessagesList(
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+
 
     Scaffold(
         modifier = Modifier
@@ -100,47 +107,57 @@ fun DialogMessagesList(
             }
         },
         bottomBar = {
-            Column {
+            Column(modifier = Modifier.fillMaxWidth()) {
 
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.padding(start = 4.dp),
                     verticalAlignment = Alignment.Bottom
                 ) {
 
-                    if (!isEmojiKeyboardEnabled.value) {
-                        IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.baseline_keyboard_24),
-                                contentDescription = "emoji",
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(30.dp)
+                    Box(
+                        modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
+                    ) {
+                        if (isEmojiKeyboardEnabled.value) {
+                            IconButton(onClick = {
+                                isEmojiKeyboardEnabled.value = false
+                                keyboardController?.show()
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.keyboard),
+                                    tint = GreyOrdinary,
+                                    contentDescription = "emojis picker",
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clip(CircleShape)
+                                        .padding(bottom = 4.dp)
 
-                            )
+                                )
+                            }
+                        } else {
+                            IconButton(onClick = {
+                                keyboardController?.hide()
+                                isEmojiKeyboardEnabled.value = true
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.emoticon_outline),
+                                    contentDescription = "emoji",
+                                    tint = GreyOrdinary,
+                                    modifier = Modifier
+                                        .size(30.dp)
+                                        .clip(CircleShape)
+                                )
+                            }
                         }
                     }
-                    else {
-                        IconButton(onClick = { isEmojiKeyboardEnabled.value = true }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.emoticon_outline),
-                                contentDescription = "emoji",
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .size(30.dp)
-
-                            )
-                        }
-                    }
-
                     TextField(
                         value = textOfMessage.value,
                         onValueChange = { viewModel.textMessage.value = it },
 
                         modifier = Modifier
                             .background(Color.White)
-                            .fillMaxWidth()
+                            .fillMaxWidth(0.75f)
                             .verticalScroll(rememberScrollState())
-                            .padding(start = 15.dp, end = 5.dp),
+                            .padding( end = 4.dp),
 
                         colors = TextFieldDefaults.textFieldColors(
                             textColor = Color.Black,
@@ -150,89 +167,69 @@ fun DialogMessagesList(
                             unfocusedIndicatorColor = Color.Transparent
                         ),
                         maxLines = 4,
-//                        leadingIcon = {
-//                            if (isEmojiKeyboardEnabled.value) {
-//                                IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
-//                                    Icon(
-//                                        painter = painterResource(id = R.drawable.keyboard),
-//                                        contentDescription = "emoji",
-//                                        modifier = Modifier
-//                                            .clip(CircleShape)
-//                                            .size(30.dp)
-//
-//                                    )
-//                                }
-//                            } else {
-//                                IconButton(onClick = { isEmojiKeyboardEnabled.value = true }) {
-//                                    Icon(
-//                                        painter = painterResource(id = R.drawable.emoticon_outline),
-//                                        contentDescription = "emoji",
-//                                        modifier = Modifier
-//                                            .clip(CircleShape)
-//                                            .size(30.dp)
-//
-//                                    )
-//                                }
-//                            }
-//                        },
-
-                        trailingIcon = {
-                            Row {
-                                IconButton(onClick = {
-                                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
-                                }) {
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.paperclip),
-                                        contentDescription = "",
-                                        modifier = Modifier
-                                            .rotate(220f)
-                                            .clip(CircleShape)
-                                            .size(30.dp)
-                                    )
-                                }
-                                if (textOfMessage.value.isBlank()) {
-                                    IconButton(onClick = { /*TODO*/ }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.microphone),
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(30.dp)
-                                                .clip(CircleShape)
-                                        )
-                                    }
-                                } else {
-                                    IconButton(
-                                        onClick = {
-                                            viewModel.sendMessage(
-                                                Message(
-                                                    1, textOfMessage.value,
-                                                    authorName = "Артур",
-                                                    time = "12.23",
-                                                    authorSurname = "Рахимзянов"
-                                                )
-                                            )
-                                        }) {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.send),
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .size(30.dp)
-                                                .clip(CircleShape)
-                                        )
-                                    }
-                                }
-                            }
-                        },
                         placeholder = {
                             Text(text = "Message", color = PlaceholderColor)
                         },
                     )
+                    Box(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                        contentAlignment = Alignment.BottomEnd
+                    ) {
+                        Row {
+                            IconButton(onClick = {
+                                pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.paperclip),
+                                    contentDescription = "photo picker",
+                                    tint = GreyOrdinary,
+                                    modifier = Modifier
+                                        .rotate(220f)
+                                        .clip(CircleShape)
+                                        .size(30.dp)
+                                )
+                            }
+                            if (textOfMessage.value.isBlank()) {
+                                IconButton(onClick = { /*TODO*/ }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.microphone),
+                                        contentDescription = null,
+                                        tint = GreyOrdinary,
+
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                            .clip(CircleShape)
+                                    )
+                                }
+                            } else {
+                                IconButton(
+                                    onClick = {
+                                        viewModel.sendMessage(
+                                            Message(
+                                                1, textOfMessage.value,
+                                                authorName = "Артур",
+                                                time = "12.23",
+                                                authorSurname = "Рахимзянов"
+                                            )
+                                        )
+                                    }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.send),
+                                        contentDescription = "send message",
+                                        tint = GreyOrdinary,
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                            .clip(CircleShape)
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
                 if (isEmojiKeyboardEnabled.value) {
                     EmojiPicker(viewModel)
                 }
             }
-
         },
 
         ) { innerPadding ->
