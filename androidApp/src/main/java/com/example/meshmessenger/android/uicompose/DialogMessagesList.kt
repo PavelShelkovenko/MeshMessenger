@@ -41,7 +41,10 @@ import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 
+@OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
     "UnusedMaterialScaffoldPaddingParameter",
     "MutableCollectionMutableState",
@@ -61,6 +64,10 @@ fun DialogMessagesList(
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
+
+    val keyboardController = LocalSoftwareKeyboardController.current
+
+
 
     Scaffold(
         modifier = Modifier
@@ -111,7 +118,10 @@ fun DialogMessagesList(
                         modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                     ) {
                         if (isEmojiKeyboardEnabled.value) {
-                            IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
+                            IconButton(onClick = {
+                                isEmojiKeyboardEnabled.value = false
+                                keyboardController?.show()
+                            }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.keyboard),
                                     tint = GreyOrdinary,
@@ -124,7 +134,10 @@ fun DialogMessagesList(
                                 )
                             }
                         } else {
-                            IconButton(onClick = { isEmojiKeyboardEnabled.value = true }) {
+                            IconButton(onClick = {
+                                keyboardController?.hide()
+                                isEmojiKeyboardEnabled.value = true
+                            }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.emoticon_outline),
                                     contentDescription = "emoji",
@@ -142,7 +155,7 @@ fun DialogMessagesList(
 
                         modifier = Modifier
                             .background(Color.White)
-                            .widthIn(max = 230.dp)
+                            .fillMaxWidth(0.75f)
                             .verticalScroll(rememberScrollState())
                             .padding( end = 4.dp),
 
@@ -203,6 +216,7 @@ fun DialogMessagesList(
                                     Icon(
                                         painter = painterResource(id = R.drawable.send),
                                         contentDescription = "send message",
+                                        tint = GreyOrdinary,
                                         modifier = Modifier
                                             .size(30.dp)
                                             .clip(CircleShape)
