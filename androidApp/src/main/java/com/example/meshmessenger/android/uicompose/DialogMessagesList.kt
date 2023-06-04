@@ -103,13 +103,12 @@ fun DialogMessagesList(
             Column(modifier = Modifier.fillMaxWidth()) {
 
                 Row(
-                    modifier = Modifier.padding(start = 5.dp),
+                    modifier = Modifier.padding(start = 4.dp),
                     verticalAlignment = Alignment.Bottom
                 ) {
 
-
                     Box(
-                        modifier = Modifier.padding(start = 5.dp, bottom = 5.dp),
+                        modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                     ) {
                         if (isEmojiKeyboardEnabled.value) {
                             IconButton(onClick = { isEmojiKeyboardEnabled.value = false }) {
@@ -120,8 +119,7 @@ fun DialogMessagesList(
                                     modifier = Modifier
                                         .size(30.dp)
                                         .clip(CircleShape)
-                                        .padding(bottom = 5.dp)
-
+                                        .padding(bottom = 4.dp)
 
                                 )
                             }
@@ -138,17 +136,15 @@ fun DialogMessagesList(
                             }
                         }
                     }
-
-
                     TextField(
                         value = textOfMessage.value,
                         onValueChange = { viewModel.textMessage.value = it },
 
                         modifier = Modifier
                             .background(Color.White)
-                            .fillMaxWidth()
+                            .widthIn(max = 230.dp)
                             .verticalScroll(rememberScrollState())
-                            .padding(start = 5.dp, end = 5.dp),
+                            .padding( end = 4.dp),
 
                         colors = TextFieldDefaults.textFieldColors(
                             textColor = Color.Black,
@@ -163,10 +159,9 @@ fun DialogMessagesList(
                         },
                     )
                     Box(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
-
                         Row {
                             IconButton(onClick = {
                                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
