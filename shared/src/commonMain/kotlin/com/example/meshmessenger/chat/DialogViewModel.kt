@@ -16,7 +16,9 @@ class DialogViewModel: ViewModel() {
     val listOfMessages: CStateFlow<MutableList<Message>> get() = _listOfMessages.cStateFlow()
 
     fun sendMessage(message: Message){
-        _listOfMessages.value.add(message)
+        val list = ArrayList(_listOfMessages.value)
+        list.add(message)
+        _listOfMessages.value = list
         textMessage.value = ""
     }
 }
