@@ -35,6 +35,14 @@ class DatabaseRepositoryImpl(
         return messageDataSource.deleteMessageById(id)
     }
 
+    override suspend fun getAllMessagesFromOneChat(id: Long): List<Message> {
+        return messageDataSource.getAllMessagesFromOneChat(id)
+    }
+
+    override suspend fun deleteAllMessages() {
+        return messageDataSource.deleteAllMessages()
+    }
+
     override suspend fun getAllUsers(): List<User> {
         return userDataSource.getAllUsers()
     }
@@ -83,8 +91,8 @@ class DatabaseRepositoryImpl(
         return chatMembersDataSource.deleteChatMembersById(id)
     }
 
-    override suspend fun deleteChatsMembersById(id: Long): List<User> {
-        return chatMembersDataSource.deleteChatsMembersById(id)
+    override suspend fun fetchAllUsersFromChat(id: Long): List<User> {
+        return chatMembersDataSource.fetchAllUsersFromChat(id)
     }
 
     override suspend fun getAllAttachments(): List<Attachment> {

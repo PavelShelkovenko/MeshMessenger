@@ -39,7 +39,7 @@ class SqlDelightChatMembersDataSource(db: AppDatabase): ChatMembersDataSource {
         queries.deleteChatsMembersById(id)
     }
 
-    override suspend fun deleteChatsMembersById(id: Long): List<User> {
+    override suspend fun fetchAllUsersFromChat(id: Long): List<User> {
        return queries
            .fetchAllUsersFromChat(id)
            .executeAsList()

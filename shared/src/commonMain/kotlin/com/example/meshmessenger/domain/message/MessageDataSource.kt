@@ -5,4 +5,6 @@ interface MessageDataSource {
     suspend fun getMessagesById(id: Long): Message?
     suspend fun insertMessage(message: Message)
     suspend fun deleteMessageById(id: Long)
+    suspend fun getAllMessagesFromOneChat(id: Long): List<Message>
+    suspend fun deleteAllMessages()
 }
