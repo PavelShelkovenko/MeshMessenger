@@ -48,11 +48,15 @@ fun ChannelListScreen(navController: NavController, channelListExample: ArrayLis
             )
         }
         item { Spacer(modifier = Modifier.height(5.dp)) }
+        item { BleUICard(navController) }
+        item { Spacer(modifier = Modifier.height(5.dp)) }
+
         items(channelListExample) { channel ->
             ChanelOnly(channel, navController)
         }
     }
 }
+
 
 
 @Composable
@@ -105,4 +109,26 @@ fun ChanelOnly(channel: Channel, navController: NavController) {
             .height(5.dp)
             .background(BackgroundColor)
     )
+}
+
+@Composable
+fun BleUICard(navController: NavController) {
+    Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically ,
+            modifier = Modifier
+                .padding(all = 20.dp)
+                .fillMaxWidth(0.95F)
+                .background(White)
+                .clickable {
+                    navController.navigate("ble") {
+                        launchSingleTop = true
+                    }
+                }
+        ) {
+            Text("Работа с BLE")
+        }
+    }
 }

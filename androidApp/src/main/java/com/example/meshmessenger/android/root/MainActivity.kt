@@ -1,12 +1,14 @@
 package com.example.meshmessenger.android.root
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -23,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.MeshAppTheme
+import com.example.meshmessenger.android.uicompose.BleUI
 import com.example.meshmessenger.android.uicompose.ChannelListScreen
 import com.example.meshmessenger.android.uicompose.DialogMessagesList
 import com.example.meshmessenger.android.uicompose.Registration
@@ -39,12 +42,14 @@ class MainActivity : ComponentActivity() {
     private lateinit var sharedPrefs: SharedPreferences
     private var startDestination: String = ""
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPrefs = this.getSharedPreferences("currenttime", MODE_PRIVATE)
-        val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()){
-                uri -> println("$uri")
-        }
+        val pickMultiMedia =
+            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri ->
+                println("$uri")
+            }
         setContent {
             startDestination = startDestinationDefine()
 
@@ -92,6 +97,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Root(
     startDestination: String,
@@ -109,12 +115,12 @@ fun Root(
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if ( event == Lifecycle.Event.ON_START) {
+            if (event == Lifecycle.Event.ON_START) {
                 val pswValue: String = SharedStorage.secureLoad("login", "")
                 val loginValue: String = SharedStorage.secureLoad("password", "")
-                if(pswValue == "" || loginValue == ""){
+                if (pswValue == "" || loginValue == "") {
                     callRegister()
-                } else if (saveTime()) {
+                } else if ( saveTime() ) {
                     callPin()
                 }
             } else if (event == Lifecycle.Event.ON_STOP) {
@@ -154,11 +160,18 @@ fun Root(
         composable(
             route = "messagesList/{channelName}",
             arguments = listOf(
-                navArgument("channelName") { type = NavType.StringType}
-            )) {
-                backStackEntry ->
-                    DialogMessagesList(navController, backStackEntry.arguments?.getString("channelName"), pickMultiMedia, dialogViewModel)
-
+                navArgument("channelName") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            DialogMessagesList(
+                navController,
+                backStackEntry.arguments?.getString("channelName"),
+                pickMultiMedia,
+                dialogViewModel
+            )
+        }
+        composable("ble") {
+            BleUI()
         }
     }
 }
@@ -170,7 +183,7 @@ fun saveTime() {
 
 fun isTimeOut(): Boolean {
     val time = SharedStorage.load("timeOfLastExitFromApp", Clock.System.now().epochSeconds.toInt())
-    if ( abs(time + 5) < Clock.System.now().epochSeconds) {
+    if (abs(time + 5) < Clock.System.now().epochSeconds) {
         return true
     }
     return false
