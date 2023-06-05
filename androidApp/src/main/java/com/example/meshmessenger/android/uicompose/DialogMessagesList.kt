@@ -67,8 +67,6 @@ fun DialogMessagesList(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
-
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize()

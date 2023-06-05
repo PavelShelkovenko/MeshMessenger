@@ -7,5 +7,6 @@ interface ChatMembersDataSource {
     suspend fun getChatMembersById(id: Long): ChatMembers?
     suspend fun insertChatMembers(chatMembers: ChatMembers)
     suspend fun deleteChatMembersById(id: Long)
-    suspend fun deleteChatsMembersById(id: Long): List<User>
+    suspend fun fetchAllUsersFromChat(id: Long): List<User>
+
 }

@@ -15,7 +15,7 @@ FROM userEntity
 WHERE id_peer = ?;
 
 insertUser:
-INSERT OR REPLACE
+INSERT OR FAIL
 INTO userEntity(
     id_peer,
     name,
@@ -46,7 +46,7 @@ FROM chatEntity
 WHERE chat_id = ?;
 
 insertChat:
-INSERT OR REPLACE
+INSERT OR FAIL
 INTO chatEntity(
     chat_id,
     chat_name,
@@ -79,7 +79,7 @@ FROM chatMemberEntity
 WHERE id_chat_members = ?;
 
 insertChatsMembers:
-INSERT OR REPLACE
+INSERT OR FAIL
 INTO chatMemberEntity(
     id_chat_members,
         id_peer,
@@ -94,7 +94,7 @@ WHERE id_chat_members = ?;
 
 fetchAllUsersFromChat:
 SELECT userEntity.id_peer, userEntity.name, userEntity.surname, userEntity.is_active FROM
-chatMemberEntity INNER JOIN userEntity ON
+chatMemberEntity INNER JOIN userEntity ON                --
 chatMemberEntity.id_peer = userEntity.id_peer
 WHERE chatMemberEntity.chat_id = ?;
 
@@ -121,7 +121,7 @@ FROM messageEntity
 WHERE message_id = ?;
 
 insertMessage:
-INSERT OR REPLACE
+INSERT OR FAIL
 INTO messageEntity(
     message_id,
         from_id,
@@ -136,6 +136,9 @@ INTO messageEntity(
 deleteMessagesById:
 DELETE FROM messageEntity
 WHERE message_id = ?;
+
+deleteAllMessages: DELETE FROM messageEntity;
+
 
 CREATE TABLE attachmentEntity(
     id_attachment INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -155,7 +158,7 @@ FROM attachmentEntity
 WHERE id_attachment = ?;
 
 insertAttachment:
-INSERT OR REPLACE
+INSERT OR FAIL
 INTO attachmentEntity(
          id_attachment,
          id_message,
@@ -166,3 +169,15 @@ INTO attachmentEntity(
 deleteAttachmentsById:
 DELETE FROM attachmentEntity
 WHERE id_attachment = ?;
+
+getAllMessagesFromOneChat:
+SELECT
+        messageEntity.message_id,
+        messageEntity.from_id,
+        messageEntity.to_chat_id,
+        messageEntity.text_content,
+        messageEntity.created_at,
+        messageEntity.sent_at,
+        messageEntity.status,
+        messageEntity.has_attachments FROM messageEntity
+WHERE messageEntity.to_chat_id = ?;

@@ -39,4 +39,11 @@ class SqlDelightMessageDataSource(db: AppDatabase): MessageDataSource {
     override suspend fun deleteMessageById(id: Long) {
         queries.deleteMessagesById(id)
     }
+
+    override suspend fun getAllMessagesFromOneChat(id: Long): List<Message> {
+        return queries.getAllMessagesFromOneChat(id).executeAsList().map { it.toMessage() }
+    }
+    override suspend fun deleteAllMessages() {
+        queries.deleteAllMessages()
+    }
 }
