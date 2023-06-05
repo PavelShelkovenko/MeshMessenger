@@ -51,6 +51,7 @@ kotlin {
 
                 // Coroutines
                 implementation(Deps.Multiplatform.coroutines_core)
+                api(Deps.Multiplatform.coroutines_core)
 
                 // Kotlin Date Time
                 implementation(Deps.Multiplatform.kotlinDateTime)
@@ -75,6 +76,9 @@ kotlin {
                 api(Deps.Multiplatform.mokoFLow)
                 api(Deps.Multiplatform.mokoState)
                 api(Deps.Multiplatform.mokoFlowRes)
+
+                //kable
+                implementation(Deps.Multiplatform.kable)
             }
         }
         val commonTest by getting {
@@ -93,6 +97,7 @@ kotlin {
 
                 // Coroutines
                 implementation(Deps.Android.coroutines)
+                api(Deps.Android.coroutines)
 
                 // Shared Storage
                 implementation(Deps.Android.sharedStorage)

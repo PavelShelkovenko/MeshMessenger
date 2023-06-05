@@ -47,6 +47,8 @@ object Deps {
 
         // MOKO-MVVM
         const val mokoFlowCompose = "dev.icerock.moko:mvvm-flow-compose:${Versions.mokoMvvmVersion}"
+
+
     }
 
     object Multiplatform {
@@ -78,6 +80,9 @@ object Deps {
         const val mokoFLow = "dev.icerock.moko:mvvm-flow:${Versions.mokoMvvmVersion}"
         const val mokoState = "dev.icerock.moko:mvvm-state:${Versions.mokoMvvmVersion}"
         const val mokoFlowRes = "dev.icerock.moko:mvvm-flow-resources:${Versions.mokoMvvmVersion}"
+
+        //kable
+        const val kable = "com.juul.kable:core:${Versions.kableVersion}"
     }
 
     object IOS {

@@ -78,6 +78,8 @@ dependencies {
     // Kotlin date Time
     implementation(Deps.Android.kotlinDateTime)
 
+    implementation(Deps.Multiplatform.kable)
+
     // ???
     implementation("androidx.work:work-runtime:2.8.1")
 }
