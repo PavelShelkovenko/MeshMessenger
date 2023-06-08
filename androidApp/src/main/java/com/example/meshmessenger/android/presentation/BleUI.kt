@@ -18,6 +18,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import com.example.meshmessenger.android.presentation.theme.BackgroundColor
 import com.example.meshmessenger.android.presentation.theme.White
@@ -129,6 +130,7 @@ fun BleUI() {
 fun BluetoothNodeUICard(advertisement: Advertisement) {
 
     val scope = CoroutineScope(Dispatchers.IO)
+    val focus = LocalFocusManager.current
 
     Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
 

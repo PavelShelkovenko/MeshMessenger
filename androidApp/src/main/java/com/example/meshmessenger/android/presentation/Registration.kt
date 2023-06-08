@@ -3,22 +3,23 @@ package com.example.meshmessenger.android.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.input.*
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.presentation.theme.*
 import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
@@ -26,12 +27,14 @@ import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
 fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit) {
+
     val login: String by viewModel.login.collectAsState()
     val password: String by viewModel.password.collectAsState()
     val textOfState: String by viewModel.textOfState.collectAsState()
     val isGoodLogin: Boolean by viewModel.isGoodLogin.collectAsState()
     val isGoodPassword: Boolean by viewModel.isGoodPassword.collectAsState()
     var isPasswordOpen by remember { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
 
     viewModel.actions.observeAsActions { action ->
         when (action) {
@@ -91,7 +94,8 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_user), contentDescription = "",
+                        painter = painterResource(id = R.drawable.ic_user),
+                        contentDescription = "",
                         tint = PrimaryColor,
                         modifier = Modifier.size(20.dp)
                     )
@@ -111,11 +115,21 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
                 fontFamily = Poppins
-            )
+            ),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true,
+                keyboardType = KeyboardType.Email,
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.moveFocus(FocusDirection.Down)
+            }),
         )
 
         TextField(
-            value = password, onValueChange = {
+            value = password,
+            onValueChange = {
                 viewModel.password.value = it
                 viewModel.isDataValid()
             },
@@ -162,6 +176,9 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                 fontFamily = Poppins
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardActions = KeyboardActions(onNext = {
+                focusManager.clearFocus()
+            }),
             visualTransformation = if (!isPasswordOpen) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
                 IconButton(onClick = { isPasswordOpen = !isPasswordOpen }) {
