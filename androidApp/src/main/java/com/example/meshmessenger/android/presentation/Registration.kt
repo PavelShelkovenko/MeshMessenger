@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose
+package com.example.meshmessenger.android.presentation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,7 +20,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.theme.*
+import com.example.meshmessenger.android.presentation.theme.*
 import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
@@ -43,8 +43,7 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxHeight(0.7f)
-            .fillMaxWidth()
+            .fillMaxSize()
     ) {
 
         Text(
@@ -55,32 +54,28 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
             fontWeight = FontWeight.Bold,
         )
 
+        Spacer(modifier = Modifier.height(15.dp))
+
         Text(
+            modifier = Modifier,
             text = textOfState,
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold,
         )
-        Spacer(modifier = Modifier.fillMaxHeight(0.05f))
-    }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .padding(top = 20.dp)
-            .fillMaxSize()
-    ) {
+        Spacer(modifier = Modifier.fillMaxHeight(0.05f))
+
         TextField(
-            value = login, onValueChange = {
+            value = login,
+            onValueChange = {
                 viewModel.login.value = it
                 viewModel.isDataValid()
             },
-            Modifier
+            modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 20.dp),
+                .padding(horizontal = 20.dp),
             colors = TextFieldDefaults.textFieldColors(
                 textColor = PrimaryColor,
                 backgroundColor = Color.White,
@@ -100,12 +95,9 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                         tint = PrimaryColor,
                         modifier = Modifier.size(20.dp)
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .width(6.dp)
-                    )
-                    Spacer(
-                        modifier = Modifier
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Spacer(modifier = Modifier
                             .width(1.dp)
                             .height(24.dp)
                             .background(BackgroundColor)
@@ -147,14 +139,12 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_password),
-                        contentDescription = "",
+                        contentDescription = "password icon",
                         tint = PrimaryColor,
                         modifier = Modifier.size(20.dp)
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .width(6.dp)
-                    )
+                    Spacer( modifier = Modifier.width(6.dp)  )
+
                     Spacer(
                         modifier = Modifier
                             .width(1.dp)
@@ -218,6 +208,5 @@ fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit
                 fontWeight = FontWeight.Bold
             )
         }
-
     }
 }

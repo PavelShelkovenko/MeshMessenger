@@ -68,7 +68,7 @@ class RegisterVM : ViewModel() {
             } else {
                 _isGoodLogin.value = true
                 _isGoodPassword.value = true
-                _textOfState.value = ""
+                _textOfState.value = "Скорее  присоединяйся!"
             }
         }
     }

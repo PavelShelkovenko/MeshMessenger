@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose
+package com.example.meshmessenger.android.presentation
 
 import android.annotation.SuppressLint
 import androidx.activity.result.ActivityResultLauncher
@@ -36,12 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import coil.transform.CircleCropTransformation
-import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.example.meshmessenger.android.presentation.theme.*
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.theme
+package com.example.meshmessenger.android.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

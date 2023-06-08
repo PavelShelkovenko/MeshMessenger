@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose.loginScreen
+package com.example.meshmessenger.android.presentation.loginScreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -13,8 +13,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.theme.BackgroundColor
-import com.example.meshmessenger.android.theme.PrimaryColor
+import com.example.meshmessenger.android.presentation.theme.BackgroundColor
+import com.example.meshmessenger.android.presentation.theme.PrimaryColor
 
 
 @Composable
