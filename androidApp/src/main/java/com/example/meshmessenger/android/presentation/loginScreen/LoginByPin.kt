@@ -1,14 +1,19 @@
 package com.example.meshmessenger.android.presentation.loginScreen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.presentation.theme.IconsBlue
 import com.example.meshmessenger.android.presentation.theme.Poppins
 import com.example.meshmessenger.android.presentation.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.LoginVM
@@ -33,7 +38,15 @@ fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight(0.6f)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+    ) {
+
+        Icon(
+            painter = painterResource(id = R.drawable.shield_lock),
+            contentDescription = null,
+            tint = IconsBlue,
+            modifier = Modifier.size(72.dp)
+        )
 
         Text(text = textOfState,
             fontFamily = Poppins,
