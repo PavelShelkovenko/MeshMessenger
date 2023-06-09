@@ -66,7 +66,7 @@ dependencies {
     // Koin
     implementation(Deps.Android.koinAndroid)
     implementation(Deps.Android.koinCore)
-    //implementation(Deps.Android.koinAndroidCompose)
+    implementation(Deps.Android.koinAndroidCompose)
 
     // ViewModel
     implementation(Deps.Android.viewModel)
@@ -78,6 +78,7 @@ dependencies {
     // Kotlin date Time
     implementation(Deps.Android.kotlinDateTime)
 
+    // Kable
     implementation(Deps.Multiplatform.kable)
     implementation("com.juul.kable:core:0.7.0-issue-142-1-SNAPSHOT")
 

@@ -5,9 +5,11 @@ import com.example.meshmessenger.database.AppDatabase
 import com.example.meshmessenger.domain.chat_members.ChatMembers
 import com.example.meshmessenger.domain.chat_members.ChatMembersDataSource
 import com.example.meshmessenger.domain.user.User
+import com.squareup.sqldelight.db.SqlDriver
 
-class SqlDelightChatMembersDataSource(db: AppDatabase): ChatMembersDataSource {
+class SqlDelightChatMembersDataSource(sqlDriver: SqlDriver): ChatMembersDataSource {
 
+    private val db = AppDatabase(sqlDriver)
     private val queries = db.appDatabaseQueries
 
     override suspend fun getAllChatMembers(): List<ChatMembers> {

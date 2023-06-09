@@ -39,7 +39,7 @@ object Deps {
 
         // Koin
         const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
-        //const val koinAndroidCompose = "io.insert-koin:koin-androidx-compose${Versions.koinVersion}"
+        const val koinAndroidCompose = "io.insert-koin:koin-androidx-compose:${Versions.koinVersion}"
         const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
 
         // Shared Storage
@@ -81,7 +81,7 @@ object Deps {
         const val mokoState = "dev.icerock.moko:mvvm-state:${Versions.mokoMvvmVersion}"
         const val mokoFlowRes = "dev.icerock.moko:mvvm-flow-resources:${Versions.mokoMvvmVersion}"
 
-        //kable
+        // Kable
         const val kable = "com.juul.kable:core:${Versions.kableVersion}"
     }
 
