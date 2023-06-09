@@ -2,6 +2,7 @@ package com.example.meshmessenger.android.root
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
@@ -21,8 +22,9 @@ class Application : Application()  {
                 single<AppInfo> { AndroidAppInfo }
                 viewModel { LoginVM() }
                 viewModel { RegisterVM() }
-                viewModel {
-                    DialogViewModel(databaseRepository = get())
+                viewModel { DialogViewModel(databaseRepository = get()) }
+                single {
+                    { Log.i("Startup", "Hello from Android/Kotlin!") }
                 }
             }
         )

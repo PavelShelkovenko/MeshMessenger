@@ -8,15 +8,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.LoginVM
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
+fun LoginByPin(viewModel: LoginVM = koinViewModel(), loginSuccess: () -> Unit   ) {
 
     val textOfState by viewModel.textState.collectAsState()
     val isKeyboardEnabled by viewModel.isKeyboardEnabled.collectAsState()

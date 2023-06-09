@@ -31,10 +31,8 @@ import com.example.meshmessenger.android.uicompose.DialogMessagesList
 import com.example.meshmessenger.android.uicompose.Registration
 import com.example.meshmessenger.android.uicompose.loginScreen.LoginByPin
 import com.example.meshmessenger.data.channelsListExample
-import com.example.meshmessenger.presentation.chat.DialogViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import kotlinx.datetime.Clock
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.math.abs
 
 class MainActivity : ComponentActivity() {
@@ -54,9 +52,6 @@ class MainActivity : ComponentActivity() {
             startDestination = startDestinationDefine()
 
             MeshAppTheme {
-
-                val dialogViewModel = getViewModel<DialogViewModel>()
-
                 Surface(color = BackgroundColor, modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
                     Root(
@@ -77,7 +72,6 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
-                        dialogViewModel = dialogViewModel
                     )
                 }
             }
@@ -108,7 +102,6 @@ fun Root(
     callRegister: () -> Unit,
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    dialogViewModel: DialogViewModel
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -167,7 +160,6 @@ fun Root(
                 navController,
                 backStackEntry.arguments?.getString("channelName"),
                 pickMultiMedia,
-                dialogViewModel
             )
         }
         composable("ble") {

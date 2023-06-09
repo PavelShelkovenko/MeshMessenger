@@ -31,8 +31,8 @@ fun initKoin(appModule: Module): KoinApplication {
     // Dummy initialization logic, making use of appModule declarations for demonstration purposes.
     val koin = koinApplication.koin
     // doOnStartup is a lambda which is implemented in Swift on iOS side
-//    val doOnStartup = koin.get<() -> Unit>()
-//    doOnStartup.invoke()
+    val doOnStartup = koin.get<() -> Unit>()
+    doOnStartup.invoke()
 
     // AppInfo is a Kotlin interface with separate Android and iOS implementations
     val appInfo = koin.get<AppInfo>()
