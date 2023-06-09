@@ -36,12 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import coil.transform.CircleCropTransformation
-import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.example.meshmessenger.android.presentation.emojis
+import com.example.meshmessenger.android.theme.*
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -59,8 +60,9 @@ fun DialogMessagesList(
 ) {
 
     val textOfMessage = viewModel.textMessage.collectAsState()
-    val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
 
+    val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
+    val iskeyboardVisible = remember { mutableStateOf(false) }
     val messagesList by viewModel.listOfMessages.collectAsState()
 
     val listState = rememberLazyListState()
@@ -102,7 +104,6 @@ fun DialogMessagesList(
                 )
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(channelName!!, fontSize = 20.sp, color = Color.Black, fontFamily = Poppins)
-
             }
         },
         bottomBar = {
@@ -116,7 +117,7 @@ fun DialogMessagesList(
                     Box(
                         modifier = Modifier.padding(start = 4.dp, bottom = 4.dp),
                     ) {
-                        if (isEmojiKeyboardEnabled.value) {
+                        if (isEmojiKeyboardEnabled.value  ) {
                             IconButton(onClick = {
                                 isEmojiKeyboardEnabled.value = false
                                 keyboardController?.show()
@@ -217,7 +218,7 @@ fun DialogMessagesList(
                                     Icon(
                                         painter = painterResource(id = R.drawable.send),
                                         contentDescription = "send message",
-                                        tint = GreyOrdinary,
+                                        tint = PrimaryColor,
                                         modifier = Modifier
                                             .size(30.dp)
                                             .clip(CircleShape)
@@ -227,7 +228,7 @@ fun DialogMessagesList(
                         }
                     }
                 }
-                if (isEmojiKeyboardEnabled.value) {
+                if ( isEmojiKeyboardEnabled.value ) {
                     EmojiPicker(viewModel)
                 }
             }
@@ -496,7 +497,6 @@ fun OneMessageOnPublicChat(message: Message) {
                 }
             }
         }
-
     }
 }
 
@@ -507,14 +507,14 @@ fun roundedCornerShapeDefine(id: Int): RoundedCornerShape {
         RoundedCornerShape(
             topEnd = 16.dp,
             topStart = 16.dp,
-            bottomEnd = 0.dp,   //
+            bottomEnd = 0.dp,
             bottomStart = 16.dp
         )
     } else {
         RoundedCornerShape(
             topEnd = 16.dp,
             topStart = 16.dp,
-            bottomEnd = 16.dp,   //
+            bottomEnd = 16.dp,
             bottomStart = 0.dp
         )
     }
@@ -687,4 +687,3 @@ fun MessageCard2(message: Message) {
         }
     }
 }
-

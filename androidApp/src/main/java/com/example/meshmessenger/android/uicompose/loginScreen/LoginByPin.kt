@@ -1,22 +1,27 @@
 package com.example.meshmessenger.android.uicompose.loginScreen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.LoginVM
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginByPin(viewModel: LoginVM = koinViewModel(), loginSuccess: () -> Unit   ) {
+fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
 
     val textOfState by viewModel.textState.collectAsState()
     val isKeyboardEnabled by viewModel.isKeyboardEnabled.collectAsState()
@@ -33,7 +38,15 @@ fun LoginByPin(viewModel: LoginVM = koinViewModel(), loginSuccess: () -> Unit   
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxHeight(0.6f)
-            .fillMaxWidth()) {
+            .fillMaxWidth()
+    ) {
+
+        Icon(
+            painter = painterResource(id = R.drawable.shield_lock),
+            contentDescription = null,
+            tint = IconsBlue,
+            modifier = Modifier.size(72.dp)
+        )
 
         Text(text = textOfState,
             fontFamily = Poppins,

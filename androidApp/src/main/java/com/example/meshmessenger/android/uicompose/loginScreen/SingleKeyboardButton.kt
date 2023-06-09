@@ -1,5 +1,6 @@
 package com.example.meshmessenger.android.uicompose.loginScreen
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -12,7 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.meshmessenger.android.theme.*
+import com.example.meshmessenger.android.theme.BackgroundColor
+import com.example.meshmessenger.android.theme.IconsBlue
+import com.example.meshmessenger.android.theme.PrimaryColor
+import com.example.meshmessenger.android.theme.ReemKufi
 
 
 @Composable
@@ -24,8 +28,10 @@ fun SingleKeyboardButton(btnText: String, isKeyboardEnabled: Boolean, onButtonCl
             backgroundColor = BackgroundColor
         ),
         modifier = Modifier
-            .padding(5.dp),
-        contentPadding = PaddingValues(vertical = 14.dp),
+            .padding(all = 10.dp)
+            .border( width =  1.dp, shape =  CircleShape, color = IconsBlue)
+            //.padding(all = 5.dp),
+        ,contentPadding = PaddingValues(vertical = 14.dp),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 0.dp,
             pressedElevation = 2.dp

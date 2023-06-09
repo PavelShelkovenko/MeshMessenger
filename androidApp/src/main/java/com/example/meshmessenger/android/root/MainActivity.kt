@@ -26,7 +26,7 @@ import androidx.navigation.navArgument
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.MeshAppTheme
 import com.example.meshmessenger.android.uicompose.BleUI
-import com.example.meshmessenger.android.uicompose.ChannelListScreen
+import com.example.meshmessenger.android.presentation.ChannelListScreen
 import com.example.meshmessenger.android.uicompose.DialogMessagesList
 import com.example.meshmessenger.android.uicompose.Registration
 import com.example.meshmessenger.android.uicompose.loginScreen.LoginByPin
@@ -43,11 +43,10 @@ class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         sharedPrefs = this.getSharedPreferences("currenttime", MODE_PRIVATE)
-        val pickMultiMedia =
-            registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri ->
-                println("$uri")
-            }
+        val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
+
         setContent {
             startDestination = startDestinationDefine()
 
@@ -175,7 +174,7 @@ fun saveTime() {
 
 fun isTimeOut(): Boolean {
     val time = SharedStorage.load("timeOfLastExitFromApp", Clock.System.now().epochSeconds.toInt())
-    if (abs(time + 5) < Clock.System.now().epochSeconds) {
+    if (abs(time + 50) < Clock.System.now().epochSeconds) {
         return true
     }
     return false
