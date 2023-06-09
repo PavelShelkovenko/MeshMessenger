@@ -3,9 +3,11 @@ package com.example.meshmessenger.data.user
 import com.example.meshmessenger.database.AppDatabase
 import com.example.meshmessenger.domain.user.User
 import com.example.meshmessenger.domain.user.UserDataSource
+import com.squareup.sqldelight.db.SqlDriver
 
-class SqlDelightUserDataSource(db: AppDatabase): UserDataSource {
+class SqlDelightUserDataSource(sqlDriver: SqlDriver): UserDataSource {
 
+    private val db = AppDatabase(sqlDriver)
     private val queries = db.appDatabaseQueries
 
     override suspend fun getAllUsers(): List<User> {

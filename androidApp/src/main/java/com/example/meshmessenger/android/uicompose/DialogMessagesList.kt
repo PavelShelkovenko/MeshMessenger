@@ -42,6 +42,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
@@ -54,7 +55,7 @@ fun DialogMessagesList(
     navController: NavController,
     channelName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    viewModel: DialogViewModel
+    viewModel: DialogViewModel = koinViewModel()
 ) {
 
     val textOfMessage = viewModel.textMessage.collectAsState()
@@ -155,7 +156,7 @@ fun DialogMessagesList(
                             .background(Color.White)
                             .fillMaxWidth(0.75f)
                             .verticalScroll(rememberScrollState())
-                            .padding( end = 4.dp),
+                            .padding(end = 4.dp),
 
                         colors = TextFieldDefaults.textFieldColors(
                             textColor = Color.Black,
@@ -170,7 +171,9 @@ fun DialogMessagesList(
                         },
                     )
                     Box(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 4.dp),
                         contentAlignment = Alignment.BottomEnd
                     ) {
                         Row {
