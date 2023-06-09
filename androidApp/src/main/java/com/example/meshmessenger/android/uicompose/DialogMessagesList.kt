@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation
+package com.example.meshmessenger.android.uicompose
 
 import android.annotation.SuppressLint
 import androidx.activity.result.ActivityResultLauncher
@@ -41,7 +41,9 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.example.meshmessenger.android.presentation.theme.*
+import com.example.meshmessenger.android.presentation.emojis
+import com.example.meshmessenger.android.theme.*
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
@@ -54,7 +56,7 @@ fun DialogMessagesList(
     navController: NavController,
     channelName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    viewModel: DialogViewModel
+    viewModel: DialogViewModel = koinViewModel()
 ) {
 
     val textOfMessage = viewModel.textMessage.collectAsState()

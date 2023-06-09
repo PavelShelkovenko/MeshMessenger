@@ -22,9 +22,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.meshmessenger.android.presentation.theme.BackgroundColor
-import com.example.meshmessenger.android.presentation.theme.IconsBlue
-import com.example.meshmessenger.android.presentation.theme.White
+import com.example.meshmessenger.android.theme.BackgroundColor
+import com.example.meshmessenger.android.theme.IconsBlue
+import com.example.meshmessenger.android.theme.White
 import com.example.meshmessenger.data.Channel
 import com.example.meshmessenger.data.channelsListExample
 

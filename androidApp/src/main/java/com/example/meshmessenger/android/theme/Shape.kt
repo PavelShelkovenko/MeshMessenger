@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation.theme
+package com.example.meshmessenger.android.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

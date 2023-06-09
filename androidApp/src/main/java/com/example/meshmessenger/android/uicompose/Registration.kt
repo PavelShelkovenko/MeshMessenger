@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation
+package com.example.meshmessenger.android.uicompose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -21,7 +21,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.presentation.theme.*
+import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 

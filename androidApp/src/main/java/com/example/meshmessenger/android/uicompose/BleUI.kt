@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation
+package com.example.meshmessenger.android.uicompose
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -20,8 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import com.example.meshmessenger.android.presentation.theme.BackgroundColor
-import com.example.meshmessenger.android.presentation.theme.White
+import com.example.meshmessenger.android.theme.BackgroundColor
+import com.example.meshmessenger.android.theme.White
 import com.juul.kable.*
 import com.juul.kable.logs.Hex
 import com.juul.kable.logs.Logging
@@ -179,7 +179,9 @@ val descriptor = descriptorOf(
 )
 @SuppressLint("MissingPermission")
 fun Activity.enableBluetooth() {
-    startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), RequestCode.EnableBluetooth)
+    startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
+        RequestCode.EnableBluetooth
+    )
 }
 
 object RequestCode {

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation.loginScreen
+package com.example.meshmessenger.android.uicompose.loginScreen
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -13,9 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.presentation.theme.IconsBlue
-import com.example.meshmessenger.android.presentation.theme.Poppins
-import com.example.meshmessenger.android.presentation.theme.PrimaryColor
+import com.example.meshmessenger.android.theme.IconsBlue
+import com.example.meshmessenger.android.theme.Poppins
+import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.LoginVM
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions

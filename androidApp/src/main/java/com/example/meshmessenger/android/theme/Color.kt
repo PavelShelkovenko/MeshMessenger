@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation.theme
+package com.example.meshmessenger.android.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation.loginScreen
+package com.example.meshmessenger.android.uicompose.loginScreen
 
 import android.app.Activity
 import androidx.compose.foundation.layout.*
@@ -18,10 +18,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.presentation.theme.BackgroundColor
-import com.example.meshmessenger.android.presentation.theme.IconsBlue
-import com.example.meshmessenger.android.presentation.theme.PrimaryColor
-import com.example.meshmessenger.android.presentation.theme.ReemKufi
+import com.example.meshmessenger.android.theme.BackgroundColor
+import com.example.meshmessenger.android.theme.IconsBlue
+import com.example.meshmessenger.android.theme.PrimaryColor
+import com.example.meshmessenger.android.theme.ReemKufi
 
 
 @Composable
