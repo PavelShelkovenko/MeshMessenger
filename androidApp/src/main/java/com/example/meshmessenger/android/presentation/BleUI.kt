@@ -86,9 +86,6 @@ fun BleUI() {
                         }
 
                         val peripheral = scope.peripheral(it) {
-                            onServicesDiscovered {
-
-                            }
                             transport = Transport.Le // default
                             phy = Phy.Le1M // default
                         }
