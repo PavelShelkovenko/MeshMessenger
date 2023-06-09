@@ -3,9 +3,11 @@ package com.example.meshmessenger.data.message
 import com.example.meshmessenger.database.AppDatabase
 import com.example.meshmessenger.domain.message.Message
 import com.example.meshmessenger.domain.message.MessageDataSource
+import com.squareup.sqldelight.db.SqlDriver
 
-class SqlDelightMessageDataSource(db: AppDatabase): MessageDataSource {
+class SqlDelightMessageDataSource(sqlDriver: SqlDriver): MessageDataSource {
 
+    private val db = AppDatabase(sqlDriver)
     private val queries = db.appDatabaseQueries
 
     override suspend fun getAllMessages(): List<Message> {

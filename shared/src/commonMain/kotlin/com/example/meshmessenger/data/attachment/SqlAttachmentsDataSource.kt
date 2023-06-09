@@ -3,9 +3,11 @@ package com.example.meshmessenger.data.attachment
 import com.example.meshmessenger.database.AppDatabase
 import com.example.meshmessenger.domain.attachment.Attachment
 import com.example.meshmessenger.domain.attachment.AttachmentDataSource
+import com.squareup.sqldelight.db.SqlDriver
 
-class SqlDelightAttachmentsDataSource(db: AppDatabase): AttachmentDataSource {
+class SqlDelightAttachmentsDataSource(sqlDriver: SqlDriver): AttachmentDataSource {
 
+    private val db = AppDatabase(sqlDriver)
     private val queries = db.appDatabaseQueries
 
     override suspend fun getAllAttachments(): List<Attachment> {
