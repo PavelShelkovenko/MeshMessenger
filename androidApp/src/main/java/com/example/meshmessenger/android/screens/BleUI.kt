@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose
+package com.example.meshmessenger.android.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.presentation.chat
+package com.example.meshmessenger.presentation.message
 
 import com.example.meshmessenger.data.Message
 import com.example.meshmessenger.data.messagesListExample
@@ -10,12 +10,13 @@ import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class ChatViewModel(private val databaseRepository: DatabaseRepository) : ViewModel() {
+class MessageViewModel(val databaseRepository: DatabaseRepository) : ViewModel() {
 
     val textMessage: CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
     private val _listOfMessages: CMutableStateFlow<MutableList<Message>> =
         MutableStateFlow(messagesListExample).cMutableStateFlow()
     val listOfMessages: CStateFlow<MutableList<Message>> get() = _listOfMessages.cStateFlow()
+
 
     fun sendMessage(message: Message) {
         val list = ArrayList(_listOfMessages.value)

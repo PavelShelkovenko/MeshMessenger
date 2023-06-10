@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation
+package com.example.meshmessenger.android.screens.chats
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,11 +25,11 @@ import coil.request.ImageRequest
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.White
-import com.example.meshmessenger.data.Channel
-import com.example.meshmessenger.data.channelsListExample
+import com.example.meshmessenger.presentation.chat.Channel
+import com.example.meshmessenger.presentation.chat.ChatViewModel
 
 @Composable
-fun ChannelListScreen(navController: NavController, channelListExample: ArrayList<Channel>) {
+fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -51,8 +51,8 @@ fun ChannelListScreen(navController: NavController, channelListExample: ArrayLis
         item { BleUICard(navController) }
         item { Spacer(modifier = Modifier.height(5.dp)) }
 
-        items(channelListExample) { channel ->
-            ChanelOnly(channel, navController)
+        items(chatViewModel.channelsListExample) { channel ->
+            ChanelOnly(channel, navController, chatViewModel)
         }
     }
 }
@@ -60,7 +60,7 @@ fun ChannelListScreen(navController: NavController, channelListExample: ArrayLis
 
 
 @Composable
-fun ChanelOnly(channel: Channel, navController: NavController) {
+fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChatViewModel) {
     Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
 
         Row(
@@ -100,7 +100,7 @@ fun ChanelOnly(channel: Channel, navController: NavController) {
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.End
             ) {
-                Text(channelsListExample[0].time)
+                Text(chatViewModel.channelsListExample[0].time)
             }
         }
     }

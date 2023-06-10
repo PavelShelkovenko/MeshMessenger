@@ -25,13 +25,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.MeshAppTheme
-import com.example.meshmessenger.android.uicompose.BleUI
-import com.example.meshmessenger.android.presentation.ChannelListScreen
-import com.example.meshmessenger.android.uicompose.DialogMessagesList
-import com.example.meshmessenger.android.uicompose.Registration
-import com.example.meshmessenger.android.uicompose.loginScreen.LoginByPin
-import com.example.meshmessenger.data.channelsListExample
+import com.example.meshmessenger.android.screens.*
+import com.example.meshmessenger.android.screens.chats.ChatsListScreen
+import com.example.meshmessenger.android.screens.messages.MessagesListScreen
+import com.example.meshmessenger.android.screens.onboarding.Registration
+import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.message.MessageViewModel
 import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
@@ -105,9 +105,10 @@ fun Root(
     callRegister: () -> Unit,
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    registrationViewModel: RegistrationViewModel = koinViewModel(),
+    registrationViewModel: RegistrationViewModel= koinViewModel(),
     loginViewModel: LoginViewModel = koinViewModel(),
-    chatViewModel: ChatViewModel = koinViewModel()
+    chatViewModel: ChatViewModel = koinViewModel(),
+    messageViewModel: MessageViewModel = koinViewModel()
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -135,7 +136,7 @@ fun Root(
     NavHost(navController, startDestination) {
         composable("register") {
             Registration(
-                registrationViewModel,
+                registrationViewModel = registrationViewModel,
                 onLoginSuccess = {
                     navController.navigate("pin") {
                         popUpTo(0)
@@ -146,29 +147,32 @@ fun Root(
         }
         composable("pin") {
             LoginByPin(
-                loginViewModel,
+                loginViewModel = loginViewModel,
                 loginSuccess = {
-                    navController.navigate("channelListScreen") {
+                    navController.navigate("chatListScreen") {
                         popUpTo(0)
                         launchSingleTop = true
                     }
                 }
             )
         }
-        composable("channelListScreen") {
-            ChannelListScreen(navController, channelsListExample)
+        composable("chatListScreen") {
+            ChatsListScreen(
+                navController,
+                chatViewModel = chatViewModel
+            )
         }
         composable(
-            route = "messagesList/{channelName}",
+            route = "messagesList/{chatName}",
             arguments = listOf(
-                navArgument("channelName") { type = NavType.StringType }
+                navArgument("chatName") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-            DialogMessagesList(
+            MessagesListScreen(
                 navController,
-                backStackEntry.arguments?.getString("channelName"),
+                backStackEntry.arguments?.getString("chatName"),
                 pickMultiMedia,
-                chatViewModel
+                messageViewModel = messageViewModel
             )
         }
         composable("ble") {

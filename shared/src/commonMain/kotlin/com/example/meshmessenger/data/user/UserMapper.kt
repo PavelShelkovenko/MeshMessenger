@@ -5,9 +5,10 @@ import database.UserEntity
 
 fun UserEntity.toUser(): User {
     return User(
-        idPeer = id_peer,
+        id_peer = id_peer,
         name = name,
         surname = surname,
-        isActive = is_active
+        user_image = user_image,
+        is_active = is_active
     )
 }

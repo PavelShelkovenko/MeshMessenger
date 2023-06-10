@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.presentation
+package com.example.meshmessenger.android.screens.messages
 
 const val EMOJI_COLUMNS = 10
 

@@ -2,6 +2,7 @@ CREATE TABLE userEntity(
     id_peer TEXT NOT NULL PRIMARY KEY, --пир в тексте так как 16-чный формат
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
+    user_image TEXT NOT NULL,
     is_active INTEGER AS Boolean NOT NULL
 );
 
@@ -20,8 +21,9 @@ INTO userEntity(
     id_peer,
     name,
     surname,
+    user_image,
     is_active
-) VALUES(?, ?,?,?);
+) VALUES(?, ?,?,?,?);
 
 deleteUserById:
 DELETE FROM userEntity
@@ -30,6 +32,7 @@ WHERE id_peer = ?;
 CREATE TABLE chatEntity(
     chat_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,    --добавил автоинкремент
     chat_name TEXT NOT NULL,
+    chat_image TEXT NOT NULL,
     type TEXT NOT NULL,   --должен быть или ENUM или просто boolean, но пока оставим чтоб тестить проще было
     created_at INTEGER AS Long NOT NULL,   --время в тексте так как использовать будет формат UTC
     id_peer_created TEXT DEFAULT NULL,
@@ -50,10 +53,11 @@ INSERT OR FAIL
 INTO chatEntity(
     chat_id,
     chat_name,
+    chat_image,
     type,
     created_at,
     id_peer_created
-) VALUES(?, ?,?,?, ?);
+) VALUES(?, ?,?,?, ?,?);
 
 deleteChatById:
 DELETE FROM chatEntity
@@ -93,7 +97,7 @@ DELETE FROM chatMemberEntity
 WHERE id_chat_members = ?;
 
 fetchAllUsersFromChat:
-SELECT userEntity.id_peer, userEntity.name, userEntity.surname, userEntity.is_active FROM
+SELECT userEntity.id_peer, userEntity.name, userEntity.surname, userEntity.user_image, userEntity.is_active FROM
 chatMemberEntity INNER JOIN userEntity ON                --
 chatMemberEntity.id_peer = userEntity.id_peer
 WHERE chatMemberEntity.chat_id = ?;

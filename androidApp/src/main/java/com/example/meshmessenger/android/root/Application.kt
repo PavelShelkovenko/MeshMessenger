@@ -7,6 +7,7 @@ import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.message.MessageViewModel
 import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -23,6 +24,7 @@ class Application : Application()  {
                 viewModel { LoginViewModel() }
                 viewModel { RegistrationViewModel() }
                 viewModel { ChatViewModel(databaseRepository = get()) }
+                viewModel { MessageViewModel(databaseRepository = get()) }
                 single {
                     { Log.i("Startup", "Hello from Android/Kotlin!") }
                 }

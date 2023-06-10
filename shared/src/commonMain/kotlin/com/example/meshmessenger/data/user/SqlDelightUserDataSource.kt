@@ -26,10 +26,11 @@ class SqlDelightUserDataSource(sqlDriver: SqlDriver): UserDataSource {
 
     override suspend fun insertUser(user: User) {
         queries.insertUser(
-            id_peer = user.idPeer,
+            id_peer = user.id_peer,
             name = user.name,
             surname = user.surname,
-            is_active = user.isActive
+            is_active = user.is_active,
+            user_image = user.user_image
         )
     }
 

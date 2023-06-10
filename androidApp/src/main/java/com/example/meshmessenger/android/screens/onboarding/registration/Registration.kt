@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose
+package com.example.meshmessenger.android.screens.onboarding
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -25,17 +25,17 @@ import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
-fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
+fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
 
-    val login: String by viewModel.login.collectAsState()
-    val password: String by viewModel.password.collectAsState()
-    val textOfState: String by viewModel.textOfState.collectAsState()
-    val isGoodLogin: Boolean by viewModel.isGoodLogin.collectAsState()
-    val isGoodPassword: Boolean by viewModel.isGoodPassword.collectAsState()
+    val login: String by registrationViewModel.login.collectAsState()
+    val password: String by registrationViewModel.password.collectAsState()
+    val textOfState: String by registrationViewModel.textOfState.collectAsState()
+    val isGoodLogin: Boolean by registrationViewModel.isGoodLogin.collectAsState()
+    val isGoodPassword: Boolean by registrationViewModel.isGoodPassword.collectAsState()
     var isPasswordOpen by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
-    viewModel.actions.observeAsActions { action ->
+    registrationViewModel.actions.observeAsActions { action ->
         when (action) {
             is RegistrationViewModel.Action.RegisterSuccess -> onLoginSuccess()
         }
@@ -72,8 +72,8 @@ fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
         TextField(
             value = login,
             onValueChange = {
-                viewModel.login.value = it
-                viewModel.isDataValid()
+                registrationViewModel.login.value = it
+                registrationViewModel.isDataValid()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -101,9 +101,9 @@ fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Spacer(modifier = Modifier
-                            .width(1.dp)
-                            .height(24.dp)
-                            .background(BackgroundColor)
+                        .width(1.dp)
+                        .height(24.dp)
+                        .background(BackgroundColor)
                     )
                 }
             },
@@ -129,8 +129,8 @@ fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
         TextField(
             value = password,
             onValueChange = {
-                viewModel.password.value = it
-                viewModel.isDataValid()
+                registrationViewModel.password.value = it
+                registrationViewModel.isDataValid()
             },
             Modifier
                 .fillMaxWidth()
@@ -200,7 +200,7 @@ fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
             }
         )
         Button(
-            onClick = viewModel::signUP,
+            onClick = registrationViewModel::signUP,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = PrimaryColor
             ),

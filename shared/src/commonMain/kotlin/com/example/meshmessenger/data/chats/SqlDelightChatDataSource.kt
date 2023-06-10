@@ -29,6 +29,7 @@ class SqlDelightChatDataSource(sqlDriver: SqlDriver): ChatDataSource {
         queries.insertChat(
             chat_id = chat.chat_id,
             chat_name = chat.chat_name,
+            chat_image = chat.chat_image,
             created_at = chat.created_at,
             id_peer_created = chat.id_peer_created,
             type = chat.type

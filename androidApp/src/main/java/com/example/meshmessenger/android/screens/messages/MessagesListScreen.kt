@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.uicompose
+package com.example.meshmessenger.android.screens.messages
 
 import android.annotation.SuppressLint
 import androidx.activity.result.ActivityResultLauncher
@@ -40,9 +40,8 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import com.example.meshmessenger.android.presentation.emojis
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.message.MessageViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
@@ -51,18 +50,17 @@ import com.example.meshmessenger.presentation.chat.ChatViewModel
     "CoroutineCreationDuringComposition"
 )
 @Composable
-fun DialogMessagesList(
+fun MessagesListScreen(
     navController: NavController,
-    channelName: String?,
+    chatName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    chatViewModel: ChatViewModel
+    messageViewModel: MessageViewModel
 ) {
 
-    val textOfMessage = chatViewModel.textMessage.collectAsState()
+    val textOfMessage = messageViewModel.textMessage.collectAsState()
 
     val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
-    val iskeyboardVisible = remember { mutableStateOf(false) }
-    val messagesList by chatViewModel.listOfMessages.collectAsState()
+    val messagesList by messageViewModel.listOfMessages.collectAsState()
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -76,7 +74,7 @@ fun DialogMessagesList(
         topBar = {
             TopAppBar(backgroundColor = Color.White) {
                 IconButton(onClick = {
-                    navController.navigate("channelListScreen") {
+                    navController.navigate("chatListScreen") {
                         popUpTo(0)
                         launchSingleTop = true
                     }
@@ -102,7 +100,7 @@ fun DialogMessagesList(
                     contentScale = ContentScale.Crop
                 )
                 Spacer(modifier = Modifier.width(20.dp))
-                Text(channelName!!, fontSize = 20.sp, color = Color.Black, fontFamily = Poppins)
+                Text(chatName!!, fontSize = 20.sp, color = Color.Black, fontFamily = Poppins)
             }
         },
         bottomBar = {
@@ -150,7 +148,7 @@ fun DialogMessagesList(
                     }
                     TextField(
                         value = textOfMessage.value,
-                        onValueChange = { chatViewModel.textMessage.value = it },
+                        onValueChange = { messageViewModel.textMessage.value = it },
 
                         modifier = Modifier
                             .background(Color.White)
@@ -205,7 +203,7 @@ fun DialogMessagesList(
                             } else {
                                 IconButton(
                                     onClick = {
-                                        chatViewModel.sendMessage(
+                                        messageViewModel.sendMessage(
                                             Message(
                                                 1, textOfMessage.value,
                                                 authorName = "Артур",
@@ -228,7 +226,7 @@ fun DialogMessagesList(
                     }
                 }
                 if ( isEmojiKeyboardEnabled.value ) {
-                    EmojiPicker(chatViewModel)
+                    EmojiPicker(messageViewModel)
                 }
             }
         },
@@ -245,7 +243,7 @@ fun DialogMessagesList(
                 listState.scrollToItem(messagesList.lastIndex)
             }
             items(messagesList) { message ->
-                when (channelName) {
+                when (chatName) {
                     "Артур Рахимзянов" -> {
                         Spacer(modifier = Modifier.height(1.dp))
                         if (message.id == 1) {
@@ -277,7 +275,7 @@ fun DialogMessagesList(
 }
 
 @Composable
-fun EmojiPicker(chatViewModel: ChatViewModel) {
+fun EmojiPicker(messageViewModel: MessageViewModel) {
     LazyVerticalGrid(
         modifier = Modifier.height(150.dp),
         columns = GridCells.Adaptive(minSize = 42.dp)
@@ -287,7 +285,7 @@ fun EmojiPicker(chatViewModel: ChatViewModel) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable(onClick = {
-                        chatViewModel.textMessage.value = chatViewModel.textMessage.value + emoji
+                        messageViewModel.textMessage.value = messageViewModel.textMessage.value + emoji
                     })
                     .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
                     .padding(8.dp),
