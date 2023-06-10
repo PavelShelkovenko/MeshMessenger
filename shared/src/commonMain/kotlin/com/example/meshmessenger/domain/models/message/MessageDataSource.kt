@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.message
+package com.example.meshmessenger.domain.models.message
 
 interface MessageDataSource {
     suspend fun getAllMessages(): List<Message>

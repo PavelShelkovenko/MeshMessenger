@@ -1,8 +1,8 @@
 package com.example.meshmessenger.data.user
 
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.domain.user.User
-import com.example.meshmessenger.domain.user.UserDataSource
+import com.example.meshmessenger.domain.models.user.User
+import com.example.meshmessenger.domain.models.user.UserDataSource
 import com.squareup.sqldelight.db.SqlDriver
 
 class SqlDelightUserDataSource(sqlDriver: SqlDriver): UserDataSource {

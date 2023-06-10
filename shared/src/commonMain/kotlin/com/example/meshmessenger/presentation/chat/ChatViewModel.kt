@@ -9,9 +9,8 @@ class ChatViewModel(private val databaseRepository: DatabaseRepository): ViewMod
 
 
     val channelsListExample = arrayListOf(
-        Channel(1, "https://randart.ru/art/JD99/wallpapers" , "Артур", "Рахимзянов", ".", "10:23"), //для примера пока так потом data классы нужно поменять и оставить ток 2 поля
-        Channel(2, "https://randart.ru/art/JD99/wallpapers","Артур2", "Рахимзянов2", ".", "10:23"),
-        Channel(3, "https://randart.ru/art/JD99/wallpapers","Дмитрий", "Кургаев", "....", "10:26"),
+        Channel(2, "https://randart.ru/art/JD99/wallpapers","Для приватных", "чатов", ".", "10:23"),
+        Channel(3, "https://randart.ru/art/JD99/wallpapers","Для публичных", "чатов", "....", "10:26"),
         Channel(4,"https://images.unsplash.com/photo-1682530016961-19763e9599b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODQ2NzI1MjF8&ixlib=rb-4.0.3&q=80&w=1080", "Алексей", "Алексеев", "йцукенг", "13:34"),
         Channel(5,"https://plus.unsplash.com/premium_photo-1683135218463-12fd419b0b85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODQ2NzI1NDF8&ixlib=rb-4.0.3&q=80&w=1080", "Вова", "Ершов", "чсмрпм итоь ", "6:23"),
         Channel(6,"https://plus.unsplash.com/premium_photo-1675754403388-7548ba37809e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3wxODY2Nzh8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODQ2NzI1NTd8&ixlib=rb-4.0.3&q=80&w=1080", "Никита", "Нейман", ".", "11:53"),

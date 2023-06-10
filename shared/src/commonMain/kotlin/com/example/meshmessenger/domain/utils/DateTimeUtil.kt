@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain
+package com.example.meshmessenger.domain.utils
 
 import kotlinx.datetime.*
 

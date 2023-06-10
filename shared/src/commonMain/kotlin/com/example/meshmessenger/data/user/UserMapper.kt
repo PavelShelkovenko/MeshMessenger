@@ -1,6 +1,6 @@
 package com.example.meshmessenger.data.user
 
-import com.example.meshmessenger.domain.user.User
+import com.example.meshmessenger.domain.models.user.User
 import database.UserEntity
 
 fun UserEntity.toUser(): User {

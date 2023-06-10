@@ -1,8 +1,8 @@
 package com.example.meshmessenger.data.attachment
 
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.domain.attachment.Attachment
-import com.example.meshmessenger.domain.attachment.AttachmentDataSource
+import com.example.meshmessenger.domain.models.attachment.Attachment
+import com.example.meshmessenger.domain.models.attachment.AttachmentDataSource
 import com.squareup.sqldelight.db.SqlDriver
 
 class SqlDelightAttachmentsDataSource(sqlDriver: SqlDriver): AttachmentDataSource {

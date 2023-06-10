@@ -17,3 +17,11 @@ val BottomBoxShape = Shapes(
 val InputBoxShape = Shapes(
     medium = RoundedCornerShape(14.dp)
 )
+
+val RoundedCornerShapeForLocalUser = RoundedCornerShape(
+    topEnd = 16.dp, topStart = 16.dp, bottomEnd = 0.dp, bottomStart = 16.dp
+)
+
+val RoundedCornerShapeForAnotherUser = RoundedCornerShape(
+    topEnd = 16.dp, topStart = 16.dp, bottomEnd = 16.dp, bottomStart = 0.dp
+)

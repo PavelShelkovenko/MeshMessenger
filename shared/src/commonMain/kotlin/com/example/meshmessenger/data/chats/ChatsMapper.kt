@@ -1,6 +1,6 @@
 package com.example.meshmessenger.data.chats
 
-import com.example.meshmessenger.domain.chat.Chat
+import com.example.meshmessenger.domain.models.chat.Chat
 import database.ChatEntity
 
 

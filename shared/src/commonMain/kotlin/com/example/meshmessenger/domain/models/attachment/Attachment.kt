@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.attachment
+package com.example.meshmessenger.domain.models.attachment
 
 data class Attachment(
     val id_attachment: Long,

@@ -1,8 +1,8 @@
 package com.example.meshmessenger.data.message
 
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.domain.message.Message
-import com.example.meshmessenger.domain.message.MessageDataSource
+import com.example.meshmessenger.domain.models.message.Message
+import com.example.meshmessenger.domain.models.message.MessageDataSource
 import com.squareup.sqldelight.db.SqlDriver
 
 class SqlDelightMessageDataSource(sqlDriver: SqlDriver): MessageDataSource {

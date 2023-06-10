@@ -1,6 +1,6 @@
 package com.example.meshmessenger.data.message
 
-import com.example.meshmessenger.domain.message.Message
+import com.example.meshmessenger.domain.models.message.Message
 import database.MessageEntity
 
 

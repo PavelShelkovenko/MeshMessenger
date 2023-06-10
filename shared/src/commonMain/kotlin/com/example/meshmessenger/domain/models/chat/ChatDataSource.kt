@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.chat
+package com.example.meshmessenger.domain.models.chat
 
 interface ChatDataSource {
     suspend fun getAllChats(): List<Chat>

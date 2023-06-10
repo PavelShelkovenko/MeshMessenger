@@ -1,6 +1,6 @@
 package com.example.meshmessenger.data.attachment
 
-import com.example.meshmessenger.domain.attachment.Attachment
+import com.example.meshmessenger.domain.models.attachment.Attachment
 import database.AttachmentEntity
 
 fun AttachmentEntity.toAttachments(): Attachment {

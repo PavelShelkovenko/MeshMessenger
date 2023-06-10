@@ -1,16 +1,16 @@
 package com.example.meshmessenger.data.database_repository
 
-import com.example.meshmessenger.domain.attachment.Attachment
-import com.example.meshmessenger.domain.attachment.AttachmentDataSource
-import com.example.meshmessenger.domain.chat.Chat
-import com.example.meshmessenger.domain.chat.ChatDataSource
-import com.example.meshmessenger.domain.chat_members.ChatMembers
-import com.example.meshmessenger.domain.chat_members.ChatMembersDataSource
+import com.example.meshmessenger.domain.models.attachment.Attachment
+import com.example.meshmessenger.domain.models.attachment.AttachmentDataSource
+import com.example.meshmessenger.domain.models.chat.Chat
+import com.example.meshmessenger.domain.models.chat.ChatDataSource
+import com.example.meshmessenger.domain.models.chat_members.ChatMembers
+import com.example.meshmessenger.domain.models.chat_members.ChatMembersDataSource
 import com.example.meshmessenger.domain.database_repository.DatabaseRepository
-import com.example.meshmessenger.domain.message.Message
-import com.example.meshmessenger.domain.message.MessageDataSource
-import com.example.meshmessenger.domain.user.User
-import com.example.meshmessenger.domain.user.UserDataSource
+import com.example.meshmessenger.domain.models.message.Message
+import com.example.meshmessenger.domain.models.message.MessageDataSource
+import com.example.meshmessenger.domain.models.user.User
+import com.example.meshmessenger.domain.models.user.UserDataSource
 
 class DatabaseRepositoryImpl(
     private val userDataSource: UserDataSource,

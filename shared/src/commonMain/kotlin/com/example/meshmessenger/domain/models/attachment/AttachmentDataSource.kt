@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.attachment
+package com.example.meshmessenger.domain.models.attachment
 
 interface AttachmentDataSource {
     suspend fun getAllAttachments(): List<Attachment>

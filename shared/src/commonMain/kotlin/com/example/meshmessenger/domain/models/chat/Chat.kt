@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.chat
+package com.example.meshmessenger.domain.models.chat
 
 data class Chat(
    val chat_id: Long,

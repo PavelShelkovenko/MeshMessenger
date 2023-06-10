@@ -1,6 +1,6 @@
 package com.example.meshmessenger.data.chat_members
 
-import com.example.meshmessenger.domain.chat_members.ChatMembers
+import com.example.meshmessenger.domain.models.chat_members.ChatMembers
 import database.ChatMemberEntity
 
 fun ChatMemberEntity.toChatMembers(): ChatMembers {

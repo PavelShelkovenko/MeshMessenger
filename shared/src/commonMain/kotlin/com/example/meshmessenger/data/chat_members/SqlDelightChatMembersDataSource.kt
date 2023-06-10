@@ -2,9 +2,9 @@ package com.example.meshmessenger.data.chat_members
 
 import com.example.meshmessenger.data.user.toUser
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.domain.chat_members.ChatMembers
-import com.example.meshmessenger.domain.chat_members.ChatMembersDataSource
-import com.example.meshmessenger.domain.user.User
+import com.example.meshmessenger.domain.models.chat_members.ChatMembers
+import com.example.meshmessenger.domain.models.chat_members.ChatMembersDataSource
+import com.example.meshmessenger.domain.models.user.User
 import com.squareup.sqldelight.db.SqlDriver
 
 class SqlDelightChatMembersDataSource(sqlDriver: SqlDriver): ChatMembersDataSource {

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.user
+package com.example.meshmessenger.domain.models.user
 
 data class User(
     val id_peer: String,

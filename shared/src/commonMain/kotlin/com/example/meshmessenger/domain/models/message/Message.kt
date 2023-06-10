@@ -1,4 +1,4 @@
-package com.example.meshmessenger.domain.message
+package com.example.meshmessenger.domain.models.message
 
 data class Message(
     val message_id: Long,

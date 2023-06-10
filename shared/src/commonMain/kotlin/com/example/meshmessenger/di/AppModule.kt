@@ -8,12 +8,12 @@ import com.example.meshmessenger.data.chats.SqlDelightChatDataSource
 import com.example.meshmessenger.data.database_repository.DatabaseRepositoryImpl
 import com.example.meshmessenger.data.message.SqlDelightMessageDataSource
 import com.example.meshmessenger.data.user.SqlDelightUserDataSource
-import com.example.meshmessenger.domain.attachment.AttachmentDataSource
-import com.example.meshmessenger.domain.chat.ChatDataSource
-import com.example.meshmessenger.domain.chat_members.ChatMembersDataSource
+import com.example.meshmessenger.domain.models.attachment.AttachmentDataSource
+import com.example.meshmessenger.domain.models.chat.ChatDataSource
+import com.example.meshmessenger.domain.models.chat_members.ChatMembersDataSource
 import com.example.meshmessenger.domain.database_repository.DatabaseRepository
-import com.example.meshmessenger.domain.message.MessageDataSource
-import com.example.meshmessenger.domain.user.UserDataSource
+import com.example.meshmessenger.domain.models.message.MessageDataSource
+import com.example.meshmessenger.domain.models.user.UserDataSource
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module

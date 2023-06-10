@@ -1,5 +1,50 @@
 package com.example.meshmessenger.android.screens.messages
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.meshmessenger.presentation.message.MessageViewModel
+
+
+@Composable
+fun EmojiPicker(messageViewModel: MessageViewModel) {
+    LazyVerticalGrid(
+        modifier = Modifier.height(150.dp),
+        columns = GridCells.Adaptive(minSize = 42.dp)
+    ) {
+        items(emojis) { emoji ->
+            Text(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .clickable(onClick = {
+                        messageViewModel.textMessage.value = messageViewModel.textMessage.value + emoji
+                    })
+                    .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
+                    .padding(8.dp),
+                text = emoji,
+                style = LocalTextStyle.current.copy(
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
+            )
+        }
+    }
+}
+
+
 const val EMOJI_COLUMNS = 10
 
 val emojis = listOf(

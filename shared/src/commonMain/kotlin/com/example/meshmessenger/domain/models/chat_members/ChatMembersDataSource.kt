@@ -1,6 +1,6 @@
-package com.example.meshmessenger.domain.chat_members
+package com.example.meshmessenger.domain.models.chat_members
 
-import com.example.meshmessenger.domain.user.User
+import com.example.meshmessenger.domain.models.user.User
 
 interface ChatMembersDataSource {
     suspend fun getAllChatMembers(): List<ChatMembers>

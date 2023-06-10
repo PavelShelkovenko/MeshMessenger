@@ -1,8 +1,8 @@
 package com.example.meshmessenger.data.chats
 
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.domain.chat.Chat
-import com.example.meshmessenger.domain.chat.ChatDataSource
+import com.example.meshmessenger.domain.models.chat.Chat
+import com.example.meshmessenger.domain.models.chat.ChatDataSource
 import com.squareup.sqldelight.db.SqlDriver
 
 class SqlDelightChatDataSource(sqlDriver: SqlDriver): ChatDataSource {
