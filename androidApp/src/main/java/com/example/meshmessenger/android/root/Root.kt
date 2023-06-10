@@ -1,11 +1,11 @@
 package com.example.meshmessenger.android.root
 
-import android.os.Build
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -27,7 +27,6 @@ import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import org.koin.androidx.compose.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Root(
     startDestination: String,
@@ -43,8 +42,8 @@ fun Root(
     chatViewModel: ChatViewModel = koinViewModel(),
     messageViewModel: MessageViewModel = koinViewModel()
 ) {
-    //val saveTime by rememberUpdatedState(onStart)
-    //val pullOutTime by rememberUpdatedState(onStop)
+    val saveTime by rememberUpdatedState(onStart)
+    val pullOutTime by rememberUpdatedState(onStop)
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -53,11 +52,11 @@ fun Root(
                 val loginValue: String = SharedStorage.secureLoad("password", "")
                 if (pswValue == "" || loginValue == "") {
                     callRegister()
-                } else if ( onStart() ) {
+                } else if ( saveTime() ) {
                     callPin()
                 }
             } else if (event == Lifecycle.Event.ON_STOP) {
-                onStop()
+                pullOutTime()
             }
         }
         lifecycleOwner.lifecycle.addObserver(observer)
