@@ -6,9 +6,9 @@ import android.util.Log
 import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
-import com.example.meshmessenger.presentation.chat.DialogViewModel
-import com.example.meshmessenger.presentation.onboarding.LoginVM
-import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
+import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.onboarding.LoginViewModel
+import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -20,9 +20,9 @@ class Application : Application()  {
             module {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
-                viewModel { LoginVM() }
-                viewModel { RegisterVM() }
-                viewModel { DialogViewModel(databaseRepository = get()) }
+                viewModel { LoginViewModel() }
+                viewModel { RegistrationViewModel() }
+                viewModel { ChatViewModel(databaseRepository = get()) }
                 single {
                     { Log.i("Startup", "Hello from Android/Kotlin!") }
                 }

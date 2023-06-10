@@ -31,9 +31,9 @@ import com.example.meshmessenger.android.uicompose.DialogMessagesList
 import com.example.meshmessenger.android.uicompose.Registration
 import com.example.meshmessenger.android.uicompose.loginScreen.LoginByPin
 import com.example.meshmessenger.data.channelsListExample
-import com.example.meshmessenger.presentation.chat.DialogViewModel
-import com.example.meshmessenger.presentation.onboarding.LoginVM
-import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
+import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.onboarding.LoginViewModel
+import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import kotlinx.datetime.Clock
 import org.koin.androidx.compose.koinViewModel
@@ -105,9 +105,9 @@ fun Root(
     callRegister: () -> Unit,
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    registerViewModel: RegisterVM = koinViewModel(),
-    loginViewModel: LoginVM = koinViewModel(),
-    dialogViewModel: DialogViewModel = koinViewModel()
+    registrationViewModel: RegistrationViewModel = koinViewModel(),
+    loginViewModel: LoginViewModel = koinViewModel(),
+    chatViewModel: ChatViewModel = koinViewModel()
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -135,7 +135,7 @@ fun Root(
     NavHost(navController, startDestination) {
         composable("register") {
             Registration(
-                registerViewModel,
+                registrationViewModel,
                 onLoginSuccess = {
                     navController.navigate("pin") {
                         popUpTo(0)
@@ -168,7 +168,7 @@ fun Root(
                 navController,
                 backStackEntry.arguments?.getString("channelName"),
                 pickMultiMedia,
-                dialogViewModel
+                chatViewModel
             )
         }
         composable("ble") {

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.presentation.onboarding.onboarding
+package com.example.meshmessenger.presentation.onboarding
 
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.*
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
-class RegisterVM : ViewModel() {
+class RegistrationViewModel : ViewModel() {
 
     private val _isGoodLogin : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
     var isGoodLogin : CStateFlow<Boolean> = _isGoodLogin.cStateFlow()

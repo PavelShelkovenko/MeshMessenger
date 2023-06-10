@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
-class LoginVM: ViewModel() {
+class LoginViewModel: ViewModel() {
 
     private var initialTextState = ""
     init {

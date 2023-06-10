@@ -15,20 +15,20 @@ import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.presentation.onboarding.LoginVM
+import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
-fun LoginByPin(viewModel: LoginVM, loginSuccess: () -> Unit   ) {
+fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
 
-    val textOfState by viewModel.textState.collectAsState()
-    val isKeyboardEnabled by viewModel.isKeyboardEnabled.collectAsState()
+    val textOfState by loginViewModel.textState.collectAsState()
+    val isKeyboardEnabled by loginViewModel.isKeyboardEnabled.collectAsState()
 
-    viewModel.actions.observeAsActions { action ->
+    loginViewModel.actions.observeAsActions { action ->
         when(action){
-            LoginVM.Action.AttemptsExceeded -> { viewModel.timer() }
-            LoginVM.Action.LoginSuccess -> loginSuccess()
+            LoginViewModel.Action.AttemptsExceeded -> { loginViewModel.timer() }
+            LoginViewModel.Action.LoginSuccess -> loginSuccess()
         }
     }
 
@@ -62,11 +62,11 @@ fun LoginByPin(viewModel: LoginVM, loginSuccess: () -> Unit   ) {
         )
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        PinState(viewModel)
+        PinState(loginViewModel)
     }
 
     Keyboard(isKeyboardEnabled) { value ->
-        viewModel.changePinValue(value)
+        loginViewModel.changePinValue(value)
     }
 }
 
