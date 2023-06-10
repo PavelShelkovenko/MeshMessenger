@@ -21,11 +21,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
+import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
-fun Registration(viewModel: RegisterVM, onLoginSuccess: () -> Unit) {
+fun Registration(viewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
 
     val login: String by viewModel.login.collectAsState()
     val password: String by viewModel.password.collectAsState()
@@ -37,7 +37,7 @@ fun Registration(viewModel: RegisterVM, onLoginSuccess: () -> Unit) {
 
     viewModel.actions.observeAsActions { action ->
         when (action) {
-            is RegisterVM.Action.RegisterSuccess -> onLoginSuccess()
+            is RegistrationViewModel.Action.RegisterSuccess -> onLoginSuccess()
         }
     }
 

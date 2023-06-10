@@ -14,12 +14,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.presentation.onboarding.LoginVM
+import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 
 @Composable
-fun PinState(viewModel: LoginVM) {
+fun PinState(loginViewModel: LoginViewModel) {
 
-    val pinState: String by viewModel.pin.collectAsState()
+    val pinState: String by loginViewModel.pin.collectAsState()
 
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -111,7 +111,7 @@ fun PinState(viewModel: LoginVM) {
                 )
             }
 
-            viewModel.signIN()
+            loginViewModel.signIN()
         }
     }
 }

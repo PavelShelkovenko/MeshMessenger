@@ -36,13 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import coil.transform.CircleCropTransformation
-import com.example.meshmessenger.presentation.chat.DialogViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import com.example.meshmessenger.android.presentation.emojis
 import com.example.meshmessenger.android.theme.*
+import com.example.meshmessenger.presentation.chat.ChatViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint(
@@ -55,14 +55,14 @@ fun DialogMessagesList(
     navController: NavController,
     channelName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    viewModel: DialogViewModel
+    chatViewModel: ChatViewModel
 ) {
 
-    val textOfMessage = viewModel.textMessage.collectAsState()
+    val textOfMessage = chatViewModel.textMessage.collectAsState()
 
     val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
     val iskeyboardVisible = remember { mutableStateOf(false) }
-    val messagesList by viewModel.listOfMessages.collectAsState()
+    val messagesList by chatViewModel.listOfMessages.collectAsState()
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -150,7 +150,7 @@ fun DialogMessagesList(
                     }
                     TextField(
                         value = textOfMessage.value,
-                        onValueChange = { viewModel.textMessage.value = it },
+                        onValueChange = { chatViewModel.textMessage.value = it },
 
                         modifier = Modifier
                             .background(Color.White)
@@ -205,7 +205,7 @@ fun DialogMessagesList(
                             } else {
                                 IconButton(
                                     onClick = {
-                                        viewModel.sendMessage(
+                                        chatViewModel.sendMessage(
                                             Message(
                                                 1, textOfMessage.value,
                                                 authorName = "Артур",
@@ -228,7 +228,7 @@ fun DialogMessagesList(
                     }
                 }
                 if ( isEmojiKeyboardEnabled.value ) {
-                    EmojiPicker(viewModel)
+                    EmojiPicker(chatViewModel)
                 }
             }
         },
@@ -277,7 +277,7 @@ fun DialogMessagesList(
 }
 
 @Composable
-fun EmojiPicker(viewModel: DialogViewModel) {
+fun EmojiPicker(chatViewModel: ChatViewModel) {
     LazyVerticalGrid(
         modifier = Modifier.height(150.dp),
         columns = GridCells.Adaptive(minSize = 42.dp)
@@ -287,7 +287,7 @@ fun EmojiPicker(viewModel: DialogViewModel) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable(onClick = {
-                        viewModel.textMessage.value = viewModel.textMessage.value + emoji
+                        chatViewModel.textMessage.value = chatViewModel.textMessage.value + emoji
                     })
                     .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
                     .padding(8.dp),
