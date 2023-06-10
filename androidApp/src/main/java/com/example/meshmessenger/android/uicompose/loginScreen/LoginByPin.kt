@@ -11,7 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
@@ -21,7 +20,7 @@ import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
-fun LoginByPin(viewModel: LoginVM = viewModel(), loginSuccess: () -> Unit   ) {
+fun LoginByPin(viewModel: LoginVM, loginSuccess: () -> Unit   ) {
 
     val textOfState by viewModel.textState.collectAsState()
     val isKeyboardEnabled by viewModel.isKeyboardEnabled.collectAsState()

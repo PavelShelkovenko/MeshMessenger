@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
@@ -26,7 +25,7 @@ import com.example.meshmessenger.presentation.onboarding.onboarding.RegisterVM
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
-fun Registration(viewModel: RegisterVM = viewModel(), onLoginSuccess: () -> Unit) {
+fun Registration(viewModel: RegisterVM, onLoginSuccess: () -> Unit) {
 
     val login: String by viewModel.login.collectAsState()
     val password: String by viewModel.password.collectAsState()
