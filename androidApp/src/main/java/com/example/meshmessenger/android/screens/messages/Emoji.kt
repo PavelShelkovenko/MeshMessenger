@@ -48,6 +48,7 @@ fun EmojiPicker(messageViewModel: MessageViewModel) {
 const val EMOJI_COLUMNS = 10
 
 val emojis = listOf(
+    "\u2764\ufe0f",
     "\ud83d\ude00", // Grinning Face
     "\ud83d\ude01", // Grinning Face With Smiling Eyes
     "\ud83d\ude02", // Face With Tears of Joy

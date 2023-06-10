@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -35,7 +33,6 @@ data class MyAdvertisement(
     val address: String,
 )
 
-@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("MutableCollectionMutableState", "UnrememberedMutableState")
 @Composable
 fun BleUI() {
@@ -67,7 +64,9 @@ fun BleUI() {
                     level = Logging.Level.Warnings
                     format = Logging.Format.Multiline
                     data = Logging.DataProcessor {
-                        bytesArray.value.joinToString { byte -> byte.toString() }
+                        bytesArray.value.joinToString {
+                                byte -> byte.toString()
+                        }
                     }
                 }
             }
@@ -76,7 +75,7 @@ fun BleUI() {
                 scanner.advertisements
                     .filter { (it.isConnectable == true) }
                     .collect {
-                        println(" ------------${it?.name}--- ${it.address} ${it.rssi} ${it.peripheralName}  ")
+                        println(" ------------${it.name}--- ${it.address} ${it.rssi} ${it.peripheralName}  ")
                         val tmp = MyAdvertisement(address = it.address)
                         if (tmp !in listOfMyAdvertisements) {
                             listOfMyAdvertisements.add(tmp)
@@ -86,14 +85,10 @@ fun BleUI() {
                         }
 
                         val peripheral = scope.peripheral(it) {
-                            transport = Transport.Le // default
-                            phy = Phy.Le1M // default
+                            onServicesDiscovered {
+                                scope.peripheral(it).read(characteristic)
+                            }
                         }
-
-                        val characteristic = characteristicOf(
-                            service = "00001815-0000-1000-8000-00805f9b34fb",
-                            characteristic = "00002a56-0000-1000-8000-00805f9b34fb",
-                        )
 
                         val observation = peripheral.observe(characteristic)
                         observation.collect { data ->
@@ -106,11 +101,11 @@ fun BleUI() {
         ) {
             Text("Scan")
         }
+
         Spacer(modifier = Modifier.height(5.dp))
         Text(textExample.value)
         Spacer(modifier = Modifier.height(5.dp))
         Text( bytesArray.value.toString() )
-
         Spacer(modifier = Modifier.height(50.dp))
 
         LazyColumn {
@@ -127,7 +122,6 @@ fun BleUI() {
 fun BluetoothNodeUICard(advertisement: Advertisement) {
 
     val scope = CoroutineScope(Dispatchers.IO)
-    val focus = LocalFocusManager.current
 
     Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
 
@@ -147,9 +141,6 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                                     data = Hex
                                     level = Logging.Level.Data
                                 }
-
-                                transport = Transport.Le
-                                phy = Phy.Le1M
                             }
                             .connect()
                     }
@@ -161,16 +152,24 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                 Text("${advertisement.name.toString()}  ${advertisement.peripheralName} ")
                 Button(onClick = {
                     scope.launch {
-                        scope.peripheral(advertisement).write( descriptor, byteArrayOf(1,2,3) )
-                        scope.peripheral(advertisement).read(descriptor)
+                        scope.peripheral(advertisement){
+                            onServicesDiscovered {
+                                scope.peripheral(advertisement).write( characteristic, "hello world".toByteArray(), WriteType.WithResponse )
+                            }
+                        }
                     }
                 } ){
-                    Text("send ")
+                    Text("send")
                 }
             }
         }
     }
 }
+
+val characteristic = characteristicOf(
+    service = "00001815-0000-1000-8000-00805f9b34fb",
+    characteristic = "00002a56-0000-1000-8000-00805f9b34fb",
+)
 
 val descriptor = descriptorOf(
     service = "00001815-0000-1000-8000-00805f9b34fb",

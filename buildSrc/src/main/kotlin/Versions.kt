@@ -3,7 +3,7 @@ object Versions {
     // SDK
     const val compileSdk = 33
     const val targetSdk = 33
-    const val minSdk = 24
+    const val minSdk = 28
 
     // Plugins
     const val android_version = "7.4.2"
