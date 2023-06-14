@@ -4,6 +4,7 @@ plugins {
     kotlin(Plugins.serialization) version Versions.kotlin_version
     id(Plugins.androidLib)
     id(Plugins.SQLDelight)
+    id(Plugins.mokoSharedRes)
 }
 
 kotlin {
@@ -24,6 +25,8 @@ kotlin {
             export(Deps.Multiplatform.mokoFLow)
             export(Deps.Multiplatform.mokoState)
             export(Deps.Multiplatform.mokoFlowRes)
+            export(Deps.Multiplatform.mokoSharedRes)
+            export(Deps.Multiplatform.mokoGraphics)
         }
         binaries
             .filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
@@ -76,6 +79,7 @@ kotlin {
                 api(Deps.Multiplatform.mokoFLow)
                 api(Deps.Multiplatform.mokoState)
                 api(Deps.Multiplatform.mokoFlowRes)
+                api(Deps.Multiplatform.mokoSharedRes)
 
                 //kable
                 implementation(Deps.Multiplatform.kable)
@@ -147,6 +151,11 @@ sqldelight {
         packageName = "com.example.meshmessenger.database"
         sourceFolders = listOf("sqldelight")
     }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.example.meshmessenger"
+    multiplatformResourcesClassName = "SharedRes"
 }
 
 android {

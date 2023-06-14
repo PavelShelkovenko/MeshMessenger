@@ -31,7 +31,9 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.screens.messages.onemessage.private_chat.OneMessageOnPrivateChat
 import com.example.meshmessenger.android.screens.messages.onemessage.public_chat.OneMessageOnPublicChat
 import com.example.meshmessenger.android.theme.*
@@ -161,7 +163,7 @@ fun MessagesListScreen(
                         ),
                         maxLines = 4,
                         placeholder = {
-                            Text(text = "Message", color = PlaceholderColor)
+                            Text(text = stringResource(id = SharedRes.strings.message), color = PlaceholderColor)
                         },
                     )
                     Box(

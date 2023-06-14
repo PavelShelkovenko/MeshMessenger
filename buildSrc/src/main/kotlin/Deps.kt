@@ -4,6 +4,7 @@ object Deps {
     const val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin_version}"
     const val android_gradle_plugin = "com.android.tools.build:gradle:${Versions.android_version}"
     const val sqlDelight_gradle_plugin = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelightGradleVersion}"
+    const val moko_shared_resources = "dev.icerock.moko:resources-generator:${Versions.mokoSharedRes}"
 
     object Android {
 
@@ -80,6 +81,8 @@ object Deps {
         const val mokoFLow = "dev.icerock.moko:mvvm-flow:${Versions.mokoMvvmVersion}"
         const val mokoState = "dev.icerock.moko:mvvm-state:${Versions.mokoMvvmVersion}"
         const val mokoFlowRes = "dev.icerock.moko:mvvm-flow-resources:${Versions.mokoMvvmVersion}"
+        const val mokoSharedRes = "dev.icerock.moko:resources:${Versions.mokoSharedRes}"
+        const val mokoGraphics = "dev.icerock.moko:graphics:${Versions.mokoGraphics}"
 
         // Kable
         const val kable = "com.juul.kable:core:${Versions.kableVersion}"

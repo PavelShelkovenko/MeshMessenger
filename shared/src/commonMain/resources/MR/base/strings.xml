@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="welcome">Welcome to MeshApp</string>
+    <string name="topAppBar_text">Mesh Messenger</string>
+    <string name="work_BLE">Work with BLE</string>
+    <string name="message">Message</string>
+    <string name="log_out">Log out</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="write_your_data">Write your data, please</string>
+</resources>

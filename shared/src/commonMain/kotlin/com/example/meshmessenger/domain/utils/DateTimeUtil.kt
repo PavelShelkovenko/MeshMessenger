@@ -12,6 +12,17 @@ object DateTimeUtil {
         return dateTime.toInstant(TimeZone.currentSystemDefault()).toEpochMilliseconds()
     }
 
+    fun testTime() {
+        val timeNow = now()
+        val timeLong = toEpochMillis(timeNow)
+        val timeLongInstant = Instant.fromEpochMilliseconds(timeLong)
+        val timeFormat = formatDate(timeLongInstant.toLocalDateTime(TimeZone.UTC))
+        println("--------------------------time now $timeNow")
+        println("--------------------------time long $timeLong")
+        println("--------------------------time longInstant $timeLongInstant")
+        println("--------------------------time format $timeFormat")
+    }
+
     fun formatDate(dateTime: LocalDateTime): String {
         val month = dateTime.month.name.lowercase().take(3).replaceFirstChar { it.uppercase() }
         val day = if(dateTime.dayOfMonth < 10) "0${dateTime.dayOfMonth}" else dateTime.dayOfMonth
