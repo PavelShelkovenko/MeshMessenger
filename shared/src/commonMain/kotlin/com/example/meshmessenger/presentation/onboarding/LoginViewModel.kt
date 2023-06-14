@@ -37,6 +37,9 @@ class LoginViewModel: ViewModel() {
     private val _isKeyboardEnabled: CMutableStateFlow<Boolean> = MutableStateFlow(true).cMutableStateFlow()
     val isKeyboardEnabled: CMutableStateFlow<Boolean> = _isKeyboardEnabled
 
+    val isAnimAccessGrantedPlaying : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
+        //val isIconVisible: CMutableStateFlow<Boolean> = MutableStateFlow(true).cMutableStateFlow()
+
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
 
@@ -49,7 +52,12 @@ class LoginViewModel: ViewModel() {
                     currentAttempt.value = 5
                 } else {
                     if(pin.value == SharedStorage.secureLoad("pin", "")){
+                        _textState.value = ""
+                        isAnimAccessGrantedPlaying.value = true
+                         delay(2000)
                         _actions.send(Action.LoginSuccess)
+                        isAnimAccessGrantedPlaying.value = false
+                        _textState.value = "Введите пин"
                         currentAttempt.value = 5
                     } else {
                         _textState.value = "Неверный пин \n осталось ${currentAttempt.value} попыток"
@@ -81,15 +89,17 @@ class LoginViewModel: ViewModel() {
     }
 
     fun changePinValue(newValue: String) {
-        if (newValue == "<-") {
-            _pin.value = pin.value.dropLast(1)
-        } else {
-            _pin.value = _pin.value.plus(newValue)
+        if(_pin.value.length < 4) {
+            if (newValue == "<-") {
+                _pin.value = pin.value.dropLast(1)
+            } else {
+                _pin.value = _pin.value.plus(newValue)
+            }
         }
     }
 
     sealed interface Action {
         object LoginSuccess : Action //вошли
-        object AttemptsExceeded: Action
+        object AttemptsExceeded: Action //попытки кончились
     }
 }

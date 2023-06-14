@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.screens.onboarding
+package com.example.meshmessenger.android.screens.onboarding.registration
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -175,9 +175,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 fontFamily = Poppins
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            keyboardActions = KeyboardActions(onNext = {
-                focusManager.clearFocus()
-            }),
+            keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
             visualTransformation = if (!isPasswordOpen) PasswordVisualTransformation() else VisualTransformation.None,
             trailingIcon = {
                 IconButton(onClick = { isPasswordOpen = !isPasswordOpen }) {

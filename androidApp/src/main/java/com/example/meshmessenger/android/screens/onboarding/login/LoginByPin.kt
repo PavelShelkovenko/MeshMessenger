@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.airbnb.lottie.compose.*
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.screens.onboarding.login.keyboard.Keyboard
 import com.example.meshmessenger.android.theme.IconsBlue
@@ -25,11 +26,21 @@ fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
 
     val textOfState by loginViewModel.textState.collectAsState()
     val isKeyboardEnabled by loginViewModel.isKeyboardEnabled.collectAsState()
+    val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
+
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = 1,
+        isPlaying = isAnimAccessGrantedPlaying,
+        speed = 1.5f,
+        restartOnPlay = false
+    )
 
     loginViewModel.actions.observeAsActions { action ->
         when(action){
             LoginViewModel.Action.AttemptsExceeded -> { loginViewModel.timer() }
-            LoginViewModel.Action.LoginSuccess -> loginSuccess()
+            LoginViewModel.Action.LoginSuccess -> { loginSuccess() }
         }
     }
 
@@ -41,12 +52,29 @@ fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
             .fillMaxWidth()
     ) {
 
-        Icon(
-            painter = painterResource(id = R.drawable.shield_lock),
-            contentDescription = null,
-            tint = IconsBlue,
-            modifier = Modifier.size(72.dp)
-        )
+        if(isAnimAccessGrantedPlaying){
+            LottieAnimation(
+                composition = composition,
+                progress =  { progress },
+                modifier = Modifier.size(92.dp)
+            )
+        } else {
+            Icon(
+                painter = painterResource(id = R.drawable.shield_lock),
+                contentDescription = null,
+                tint = IconsBlue,
+                modifier = Modifier.size(72.dp)
+            )
+        }
+//        if(isIconVisible) {
+//            Icon(
+//                painter = painterResource(id = R.drawable.shield_lock),
+//                contentDescription = null,
+//                tint = IconsBlue,
+//                modifier = Modifier.size(72.dp)
+//            )
+//        }
+        
 
         Text(text = textOfState,
             fontFamily = Poppins,

@@ -80,8 +80,10 @@ dependencies {
 
     // Kable
     implementation(Deps.Multiplatform.kable)
-    implementation("com.juul.kable:core:0.7.0-issue-142-1-SNAPSHOT")
 
+    ///?
+    implementation("com.juul.kable:core:0.7.0-issue-142-1-SNAPSHOT")
+    implementation("com.airbnb.android:lottie-compose:6.0.0")
 
     // ???
     implementation("androidx.work:work-runtime:2.8.1")
