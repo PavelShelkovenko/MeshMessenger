@@ -18,7 +18,7 @@ import androidx.navigation.navArgument
 import com.example.meshmessenger.android.screens.BleUI
 import com.example.meshmessenger.android.screens.chats.ChatsListScreen
 import com.example.meshmessenger.android.screens.messages.MessagesListScreen
-import com.example.meshmessenger.android.screens.onboarding.Registration
+import com.example.meshmessenger.android.screens.onboarding.registration.Registration
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
@@ -48,6 +48,7 @@ fun Root(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
+
                 val pswValue: String = SharedStorage.secureLoad("login", "")
                 val loginValue: String = SharedStorage.secureLoad("password", "")
                 if (pswValue == "" || loginValue == "") {

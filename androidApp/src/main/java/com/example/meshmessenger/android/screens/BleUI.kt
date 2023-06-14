@@ -16,8 +16,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.benasher44.uuid.uuidFrom
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.White
 import com.juul.kable.*
@@ -26,7 +26,6 @@ import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
 
 data class MyAdvertisement(
@@ -37,8 +36,7 @@ data class MyAdvertisement(
 @Composable
 fun BleUI() {
 
-
-    val textExample = remember { mutableStateOf("Здесь мы должны получит информацию") }
+    val textExample = remember { mutableStateOf("Здесь мы должны получить строку") }
     val bytesArray = remember { mutableStateOf(byteArrayOf()) }
 
     val listOfMyAdvertisements: MutableList<MyAdvertisement> = mutableListOf() //для проверки пришел ли новый адрес
@@ -57,43 +55,59 @@ fun BleUI() {
 
         Button(onClick = {
             val scanner = Scanner {
-                filters = null
+
+               filters = null
 
                 logging {
                     engine = SystemLogEngine
-                    level = Logging.Level.Warnings
+                    level = Logging.Level.Data
                     format = Logging.Format.Multiline
                     data = Logging.DataProcessor {
-                        bytesArray.value.joinToString {
-                                byte -> byte.toString()
+                        bytesArray.value.joinToString { byte ->
+                            byte.toString()
                         }
                     }
                 }
+
             }
 
             scope.launch {
                 scanner.advertisements
-                    .filter { (it.isConnectable == true) }
-                    .collect {
-                        println(" ------------${it.name}--- ${it.address} ${it.rssi} ${it.peripheralName}  ")
-                        val tmp = MyAdvertisement(address = it.address)
+                    //.filter { (it.isConnectable == true) }
+                    .collect { advertisement ->
+                        println(" ------------${advertisement.name}--- ${advertisement.address} ${advertisement.rssi} ${advertisement.peripheralName} ${advertisement.uuids}  ")
+                        val tmp = MyAdvertisement(address = advertisement.address)
                         if (tmp !in listOfMyAdvertisements) {
                             listOfMyAdvertisements.add(tmp)
                             val list = ArrayList(wrapListOfAdvertisements.value)
-                            list.add(it)
-                            wrapListOfAdvertisements.value  = list
+                            list.add(advertisement)
+                            wrapListOfAdvertisements.value = list
                         }
 
-                        val peripheral = scope.peripheral(it) {
+                        scope.peripheral(advertisement) {
                             onServicesDiscovered {
-                                scope.peripheral(it).read(characteristic)
+                                val services = scope.peripheral(advertisement).services
+                                    ?: error("Services have not been discovered")
+
+                                val descriptor = services
+                                    .first { it.serviceUuid == uuidFrom("00001815-0000-1000-8000-00805f9b34fb") }
+                                    .characteristics
+                                    .first { it.characteristicUuid == uuidFrom("00002a56-0000-1000-8000-00805f9b34fb") }
+                                    .descriptors
+                                    .first { it.descriptorUuid == uuidFrom("00002902-0000-1000-8000-00805f9b34fb") }
+
+
+                                val peripheral = scope.peripheral(advertisement) {
+                                    onServicesDiscovered {
+                                        bytesArray.value = scope.peripheral(advertisement).read(descriptor)
+                                    }
+                                }
+
+                                peripheral.observe(characteristic).collect { data ->
+                                    bytesArray.value = data
+                                    println("!!!!!!!!$data")
+                                }
                             }
-                        }
-
-                        val observation = peripheral.observe(characteristic)
-                        observation.collect { data ->
-                            println("!!!!!!!!$data")
-
                         }
                     }
             }
@@ -105,7 +119,7 @@ fun BleUI() {
         Spacer(modifier = Modifier.height(5.dp))
         Text(textExample.value)
         Spacer(modifier = Modifier.height(5.dp))
-        Text( bytesArray.value.toString() )
+        Text(bytesArray.value.toString())
         Spacer(modifier = Modifier.height(50.dp))
 
         LazyColumn {
@@ -143,6 +157,17 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                                 }
                             }
                             .connect()
+
+                        scope.peripheral(advertisement) {
+                            onServicesDiscovered {
+                                scope.peripheral(advertisement).read(descriptor)
+                            }
+                        }
+
+                        scope.peripheral(advertisement).state.collect { state ->
+                            println("ssssssssstate $state")
+                        }
+
                     }
                 }
         ) {
@@ -152,13 +177,19 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                 Text("${advertisement.name.toString()}  ${advertisement.peripheralName} ")
                 Button(onClick = {
                     scope.launch {
-                        scope.peripheral(advertisement){
+                        scope.peripheral(advertisement) {
                             onServicesDiscovered {
-                                scope.peripheral(advertisement).write( characteristic, "hello world".toByteArray(), WriteType.WithResponse )
+                                logging {
+                                    engine = SystemLogEngine
+                                    format = Logging.Format.Multiline
+                                    data = Hex
+                                    level = Logging.Level.Data
+                                }
+                                scope.peripheral(advertisement).write(descriptor, "hello world".toByteArray())
                             }
                         }
                     }
-                } ){
+                }) {
                     Text("send")
                 }
             }
@@ -176,11 +207,10 @@ val descriptor = descriptorOf(
     characteristic = "00002a56-0000-1000-8000-00805f9b34fb",
     descriptor = "00002902-0000-1000-8000-00805f9b34fb"
 )
+
 @SuppressLint("MissingPermission")
 fun Activity.enableBluetooth() {
-    startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
-        RequestCode.EnableBluetooth
-    )
+    startActivityForResult( Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), RequestCode.EnableBluetooth )
 }
 
 object RequestCode {
