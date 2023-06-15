@@ -16,10 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
-import com.benasher44.uuid.Uuid
-import com.benasher44.uuid.uuidFrom
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.White
 import com.juul.kable.*
