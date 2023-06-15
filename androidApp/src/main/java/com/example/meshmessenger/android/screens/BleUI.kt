@@ -18,6 +18,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuidFrom
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.White
 import com.juul.kable.*
@@ -28,6 +30,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class MyAdvertisement(
     val address: String,
@@ -70,6 +74,15 @@ fun BleUI() {
                     }
                 }
             }
+
+//            scope.launch {
+//                scanner.advertisements
+//                    //.filter { (it.isConnectable == true) }
+//                    .collect {
+//                        println(" -----${it.isConnectable}-------${it.name}--- ${it.address} ${it.rssi} ${it.peripheralName}  ")
+//                    }
+//            }
+
 
             scope.launch {
                 scanner.advertisements
@@ -143,6 +156,16 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                                 }
                             }
                             .connect()
+
+                        scope.peripheral(advertisement) {
+                            onServicesDiscovered {
+                                scope.peripheral(advertisement).read(descriptor)
+                            }
+                        }
+
+                        scope.peripheral(advertisement).state.collect { state ->
+                            println("ssssssssstate $state")
+                        }
                     }
                 }
         ) {
@@ -186,3 +209,5 @@ fun Activity.enableBluetooth() {
 object RequestCode {
     const val EnableBluetooth = 55001
 }
+
+//Filter.Service(uuidFrom("0000aa80-0000-1000-8000-00805f9b34fb"))
