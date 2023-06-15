@@ -145,13 +145,13 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                 .clickable {
                     scope.launch {
                         scope.peripheral(advertisement) {
-                                logging {
-                                    engine = SystemLogEngine
-                                    format = Logging.Format.Multiline
-                                    data = Hex
-                                    level = Logging.Level.Data
-                                }
+                            logging {
+                                engine = SystemLogEngine
+                                format = Logging.Format.Multiline
+                                data = Hex
+                                level = Logging.Level.Data
                             }
+                        }
                             .connect()
 
                         scope.peripheral(advertisement) {
@@ -163,6 +163,7 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                         scope.peripheral(advertisement).state.collect { state ->
                             println("ssssssssstate $state")
                         }
+
                     }
                 }
         ) {
@@ -172,13 +173,19 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                 Text("${advertisement.name.toString()}  ${advertisement.peripheralName} ")
                 Button(onClick = {
                     scope.launch {
-                        scope.peripheral(advertisement){
+                        scope.peripheral(advertisement) {
                             onServicesDiscovered {
-                                scope.peripheral(advertisement).write( characteristic, "hello world".toByteArray(), WriteType.WithResponse )
+                                logging {
+                                    engine = SystemLogEngine
+                                    format = Logging.Format.Multiline
+                                    data = Hex
+                                    level = Logging.Level.Data
+                                }
+                                scope.peripheral(advertisement).write(descriptor, "hello world".toByteArray())
                             }
                         }
                     }
-                } ){
+                }) {
                     Text("send")
                 }
             }
@@ -196,11 +203,10 @@ val descriptor = descriptorOf(
     characteristic = "00002a56-0000-1000-8000-00805f9b34fb",
     descriptor = "00002902-0000-1000-8000-00805f9b34fb"
 )
+
 @SuppressLint("MissingPermission")
 fun Activity.enableBluetooth() {
-    startActivityForResult(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
-        RequestCode.EnableBluetooth
-    )
+    startActivityForResult( Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), RequestCode.EnableBluetooth )
 }
 
 object RequestCode {
