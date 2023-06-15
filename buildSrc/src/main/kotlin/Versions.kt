@@ -39,6 +39,8 @@ object Versions {
 
     // MOKO-MVVM
     const val mokoMvvmVersion = "0.16.1"
+    const val mokoSharedRes = "0.23.0"
+    const val mokoGraphics = "0.9.0"
 
     //Kable
     const val kableVersion = "0.23.0"

@@ -17,7 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.PrimaryColor
@@ -73,7 +75,7 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
                 ) {
 
                     Text(
-                        text = "выйти",
+                        text = stringResource(id = SharedRes.strings.log_out),
                         fontFamily = ReemKufi,
                         color = IconsBlue,
                         fontSize = 16.sp,

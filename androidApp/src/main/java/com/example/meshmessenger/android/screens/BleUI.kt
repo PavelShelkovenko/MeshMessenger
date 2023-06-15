@@ -27,6 +27,8 @@ import com.juul.kable.logs.SystemLogEngine
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
 
 data class MyAdvertisement(
     val address: String,
@@ -70,6 +72,15 @@ fun BleUI() {
                 }
 
             }
+
+//            scope.launch {
+//                scanner.advertisements
+//                    //.filter { (it.isConnectable == true) }
+//                    .collect {
+//                        println(" -----${it.isConnectable}-------${it.name}--- ${it.address} ${it.rssi} ${it.peripheralName}  ")
+//                    }
+//            }
+
 
             scope.launch {
                 scanner.advertisements
@@ -149,13 +160,13 @@ fun BluetoothNodeUICard(advertisement: Advertisement) {
                 .clickable {
                     scope.launch {
                         scope.peripheral(advertisement) {
-                                logging {
-                                    engine = SystemLogEngine
-                                    format = Logging.Format.Multiline
-                                    data = Hex
-                                    level = Logging.Level.Data
-                                }
+                            logging {
+                                engine = SystemLogEngine
+                                format = Logging.Format.Multiline
+                                data = Hex
+                                level = Logging.Level.Data
                             }
+                        }
                             .connect()
 
                         scope.peripheral(advertisement) {
@@ -216,3 +227,5 @@ fun Activity.enableBluetooth() {
 object RequestCode {
     const val EnableBluetooth = 55001
 }
+
+//Filter.Service(uuidFrom("0000aa80-0000-1000-8000-00805f9b34fb"))

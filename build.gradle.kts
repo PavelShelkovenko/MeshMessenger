@@ -8,6 +8,7 @@ buildscript {
         classpath(Deps.kotlin_gradle_plugin)
         classpath(Deps.android_gradle_plugin)
         classpath(Deps.sqlDelight_gradle_plugin)
+        classpath(Deps.moko_shared_resources)
     }
 }
 

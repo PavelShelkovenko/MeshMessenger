@@ -19,7 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.*
+import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
@@ -49,7 +51,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
     ) {
 
         Text(
-            text = "Welcome to MeshApp",
+            text = stringResource(id = SharedRes.strings.welcome),
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
@@ -108,7 +110,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 }
             },
             placeholder = {
-                Text(text = "Username", color = PlaceholderColor)
+                Text(text = stringResource(id = SharedRes.strings.username), color = PlaceholderColor)
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -167,7 +169,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 }
             },
             placeholder = {
-                Text(text = "Password", color = PlaceholderColor)
+                Text(text = stringResource(id = SharedRes.strings.password), color = PlaceholderColor)
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -203,7 +205,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 backgroundColor = PrimaryColor
             ),
             modifier = Modifier
-                .fillMaxWidth(0.45f)
+                .wrapContentWidth()
                 .padding(horizontal = 20.dp)
                 .padding(top = 20.dp),
             contentPadding = PaddingValues(vertical = 14.dp),
@@ -215,7 +217,9 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             shape = CircleShape
         ) {
             Text(
-                text = "Sign Up",
+                text = stringResource(id = SharedRes.strings.sign_up),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp),
                 fontFamily = Poppins,
                 color = LightPrimaryColor,
                 fontSize = 12.sp,

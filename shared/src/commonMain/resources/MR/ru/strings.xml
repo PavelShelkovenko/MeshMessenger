@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="welcome">Приветствуем в MeshApp</string>
+    <string name="topAppBar_text">Mesh Мессенджер</string>
+    <string name="work_BLE">Работа с BLE</string>
+    <string name="message">Сообщение</string>
+    <string name="log_out">Выйти</string>
+    <string name="username">Имя</string>
+    <string name="password">Пароль</string>
+    <string name="sign_up">Зарегистрироваться</string>
+</resources>

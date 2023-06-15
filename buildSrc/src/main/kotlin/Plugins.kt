@@ -8,4 +8,5 @@ object Plugins {
     const val kotlinKapt = "kotlin-kapt"
     const val kotlinParcelize = "kotlin-parcelize"
     const val SQLDelight = "com.squareup.sqldelight"
+    const val mokoSharedRes = "dev.icerock.mobile.multiplatform-resources"
 }
