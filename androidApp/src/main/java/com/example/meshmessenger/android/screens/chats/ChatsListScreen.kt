@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.meshmessenger.SharedRes
+import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.White
@@ -39,7 +41,12 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
         item {
             TopAppBar(
                 backgroundColor = Color.White,
-                title = { Text(text = "Mesh-App", fontSize = 20.sp, color = Color.Black) },
+                title = {
+                    Text(
+                        text = stringResource(id = SharedRes.strings.topAppBar_text),
+                        fontSize = 20.sp,
+                        color = Color.Black)
+                    },
                 navigationIcon = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = IconsBlue)
@@ -128,7 +135,9 @@ fun BleUICard(navController: NavController) {
                     }
                 }
         ) {
-            Text("Работа с BLE")
+            Text(
+                text = stringResource(id = SharedRes.strings.work_BLE)
+            )
         }
     }
 }

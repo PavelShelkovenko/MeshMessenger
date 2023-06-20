@@ -29,9 +29,15 @@ import com.juul.kable.*
 import com.juul.kable.logs.Hex
 import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
-import dev.bluefalcon.BlueFalcon
+
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 
 @SuppressLint("MutableCollectionMutableState")
@@ -143,9 +149,11 @@ fun BluetoothNodeUICard(advertisement: AndroidAdvertisement) {
                 .background(White)
                 .clickable {
                     scope.launch {
+
                         scope.peripheral(advertisement).connect()
 
                         delay(100)
+
 
                         scope.peripheral(advertisement) {
                             onServicesDiscovered {
@@ -223,6 +231,7 @@ object RequestCode {
     const val EnableBluetooth = 55001
 }
 
+
 fun Flow<AndroidAdvertisement>.uniqueValuesFromFlow(): Flow<AndroidAdvertisement> {
     val addresses = mutableListOf<String>()
     return flow {
@@ -243,4 +252,4 @@ private const val CHAR_FOR_READ_UUID = "25AE1442-05D3-4C5B-8281-93D4E07420CF"
 private const val CHAR_FOR_WRITE_UUID = "25AE1443-05D3-4C5B-8281-93D4E07420CF"
 private const val CHAR_FOR_INDICATE_UUID = "25AE1444-05D3-4C5B-8281-93D4E07420CF"
 private const val CCC_DESCRIPTOR_UUID = "00002902-0000-1000-8000-00805f9b34fb"
-const val TAG = "log"
+const val TAG = "logggg"
