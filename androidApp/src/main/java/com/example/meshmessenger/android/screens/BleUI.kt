@@ -125,6 +125,13 @@ fun kableScan(
             .collect { advertisement ->
 
                 val list = ArrayList(wrapListOfAdvertisements.value)
+
+                scope.peripheral(advertisement){
+                    onServicesDiscovered{
+                        println(scope.peripheral(advertisement).read(characteristicRead))
+                    }
+                }
+
                 list.add(advertisement)
                 wrapListOfAdvertisements.value = list
 
@@ -153,7 +160,6 @@ fun BluetoothNodeUICard(advertisement: AndroidAdvertisement) {
                         scope.peripheral(advertisement).connect()
 
                         delay(100)
-
 
                         scope.peripheral(advertisement) {
                             onServicesDiscovered {
