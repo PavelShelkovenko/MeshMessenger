@@ -40,7 +40,8 @@ fun Root(
     registrationViewModel: RegistrationViewModel = koinViewModel(),
     loginViewModel: LoginViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
-    messageViewModel: MessageViewModel = koinViewModel()
+    messageViewModel: MessageViewModel = koinViewModel(),
+    application: Application
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -48,7 +49,6 @@ fun Root(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_START) {
-
                 val pswValue: String = SharedStorage.secureLoad("login", "")
                 val loginValue: String = SharedStorage.secureLoad("password", "")
                 if (pswValue == "" || loginValue == "") {
@@ -109,7 +109,7 @@ fun Root(
             )
         }
         composable("ble") {
-            BleUI()
+            BleUI(application)
         }
     }
 }

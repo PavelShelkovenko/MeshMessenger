@@ -10,7 +10,7 @@ class SqlDelightUserDataSource(sqlDriver: SqlDriver): UserDataSource {
     private val db = AppDatabase(sqlDriver)
     private val queries = db.appDatabaseQueries
 
-    override suspend fun getAllUsers(): List<User> {
+    override suspend fun  getAllUsers(): List<User> {
         return queries
             .getAllUsers()
             .executeAsList()

@@ -41,5 +41,5 @@ object Versions {
     const val mokoMvvmVersion = "0.16.1"
 
     //Kable
-    const val kableVersion = "0.23.0"
+    const val kableVersion = "0.24.0"
 }

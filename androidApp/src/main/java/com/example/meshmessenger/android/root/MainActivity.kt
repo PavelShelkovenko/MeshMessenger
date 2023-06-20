@@ -13,12 +13,15 @@ import com.example.meshmessenger.android.theme.MeshAppTheme
 import com.example.meshmessenger.domain.utils.isTimeOut
 import com.example.meshmessenger.domain.utils.saveTime
 import com.example.meshmessenger.domain.utils.startDestinationDefine
+import dev.bluefalcon.BlueFalcon
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
+
 
         setContent {
             MeshAppTheme {
@@ -42,6 +45,7 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
+                        application = application as Application
                     )
                 }
             }

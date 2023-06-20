@@ -5,9 +5,6 @@ import dev.icerock.moko.mvvm.viewmodel.ViewModel
 
 class ChatViewModel(private val databaseRepository: DatabaseRepository): ViewModel() {
 
-
-
-
     val channelsListExample = arrayListOf(
         Channel(2, "https://randart.ru/art/JD99/wallpapers","Для приватных", "чатов", ".", "10:23"),
         Channel(3, "https://randart.ru/art/JD99/wallpapers","Для публичных", "чатов", "....", "10:26"),

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel: ViewModel() {
 
-    private var initialTextState = ""
+    private var initialTextState: String
     init {
         val pinValue: String = SharedStorage.secureLoad("pin", "")
 
@@ -23,7 +23,7 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-    var currentAttempt : CMutableStateFlow<Int> = MutableStateFlow(5).cMutableStateFlow()
+    private var currentAttempt : CMutableStateFlow<Int> = MutableStateFlow(5).cMutableStateFlow()
 
     private val _pin : CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
     val pin : CMutableStateFlow<String> = _pin
@@ -38,7 +38,6 @@ class LoginViewModel: ViewModel() {
     val isKeyboardEnabled: CMutableStateFlow<Boolean> = _isKeyboardEnabled
 
     val isAnimAccessGrantedPlaying : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
-        //val isIconVisible: CMutableStateFlow<Boolean> = MutableStateFlow(true).cMutableStateFlow()
 
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
@@ -56,6 +55,7 @@ class LoginViewModel: ViewModel() {
                         isAnimAccessGrantedPlaying.value = true
                          delay(2000)
                         _actions.send(Action.LoginSuccess)
+                        delay(1500)
                         isAnimAccessGrantedPlaying.value = false
                         _textState.value = "Введите пин"
                         currentAttempt.value = 5
@@ -99,7 +99,7 @@ class LoginViewModel: ViewModel() {
     }
 
     sealed interface Action {
-        object LoginSuccess : Action //вошли
-        object AttemptsExceeded: Action //попытки кончились
+        object LoginSuccess : Action
+        object AttemptsExceeded: Action
     }
 }
