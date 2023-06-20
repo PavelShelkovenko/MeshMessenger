@@ -4,8 +4,7 @@ import com.example.meshmessenger.domain.models.message.Message
 import database.MessageEntity
 
 
-fun MessageEntity.toMessage(): Message {
-    return Message(
+fun MessageEntity.toMessage() = Message(
         message_id = message_id,
         from_id = from_id,
         to_chat_id = to_chat_id,
@@ -14,5 +13,5 @@ fun MessageEntity.toMessage(): Message {
         sent_at = sent_at,
         status = status,
         has_attachment = has_attachments ?: false
-    )
-}
+)
+

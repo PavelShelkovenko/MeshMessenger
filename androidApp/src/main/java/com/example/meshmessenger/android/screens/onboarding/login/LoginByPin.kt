@@ -11,6 +11,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.airbnb.lottie.compose.*
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.screens.onboarding.login.keyboard.Keyboard
@@ -20,6 +21,7 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
@@ -45,13 +47,12 @@ fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
     }
 
     Column(
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .fillMaxHeight(0.6f)
-            .fillMaxWidth()
+            .fillMaxSize()
+            .padding(top = 50.dp)
     ) {
-
         if(isAnimAccessGrantedPlaying){
             LottieAnimation(
                 composition = composition,
@@ -66,15 +67,15 @@ fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
                 modifier = Modifier.size(72.dp)
             )
         }
-//        if(isIconVisible) {
-//            Icon(
-//                painter = painterResource(id = R.drawable.shield_lock),
-//                contentDescription = null,
-//                tint = IconsBlue,
-//                modifier = Modifier.size(72.dp)
-//            )
-//        }
-        
+    }
+
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxHeight(0.6f)
+            .fillMaxWidth()
+    ) {
 
         Text(text = textOfState,
             fontFamily = Poppins,

@@ -22,7 +22,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
+
 
         setContent {
             MeshAppTheme {
@@ -46,6 +48,7 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
+                        application = application as Application
                     )
                 }
             }
