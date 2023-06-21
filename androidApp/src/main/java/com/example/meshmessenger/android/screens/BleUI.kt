@@ -3,7 +3,6 @@ package com.example.meshmessenger.android.screens
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.compose.foundation.background
@@ -27,11 +26,7 @@ import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.ArrayList
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
@@ -53,7 +48,15 @@ fun BleUI() {
     ) {
 
         Row {
-            Button(onClick = { kableScan(scope, bytesArray, wrapListOfAdvertisements) }) { Text("Scan Kable") }
+            Button(onClick = {
+                scope.launch {
+                    kableScan(wrapListOfAdvertisements)
+                }
+            })
+
+            {
+                Text("Scan Kable")
+            }
 
             Spacer(modifier = Modifier.width(5.dp))
 
@@ -61,7 +64,7 @@ fun BleUI() {
 
             Spacer(modifier = Modifier.width(5.dp))
 
-            Button(onClick = {  }) { Text("scan Proof ") }
+            Button(onClick = { scanProof() }) { Text("scan Proof ") }
 
             Spacer(modifier = Modifier.width(5.dp))
 
@@ -85,50 +88,37 @@ fun BleUI() {
     }
 }
 
-fun scanProof(context: Context) {}
+fun scanProof() {}
 
-
-fun kableScan(
-    scope: CoroutineScope,
-    bytesArray: MutableState<ByteArray>,
+suspend fun kableScan(
     wrapListOfAdvertisements: MutableState<MutableList<AndroidAdvertisement>>
 ) {
 
-    val scanner = Scanner {
-
+    val advertisement = Scanner {
         filters = listOf(Filter.Service(uuidFrom("25AE1441-05D3-4C5B-8281-93D4E07420CF")))
-
         logging {
             engine = SystemLogEngine
             level = Logging.Level.Data
             format = Logging.Format.Multiline
-            data = Logging.DataProcessor {
-                bytesArray.value.joinToString { byte ->
-                    byte.toString()
-                }
-            }
         }
-    }
+    }.advertisements.first()
 
-    scope.launch {
-        scanner.advertisements
-            .filter { true }
-            .uniqueValuesFromFlow()
-            .collect { advertisement ->
+    val list = ArrayList(wrapListOfAdvertisements.value)
+    list.add(advertisement)
+    wrapListOfAdvertisements.value = list
 
-                val list = ArrayList(wrapListOfAdvertisements.value)
 
-                scope.peripheral(advertisement){
-                    onServicesDiscovered{
-                        println(scope.peripheral(advertisement).read(characteristicRead))
-                    }
-                }
+//    val advertisement = scope.async {
+//        Scanner {
+//            filters = listOf(Filter.Service(uuidFrom("25AE1441-05D3-4C5B-8281-93D4E07420CF")))
+//            logging {
+//                engine = SystemLogEngine
+//                level = Logging.Level.Data
+//                format = Logging.Format.Multiline
+//            }
+//        }.advertisements.first()
+//    }.await()
 
-                list.add(advertisement)
-                wrapListOfAdvertisements.value = list
-
-            }
-    }
 }
 
 
@@ -148,27 +138,12 @@ fun BluetoothNodeUICard(advertisement: AndroidAdvertisement) {
                 .background(White)
                 .clickable {
                     scope.launch {
-
-                        scope.peripheral(advertisement).connect()
-
-                        delay(100)
-
                         scope.peripheral(advertisement) {
                             onServicesDiscovered {
-                                scope.peripheral(advertisement).read(characteristicRead)
-                                println(scope.peripheral(advertisement).read(characteristicRead))
+                                val bytes = this.read(characteristicRead)
+                                this.write(characteristicWrite, bytes, WriteType.WithResponse )
                             }
-                        }
-
-                        scope.peripheral(advertisement).observe(characteristicRead).collect { data ->
-//                            bytesArray.value = data
-                            println("!!!!!!!!$data")
-                        }
-
-                        scope.peripheral(advertisement).state.collect { state ->
-                            println("ssssssssstate $state")
-                        }
-
+                        }.connect()
                     }
                 }
 
@@ -188,7 +163,11 @@ fun BluetoothNodeUICard(advertisement: AndroidAdvertisement) {
                         scope.peripheral(advertisement) {
                             Log.e(TAG, "send button pressed")
                             onServicesDiscovered {
-                                scope.peripheral(advertisement).write(characteristicWrite, "hello world".toByteArray(), WriteType.WithResponse)
+                                scope.peripheral(advertisement).write(
+                                    characteristicWrite,
+                                    "hello world".toByteArray(),
+                                    WriteType.WithResponse
+                                )
                             }
                         }
                     }

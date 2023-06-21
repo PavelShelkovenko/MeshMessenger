@@ -38,7 +38,7 @@ fun Root(
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
     registrationViewModel: RegistrationViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
-    messageViewModel: MessageViewModel = koinViewModel(),
+    messageViewModel: MessageViewModel = koinViewModel()
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
