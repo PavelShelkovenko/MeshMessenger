@@ -22,7 +22,6 @@ import com.example.meshmessenger.android.screens.onboarding.registration.Registr
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
-import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import org.koin.androidx.compose.koinViewModel
@@ -38,7 +37,6 @@ fun Root(
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
     registrationViewModel: RegistrationViewModel = koinViewModel(),
-    loginViewModel: LoginViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
     messageViewModel: MessageViewModel = koinViewModel()
 ) {
@@ -79,7 +77,6 @@ fun Root(
         }
         composable("pin") {
             LoginByPin(
-                loginViewModel = loginViewModel,
                 loginSuccess = {
                     navController.navigate("chatListScreen") {
                         popUpTo(0)

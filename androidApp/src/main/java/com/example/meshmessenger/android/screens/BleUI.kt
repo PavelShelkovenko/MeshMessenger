@@ -17,7 +17,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.benasher44.uuid.uuidFrom
 import com.example.meshmessenger.android.theme.BackgroundColor
@@ -28,7 +27,6 @@ import com.juul.kable.logs.SystemLogEngine
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
-
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable

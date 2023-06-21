@@ -11,7 +11,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.ViewModel
 import com.airbnb.lottie.compose.*
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.screens.onboarding.login.keyboard.Keyboard
@@ -24,7 +23,7 @@ import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginByPin(loginViewModel: LoginViewModel, loginSuccess: () -> Unit   ) {
+fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit   ) {
 
     val textOfState by loginViewModel.textState.collectAsState()
     val isKeyboardEnabled by loginViewModel.isKeyboardEnabled.collectAsState()
