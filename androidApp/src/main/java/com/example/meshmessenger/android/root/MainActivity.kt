@@ -48,7 +48,6 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
-                        application = application as Application
                     )
                 }
             }

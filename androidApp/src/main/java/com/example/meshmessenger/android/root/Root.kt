@@ -20,13 +20,10 @@ import com.example.meshmessenger.android.screens.chats.ChatsListScreen
 import com.example.meshmessenger.android.screens.messages.MessagesListScreen
 import com.example.meshmessenger.android.screens.onboarding.registration.Registration
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
-import com.example.meshmessenger.domain.utils.DateTimeUtil
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
-import com.example.meshmessenger.presentation.onboarding.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
-import kotlinx.datetime.*
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -40,10 +37,8 @@ fun Root(
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
     registrationViewModel: RegistrationViewModel = koinViewModel(),
-    loginViewModel: LoginViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
     messageViewModel: MessageViewModel = koinViewModel(),
-    application: Application
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -82,7 +77,6 @@ fun Root(
         }
         composable("pin") {
             LoginByPin(
-                loginViewModel = loginViewModel,
                 loginSuccess = {
                     navController.navigate("chatListScreen") {
                         popUpTo(0)
@@ -111,7 +105,7 @@ fun Root(
             )
         }
         composable("ble") {
-            BleUI(application)
+            BleUI()
         }
     }
 }

@@ -3,7 +3,6 @@ package com.example.meshmessenger.android.screens
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -19,17 +18,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.benasher44.uuid.uuidFrom
-import com.example.meshmessenger.android.root.Application
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.White
 import com.juul.kable.*
-import com.juul.kable.logs.Hex
 import com.juul.kable.logs.Logging
 import com.juul.kable.logs.SystemLogEngine
-
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.CoroutineScope
@@ -38,18 +33,15 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 
-
-
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun BleUI(application: Application) {
+fun BleUI() {
 
     val textExample = remember { mutableStateOf("Здесь мы должны получить строку") }
     val bytesArray = remember { mutableStateOf(byteArrayOf()) }
     val listOfAdvertisements: MutableList<AndroidAdvertisement> = mutableListOf()
     val wrapListOfAdvertisements = remember { mutableStateOf(listOfAdvertisements) }
     val scope = CoroutineScope(Dispatchers.IO)
-    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -69,7 +61,7 @@ fun BleUI(application: Application) {
 
             Spacer(modifier = Modifier.width(5.dp))
 
-            Button(onClick = { scanProof(context) }) { Text("scan Proof ") }
+            Button(onClick = {  }) { Text("scan Proof ") }
 
             Spacer(modifier = Modifier.width(5.dp))
 
