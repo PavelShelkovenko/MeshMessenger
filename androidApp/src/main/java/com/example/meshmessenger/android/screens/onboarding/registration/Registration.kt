@@ -23,23 +23,21 @@ import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.*
-import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
+import com.example.meshmessenger.presentation.onboarding.registration.RegistrationEvent
+import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 @Composable
 fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
 
-    val login: String by registrationViewModel.login.collectAsState()
-    val password: String by registrationViewModel.password.collectAsState()
-    val textOfState: String by registrationViewModel.textOfState.collectAsState()
-    val isGoodLogin: Boolean by registrationViewModel.isGoodLogin.collectAsState()
-    val isGoodPassword: Boolean by registrationViewModel.isGoodPassword.collectAsState()
+    val state by registrationViewModel.state.collectAsState()
+
     var isPasswordOpen by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
     registrationViewModel.actions.observeAsActions { action ->
         when (action) {
-            is RegistrationViewModel.Action.RegisterSuccess -> onLoginSuccess()
+            is RegistrationViewModel.Action.RegistrationSuccess -> onLoginSuccess()
         }
     }
 
@@ -60,23 +58,23 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Text(
-            modifier = Modifier,
-            text = textOfState,
-            fontFamily = Poppins,
-            color = PrimaryColor,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-        )
+//        Text(
+//            modifier = Modifier,
+//            text = textOfState,
+//            fontFamily = Poppins,
+//            color = PrimaryColor,
+//            fontSize = 18.sp,
+//            fontWeight = FontWeight.Bold,
+//        )
 
         Spacer(modifier = Modifier.fillMaxHeight(0.05f))
 
         TextField(
-            value = login,
+            value = state.email,
             onValueChange = {
-                registrationViewModel.login.value = it
-                registrationViewModel.isDataValid()
+                registrationViewModel.onEvent(RegistrationEvent.EmailChanged(it))
             },
+            isError = state.emailError != null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
@@ -127,12 +125,18 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 focusManager.moveFocus(FocusDirection.Down)
             }),
         )
+        if (state.emailError != null) {
+            Text(
+                text = state.emailError!!,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
 
         TextField(
-            value = password,
+            value = state.password,
             onValueChange = {
-                registrationViewModel.password.value = it
-                registrationViewModel.isDataValid()
+                registrationViewModel.onEvent(RegistrationEvent.PasswordChanged(it))
             },
             Modifier
                 .fillMaxWidth()
@@ -199,8 +203,16 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 }
             }
         )
+        if (state.passwordError != null) {
+            Text(
+                text = state.passwordError!!,
+                color = MaterialTheme.colors.error,
+                modifier = Modifier.align(Alignment.End)
+            )
+        }
+
         Button(
-            onClick = registrationViewModel::signUP,
+            onClick = registrationViewModel::signUp,
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = PrimaryColor
             ),
@@ -213,7 +225,6 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 defaultElevation = 0.dp,
                 pressedElevation = 2.dp
             ),
-            enabled = isGoodLogin.and(isGoodPassword),
             shape = CircleShape
         ) {
             Text(

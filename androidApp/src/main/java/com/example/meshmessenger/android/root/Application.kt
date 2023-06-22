@@ -9,7 +9,7 @@ import com.example.meshmessenger.di.initKoin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
 import com.example.meshmessenger.presentation.onboarding.LoginViewModel
-import com.example.meshmessenger.presentation.onboarding.RegistrationViewModel
+import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,7 +22,7 @@ class Application : Application()  {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
                 viewModel { LoginViewModel() }
-                viewModel { RegistrationViewModel() }
+                viewModel { RegistrationViewModel(validator = get()) }
                 viewModel { ChatViewModel(databaseRepository = get()) }
                 viewModel { MessageViewModel(databaseRepository = get()) }
                 single {
