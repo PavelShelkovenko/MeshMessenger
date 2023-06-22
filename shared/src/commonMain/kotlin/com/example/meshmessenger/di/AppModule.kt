@@ -14,6 +14,7 @@ import com.example.meshmessenger.domain.models.chat_members.ChatMembersDataSourc
 import com.example.meshmessenger.domain.database_repository.DatabaseRepository
 import com.example.meshmessenger.domain.models.message.MessageDataSource
 import com.example.meshmessenger.domain.models.user.UserDataSource
+import com.example.meshmessenger.presentation.onboarding.registration.RegistrationValidator
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
@@ -70,6 +71,10 @@ private val coreModule = module {
 
     single<MessageDataSource> {
         SqlDelightMessageDataSource(sqlDriver = get())
+    }
+
+    single {
+        RegistrationValidator()
     }
 
 }

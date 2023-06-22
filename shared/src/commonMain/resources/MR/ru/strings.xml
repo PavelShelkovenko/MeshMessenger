@@ -8,4 +8,6 @@
     <string name="username">Имя</string>
     <string name="password">Пароль</string>
     <string name="sign_up">Зарегистрироваться</string>
+    <string name="enter_your_pin">Введите свой пин</string>
+    <string name="create_your_pin">Создайте свой PIN</string>
 </resources>

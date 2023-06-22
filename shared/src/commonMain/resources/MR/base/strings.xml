@@ -9,4 +9,6 @@
     <string name="password">Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="write_your_data">Write your data, please</string>
+    <string name="write_your_pin">Write your PIN</string>
+    <string name="create_your_pin">Create your PIN</string>
 </resources>
