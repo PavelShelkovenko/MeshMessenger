@@ -1,5 +1,8 @@
 package com.example.meshmessenger.android.root
 
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +25,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val bluetoothManager: BluetoothManager by lazy {
+            getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        }
+        val bluetoothAdapter: BluetoothAdapter by lazy { bluetoothManager.adapter }
+        val bleAdvertiser by lazy { bluetoothAdapter.bluetoothLeAdvertiser }
 
         val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
 
@@ -48,6 +56,9 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
+                        bluetoothAdapter = bluetoothAdapter,
+                        bluetoothLeAdvertiser = bleAdvertiser,
+                        bluetoothManager = bluetoothManager
                     )
                 }
             }

@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel: ViewModel() {
 
-    private var initialTextState: String = ""
+    private var initialTextState: String
 
     private var currentAttempt : CMutableStateFlow<Int> = MutableStateFlow(5).cMutableStateFlow()
 
@@ -30,8 +30,7 @@ class LoginViewModel: ViewModel() {
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
 
-    private val _textState: MutableStateFlow<String> = MutableStateFlow(initialTextState)
-    val textState: CStateFlow<String> = _textState.cStateFlow()
+
 
     init {
 
@@ -42,10 +41,10 @@ class LoginViewModel: ViewModel() {
         } else {
             "Введите пин"
         }
-        isAnimAccessGrantedPlaying.value = false
-        _textState.value = "Введите пин"
-        currentAttempt.value = 5
+
     }
+    private val _textState: MutableStateFlow<String> = MutableStateFlow(initialTextState)
+    val textState: CStateFlow<String> = _textState.cStateFlow()
 
     fun signIN(){
         viewModelScope.launch {
@@ -60,9 +59,9 @@ class LoginViewModel: ViewModel() {
                         isAnimAccessGrantedPlaying.value = true
                          delay(2000)
                         _actions.send(Action.LoginSuccess)
-//                        isAnimAccessGrantedPlaying.value = false
-//                        _textState.value = "Введите пин"
-//                        currentAttempt.value = 5
+                        isAnimAccessGrantedPlaying.value = false
+                        _textState.value = "Введите пин"
+                        currentAttempt.value = 5
                     } else {
                         _textState.value = "Неверный пин \n осталось ${currentAttempt.value} попыток"
                         currentAttempt.value = currentAttempt.value - 1
