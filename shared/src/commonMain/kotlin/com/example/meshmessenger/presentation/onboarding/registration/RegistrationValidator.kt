@@ -38,7 +38,8 @@ class RegistrationValidator() {
                 )
             }
             return ValidationResult(
-                successful = true
+                successful = true,
+                errorMessage = null
             )
         }
     }
@@ -61,7 +62,8 @@ class RegistrationValidator() {
                 )
             }
             return ValidationResult(
-                successful = true
+                successful = true,
+                errorMessage = null
             )
         }
     }

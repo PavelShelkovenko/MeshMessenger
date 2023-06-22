@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.*
+import androidx.compose.ui.text.input.* import androidx.compose.ui.text.style.TextAlign
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.root.stringResource
@@ -26,6 +26,7 @@ import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationEvent
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
+
 
 @Composable
 fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
@@ -59,11 +60,13 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
         Spacer(modifier = Modifier.height(15.dp))
 
         Text(
-            modifier = Modifier,
+            modifier = Modifier
+                .fillMaxWidth(0.8f),
             text = state.errorText ?: "",
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 18.sp,
+            textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
         )
 
@@ -73,9 +76,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             value = state.email,
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.EmailChanged(it))
-                registrationViewModel.validateData()
+                registrationViewModel.validateEmail()
             },
-            isError = state.emailError != null,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
@@ -131,7 +133,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             value = state.password,
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.PasswordChanged(it))
-                registrationViewModel.validateData()
+                registrationViewModel.validatePassword()
             },
             Modifier
                 .fillMaxWidth()
@@ -214,7 +216,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 pressedElevation = 2.dp
             ),
             shape = CircleShape,
-            enabled = (state.errorText == null)
+            enabled = registrationViewModel.validateData()//(state.errorText == "Скорее присоединяйся")
         ) {
             Text(
                 text = stringResource(id = SharedRes.strings.sign_up),

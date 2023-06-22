@@ -34,26 +34,41 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
         }
     }
 
-    fun validateData() {
+
+    fun validateEmail(): Boolean {
         val emailResult = validator.validateEmail.execute(state.value.email)
-        val passwordResult = validator.validatePassword.execute(state.value.password)
-
-        val hasError = listOf(
-            emailResult,
-            passwordResult,
-        ).any { !it.successful }
-
-        if(hasError) {
+        val emailError = emailResult.errorMessage
+        if (emailError != null) {
             state.value = state.value.copy(
-                emailError = emailResult.errorMessage,
-                passwordError = passwordResult.errorMessage,
-                errorText = "error"
+                emailError = emailError,
+                errorText = emailError
             )
-            return
+            return false
         }
-        state.value = state.value.copy(
-            errorText = null
-        )
+        return true
+    }
+
+    fun validatePassword(): Boolean {
+        val passwordResult = validator.validatePassword.execute(state.value.password)
+        val passwordError = passwordResult.errorMessage
+        if (passwordError != null) {
+            state.value = state.value.copy(
+                passwordError = passwordError,
+                errorText = passwordError
+            )
+            return false
+        }
+        return true
+    }
+
+    fun validateData(): Boolean {
+        if (validatePassword() and validateEmail()) {
+            state.value = state.value.copy(
+                errorText = "Join us!"
+            )
+            return true
+        }
+        return false
     }
 
     fun signUp() {
@@ -64,39 +79,6 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
         }
     }
 
-//    fun isDataValid() {
-//        viewModelScope.launch {
-//            if(login.value.isEmpty()){
-//                _textOfState.value = "Логин не должен быть пустым"
-//                _isGoodLogin.value = false
-//            } else if(!login.value.contains("@")){
-//                _textOfState.value = "Неверный логин, нет @"
-//                _isGoodLogin.value = false
-//            } else if(login.value.length < 5){
-//                _isGoodLogin.value = false
-//                _textOfState.value = "Короткий логин"
-//            }else if(login.value.length > 20){
-//                _textOfState.value = "Длинный логин"
-//                _isGoodLogin.value = false
-//            } else if(password.value.isEmpty()){
-//                _textOfState.value = "Пароль не должен быть пустым"
-//                _isGoodPassword.value = false
-//            } else if(password.value.length < 5){
-//                _textOfState.value = "Короткий пароль"
-//                _isGoodPassword.value = false
-//            } else if(password.value.length > 20){
-//                _textOfState.value = "Длинный пароль"
-//                _isGoodPassword.value = false
-//            } else if(password.value.length > 20){
-//                _textOfState.value = "длинный пароль"
-//                _isGoodPassword.value = false
-//            } else {
-//                _isGoodLogin.value = true
-//                _isGoodPassword.value = true
-//                _textOfState.value = "Скорее  присоединяйся!"
-//            }
-//        }
-//    }
 
     interface Action {
         object RegistrationSuccess: Action
