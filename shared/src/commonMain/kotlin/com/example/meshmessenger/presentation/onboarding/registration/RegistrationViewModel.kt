@@ -14,21 +14,6 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
     var state: CMutableStateFlow<RegistrationState> =
         MutableStateFlow(RegistrationState()).cMutableStateFlow()
 
-    //    private val _isGoodLogin : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
-//    var isGoodLogin : CStateFlow<Boolean> = _isGoodLogin.cStateFlow()
-//
-//    private val _isGoodPassword : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
-//    val isGoodPassword : CStateFlow<Boolean> = _isGoodPassword.cStateFlow()
-//
-//    val login : CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
-//    val password : CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
-//
-//    private val _textOfState: CMutableStateFlow<String> = MutableStateFlow("Write your data, pls").cMutableStateFlow()
-//    val textOfState: CStateFlow<String> = _textOfState.cStateFlow()
-//
-//    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(false)
-//    //val isLoading: CStateFlow<Boolean> = _isLoading.cStateFlow()
-
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
 
@@ -40,14 +25,16 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
             is RegistrationEvent.PasswordChanged -> {
                 state.value = state.value.copy(password = event.password)
             }
+            is RegistrationEvent.ErrorTextChanged -> {
+                state.value = state.value.copy(errorText = event.error)
+            }
             is RegistrationEvent.SignUp -> {
                 signUp()
             }
         }
     }
 
-    fun signUp(){
-
+    fun validateData() {
         val emailResult = validator.validateEmail.execute(state.value.email)
         val passwordResult = validator.validatePassword.execute(state.value.password)
 
@@ -60,10 +47,16 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
             state.value = state.value.copy(
                 emailError = emailResult.errorMessage,
                 passwordError = passwordResult.errorMessage,
+                errorText = "error"
             )
             return
         }
+        state.value = state.value.copy(
+            errorText = null
+        )
+    }
 
+    fun signUp() {
         viewModelScope.launch {
             SharedStorage.secureSave(state.value.email, "login")      //шифруем данные
             SharedStorage.secureSave(state.value.password, "password")//и записываем в encrypted sp

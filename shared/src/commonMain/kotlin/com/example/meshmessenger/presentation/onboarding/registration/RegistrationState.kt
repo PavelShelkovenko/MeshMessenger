@@ -5,4 +5,5 @@ data class RegistrationState(
     val emailError: String? = null,
     val password: String = "",
     val passwordError: String? = null,
+    val errorText: String? = ""
 )

@@ -58,14 +58,14 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
 
         Spacer(modifier = Modifier.height(15.dp))
 
-//        Text(
-//            modifier = Modifier,
-//            text = textOfState,
-//            fontFamily = Poppins,
-//            color = PrimaryColor,
-//            fontSize = 18.sp,
-//            fontWeight = FontWeight.Bold,
-//        )
+        Text(
+            modifier = Modifier,
+            text = state.errorText ?: "",
+            fontFamily = Poppins,
+            color = PrimaryColor,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+        )
 
         Spacer(modifier = Modifier.fillMaxHeight(0.05f))
 
@@ -73,6 +73,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             value = state.email,
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.EmailChanged(it))
+                registrationViewModel.validateData()
             },
             isError = state.emailError != null,
             modifier = Modifier
@@ -125,18 +126,12 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 focusManager.moveFocus(FocusDirection.Down)
             }),
         )
-        if (state.emailError != null) {
-            Text(
-                text = state.emailError!!,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
-        }
 
         TextField(
             value = state.password,
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.PasswordChanged(it))
+                registrationViewModel.validateData()
             },
             Modifier
                 .fillMaxWidth()
@@ -203,13 +198,6 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 }
             }
         )
-        if (state.passwordError != null) {
-            Text(
-                text = state.passwordError!!,
-                color = MaterialTheme.colors.error,
-                modifier = Modifier.align(Alignment.End)
-            )
-        }
 
         Button(
             onClick = registrationViewModel::signUp,
@@ -225,7 +213,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 defaultElevation = 0.dp,
                 pressedElevation = 2.dp
             ),
-            shape = CircleShape
+            shape = CircleShape,
+            enabled = (state.errorText == null)
         ) {
             Text(
                 text = stringResource(id = SharedRes.strings.sign_up),
