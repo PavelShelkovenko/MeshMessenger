@@ -1,5 +1,8 @@
 package com.example.meshmessenger.android.root
 
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.bluetooth.le.BluetoothLeAdvertiser
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.compose.runtime.Composable
@@ -38,7 +41,10 @@ fun Root(
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
     registrationViewModel: RegistrationViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
-    messageViewModel: MessageViewModel = koinViewModel()
+    messageViewModel: MessageViewModel = koinViewModel(),
+    bluetoothManager: BluetoothManager,
+    bluetoothAdapter: BluetoothAdapter,
+    bluetoothLeAdvertiser: BluetoothLeAdvertiser,
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -105,7 +111,11 @@ fun Root(
             )
         }
         composable("ble") {
-            BleUI()
+            BleUI(
+                bluetoothManager = bluetoothManager,
+                bluetoothLeAdvertiser = bluetoothLeAdvertiser,
+                bluetoothAdapter = bluetoothAdapter
+            )
         }
     }
 }
