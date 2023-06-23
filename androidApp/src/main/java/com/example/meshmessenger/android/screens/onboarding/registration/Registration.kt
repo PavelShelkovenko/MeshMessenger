@@ -42,13 +42,13 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
         }
     }
 
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
 
-    Box(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 60.dp, horizontal = 40.dp),
-        contentAlignment = Alignment.TopCenter
-    )
-    {
         Text(
             text = stringResource(id = SharedRes.strings.welcome),
             fontFamily = Poppins,
@@ -57,18 +57,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-    }
 
-
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-
-
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         Text(
             modifier = Modifier
