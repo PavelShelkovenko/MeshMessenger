@@ -42,6 +42,24 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
         }
     }
 
+
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(vertical = 60.dp, horizontal = 40.dp),
+        contentAlignment = Alignment.TopCenter
+    )
+    {
+        Text(
+            text = stringResource(id = SharedRes.strings.welcome),
+            fontFamily = Poppins,
+            color = PrimaryColor,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+        )
+    }
+
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -49,13 +67,6 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             .fillMaxSize()
     ) {
 
-        Text(
-            text = stringResource(id = SharedRes.strings.welcome),
-            fontFamily = Poppins,
-            color = PrimaryColor,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-        )
 
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -77,6 +88,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.EmailChanged(it))
                 registrationViewModel.validateEmail()
+                registrationViewModel.validateData()
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -134,6 +146,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             onValueChange = {
                 registrationViewModel.onEvent(RegistrationEvent.PasswordChanged(it))
                 registrationViewModel.validatePassword()
+                registrationViewModel.validateData()
             },
             Modifier
                 .fillMaxWidth()
@@ -170,7 +183,10 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 }
             },
             placeholder = {
-                Text(text = stringResource(id = SharedRes.strings.password), color = PlaceholderColor)
+                Text(
+                    text = stringResource(id = SharedRes.strings.password),
+                    color = PlaceholderColor
+                )
             },
             textStyle = TextStyle(
                 fontSize = 14.sp,
@@ -216,7 +232,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 pressedElevation = 2.dp
             ),
             shape = CircleShape,
-            enabled = registrationViewModel.validateData()//(state.errorText == "Скорее присоединяйся")
+            enabled = registrationViewModel.validateData()
         ) {
             Text(
                 text = stringResource(id = SharedRes.strings.sign_up),

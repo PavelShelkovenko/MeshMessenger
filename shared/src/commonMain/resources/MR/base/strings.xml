@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="empty_string"> </string>
     <string name="welcome">Welcome to MeshApp</string>
     <string name="topAppBar_text">Mesh Messenger</string>
     <string name="work_BLE">Work with BLE</string>
@@ -11,4 +12,11 @@
     <string name="write_your_data">Write your data, please</string>
     <string name="write_your_pin">Write your PIN</string>
     <string name="create_your_pin">Create your PIN</string>
+    <string name="join_us">Join us!</string>
+    <string name="blank_email">Email cant be blank</string>
+    <string name="no_email_char">There is no @ in your email</string>
+    <string name="short_email">Your email is too short</string>
+    <string name="long_email">Your email is too long</string>
+    <string name="short_password">The password needs to consist of at least 5 charactersg</string>
+    <string name="one_letter_one_digit_password">The password needs to contain at least one letter and digit</string>
 </resources>

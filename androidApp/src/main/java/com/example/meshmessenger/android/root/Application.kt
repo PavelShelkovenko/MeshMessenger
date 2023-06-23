@@ -22,7 +22,7 @@ class Application : Application()  {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
                 viewModel { LoginViewModel() }
-                viewModel { RegistrationViewModel(validator = get()) }
+                viewModel { RegistrationViewModel(sharedStrings = get()) }
                 viewModel { ChatViewModel(databaseRepository = get()) }
                 viewModel { MessageViewModel(databaseRepository = get()) }
                 single {

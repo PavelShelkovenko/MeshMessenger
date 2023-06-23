@@ -1,5 +1,7 @@
 package com.example.meshmessenger.presentation.onboarding.registration
 
+import com.example.meshmessenger.SharedRes
+import com.example.meshmessenger.Strings
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.*
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
@@ -9,7 +11,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
-class RegistrationViewModel(private val validator: RegistrationValidator) : ViewModel() {
+class RegistrationViewModel(private val sharedStrings: Strings) : ViewModel() {
+
+    private val validator: RegistrationValidator = RegistrationValidator(sharedStrings)
 
     var state: CMutableStateFlow<RegistrationState> =
         MutableStateFlow(RegistrationState()).cMutableStateFlow()
@@ -45,6 +49,10 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
             )
             return false
         }
+        state.value = state.value.copy(
+            emailError = emailError,
+            errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
+        )
         return true
     }
 
@@ -58,13 +66,17 @@ class RegistrationViewModel(private val validator: RegistrationValidator) : View
             )
             return false
         }
+        state.value = state.value.copy(
+            passwordError = passwordError,
+            errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
+        )
         return true
     }
 
     fun validateData(): Boolean {
-        if (validatePassword() and validateEmail()) {
+        if (state.value.emailError == null && state.value.passwordError == null) {
             state.value = state.value.copy(
-                errorText = "Join us!"
+                errorText = sharedStrings.get(SharedRes.strings.join_us, listOf())
             )
             return true
         }
