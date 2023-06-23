@@ -9,7 +9,8 @@
     <string name="username">Имя</string>
     <string name="password">Пароль</string>
     <string name="sign_up">Зарегистрироваться</string>
-    <string name="enter_your_pin">Введите свой пин</string>
+    <string name="write_your_data">Введите свои данные, пожалуйста</string>
+    <string name="write_your_pin">Введите свой пин</string>
     <string name="create_your_pin">Создайте свой PIN</string>
     <string name="join_us">Присоединяйся к нам!</string>
     <string name="blank_email">Логин не может быть пустым</string>

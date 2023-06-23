@@ -74,6 +74,14 @@ class RegistrationViewModel(private val sharedStrings: Strings) : ViewModel() {
     }
 
     fun validateData(): Boolean {
+
+        if (state.value.emailError == "" && state.value.passwordError == "") {
+            state.value = state.value.copy(
+                errorText = sharedStrings.get(SharedRes.strings.write_your_data, listOf())
+            )
+            return false
+        }
+
         if (state.value.emailError == null && state.value.passwordError == null) {
             state.value = state.value.copy(
                 errorText = sharedStrings.get(SharedRes.strings.join_us, listOf())
