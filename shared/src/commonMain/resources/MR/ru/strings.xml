@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="empty_string"> </string>
     <string name="welcome">Приветствуем в MeshApp</string>
     <string name="topAppBar_text">Mesh Мессенджер</string>
     <string name="work_BLE">Работа с BLE</string>
@@ -10,4 +11,11 @@
     <string name="sign_up">Зарегистрироваться</string>
     <string name="enter_your_pin">Введите свой пин</string>
     <string name="create_your_pin">Создайте свой PIN</string>
+    <string name="join_us">Присоединяйся к нам!</string>
+    <string name="blank_email">Логин не может быть пустым</string>
+    <string name="no_email_char">Должен присутствовать @ в логине</string>
+    <string name="short_email">Слишком короткий логин</string>
+    <string name="long_email">Слишком длинный логин</string>
+    <string name="short_password">Пароль должен содержать минимум 5 символов</string>
+    <string name="one_letter_one_digit_password">В пароле должна быть как минимум 1 цифра и 1 буква</string>
 </resources>

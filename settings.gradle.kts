@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "MeshMessenger"
 include(":androidApp")
 include(":shared")
+//include(":kab")

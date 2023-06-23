@@ -12,6 +12,10 @@ buildscript {
     }
 }
 
+//dependencies {
+//    project(":kab")
+//}
+
 allprojects {
     repositories {
         google()

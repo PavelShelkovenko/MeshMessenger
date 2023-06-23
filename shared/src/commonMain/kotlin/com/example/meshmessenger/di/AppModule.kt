@@ -74,7 +74,7 @@ private val coreModule = module {
     }
 
     single {
-        RegistrationValidator()
+        RegistrationValidator(sharedString = get())
     }
 
 }

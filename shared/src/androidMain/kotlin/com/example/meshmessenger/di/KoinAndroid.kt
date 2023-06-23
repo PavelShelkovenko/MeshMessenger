@@ -1,5 +1,6 @@
 package com.example.meshmessenger.di
 
+import com.example.meshmessenger.Strings
 import com.example.meshmessenger.database.AppDatabase
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
@@ -14,5 +15,5 @@ actual val platformModule: Module = module {
             "appDatabase.db"
         )
     }
-
+    single { Strings(get()) }
 }
