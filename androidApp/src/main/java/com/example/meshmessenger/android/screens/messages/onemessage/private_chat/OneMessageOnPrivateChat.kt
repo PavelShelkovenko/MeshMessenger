@@ -1,5 +1,7 @@
 package com.example.meshmessenger.android.screens.messages.onemessage.private_chat
 
+import android.util.Log
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -11,12 +13,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.screens.messages.roundedCornerShapeDefine
+import com.example.meshmessenger.android.screens.TAG
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.data.Message
 
 @Composable
 fun OneMessageOnPrivateChat(message: Message) {
+
     Row(
         verticalAlignment = Alignment.Bottom,
         horizontalArrangement = if (message.id == 1) Arrangement.End else Arrangement.Start, //
@@ -24,22 +27,34 @@ fun OneMessageOnPrivateChat(message: Message) {
     ) {
 
         Surface(
-            shape = roundedCornerShapeDefine(id = message.id),
+            shape = if (message.id == 1) {
+                Log.e(TAG, "first")
+                ShapesOfPrivateTextMessages(25f, isLastMessage = true, isMyMessage = true)
+            } else {
+                Log.e(TAG, "second")
+                ShapesOfPrivateTextMessages(25f, isLastMessage = true, isMyMessage = false)
+            },
             elevation = 5.dp,
             modifier = Modifier
                 .wrapContentWidth()
-                .widthIn(
-                    max = 340.dp,
-                    min = 80.dp
-                )    //чтобы задать макс и мин длину, через fraction не работает
+                .widthIn(max = 340.dp, min = 80.dp)    //чтобы задать макс и мин длину, через fraction не работает
                 .padding(
                     bottom = 15.dp,
                     start = 15.dp,
-                    end = 15.dp
+                    end = 2.dp
                 ), //чтобы фотка была ниже чем текст сообщения
         ) {
+
             Column(
-                modifier = Modifier.wrapContentWidth(),
+                modifier = if (message.id == 1) {
+                    Modifier
+                        .wrapContentWidth()
+                        .padding(end = 15.dp)
+                } else {
+                    Modifier
+                        .wrapContentWidth()
+                        .padding(start = 15.dp)
+                },
                 horizontalAlignment = if (message.id == 1) Alignment.End else Alignment.Start, //
                 verticalArrangement = Arrangement.Center
             ) {
