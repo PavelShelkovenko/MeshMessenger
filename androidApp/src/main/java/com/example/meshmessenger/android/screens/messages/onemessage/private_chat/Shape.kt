@@ -9,8 +9,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 
 class ShapesOfPrivateTextMessages(
-    private val cornerRadius: Float,
-    private val isLastMessage: Boolean,
+    private val cornerRadius: Float = 25f,
     private val isMyMessage: Boolean
 ) : Shape {
 
@@ -20,7 +19,7 @@ class ShapesOfPrivateTextMessages(
         density: Density
     ) =
 
-        if (isMyMessage && isLastMessage) {
+        if (isMyMessage) {
             Outline.Generic(path = drawMyLastMessage(size = size, cornerRadius = cornerRadius))
         } else {
              Outline.Generic(path = drawMyNotLastMessage(size = size, cornerRadius = cornerRadius))

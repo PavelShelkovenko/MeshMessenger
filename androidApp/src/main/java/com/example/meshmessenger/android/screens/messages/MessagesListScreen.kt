@@ -240,7 +240,7 @@ fun MessagesListScreen(
             coroutineScope.launch {
                 listState.scrollToItem(messagesList.lastIndex)
             }
-            items(messagesList.shuffled()) { message ->
+            items(messagesList) { message ->
                 when (chatName) {
                     "Для приватных чатов" -> {
                         Spacer(modifier = Modifier.height(1.dp))
