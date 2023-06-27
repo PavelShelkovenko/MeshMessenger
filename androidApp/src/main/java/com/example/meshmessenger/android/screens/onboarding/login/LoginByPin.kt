@@ -1,6 +1,5 @@
 package com.example.meshmessenger.android.screens.onboarding.login
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -19,6 +18,7 @@ import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
+import com.example.meshmessenger.presentation.onboarding.login.LoginState
 import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
@@ -28,7 +28,6 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit   ) {
 
     val state by loginViewModel.state.collectAsState()
-    val pinState = remember { mutableStateOf(state.pinState) }
 
     val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
 
@@ -98,8 +97,9 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
         )
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        Log.e("LOL", "1")
-        PinState(pinState, loginViewModel)
+        PinState(state) { pinAttempt ->
+            loginViewModel.onEvent(LoginEvent.LoginAttempt(pinAttempt))
+        }
     }
 
     Keyboard(state.keyboardEnabled) { value ->
@@ -108,14 +108,14 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
 }
 
 @Composable
-fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
+fun PinState(state: LoginState,loginAttempt: (String) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        if (currentPin.value == "") {
+        if (state.pinState == "") {
             for (i in 0 until 4) {
                 Icon(
                     painter = painterResource(id = R.drawable.empty_circle),
@@ -126,7 +126,7 @@ fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
             }
         }
 
-        if (currentPin.value.length == 1) {
+        if (state.pinState.length == 1) {
 
             for (i in 0 until 1) {
                 Icon(
@@ -147,7 +147,7 @@ fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
             }
         }
 
-        if (currentPin.value.length == 2) {
+        if (state.pinState.length == 2) {
 
             for (i in 0 until 2) {
                 Icon(
@@ -168,7 +168,7 @@ fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
             }
         }
 
-        if (currentPin.value.length == 3) {
+        if (state.pinState.length == 3) {
 
             for (i in 0 until 3) {
                 Icon(
@@ -189,7 +189,7 @@ fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
             }
         }
 
-        if (currentPin.value.length == 4) {
+        if (state.pinState.length == 4) {
 
             for (i in 0 until 4) {
                 Icon(
@@ -199,7 +199,7 @@ fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
                     modifier = Modifier.padding(10.dp)
                 )
             }
-            loginViewModel.onEvent(LoginEvent.LoginAttempt(currentPin.value))
+            loginAttempt(state.pinState)
         }
     }
 }

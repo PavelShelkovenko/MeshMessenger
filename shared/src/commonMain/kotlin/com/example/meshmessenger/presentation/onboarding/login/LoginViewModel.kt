@@ -7,6 +7,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
@@ -17,6 +18,7 @@ class LoginViewModel: ViewModel() {
 
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
+
     val isAnimAccessGrantedPlaying : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
 
     init {
@@ -37,9 +39,6 @@ class LoginViewModel: ViewModel() {
             is LoginEvent.PinChanged -> {
                 changePinValue(event.value)
             }
-            is LoginEvent.AttemptsChanged -> {
-                state.value = state.value.copy(remainingAttempts = state.value.remainingAttempts - 1)
-            }
             is LoginEvent.LoginSuccess -> {
                 viewModelScope.launch {
                     _actions.send(Action.LoginSuccess)
@@ -54,10 +53,7 @@ class LoginViewModel: ViewModel() {
         }
     }
 
-//    private val _textState: MutableStateFlow<String> = MutableStateFlow(initialTextState)
-//    val textState: CStateFlow<String> = _textState.cStateFlow()
-
-    fun tryLogin(pinAttempt: String) {
+    private fun tryLogin(pinAttempt: String) {
         viewModelScope.launch {
             if (state.value.remainingAttempts > 0) {
                 if (state.value.informText == "Создайте пин") {
@@ -74,8 +70,9 @@ class LoginViewModel: ViewModel() {
                     } else {
                         state.value = state.value.copy(
                             informText = "Неверный пин \n осталось ${state.value.remainingAttempts} попыток",
+                            remainingAttempts = state.value.remainingAttempts - 1,
+                            pinState = ""
                         )
-                        onEvent(LoginEvent.AttemptsChanged)
                     }
                 }
             } else {
@@ -86,9 +83,12 @@ class LoginViewModel: ViewModel() {
 
     private fun block(){
         viewModelScope.launch {
-            state.value = state.value.copy(
-                keyboardEnabled = false
-            )
+            state.update {
+                state.value.copy(
+                    pinState = "",
+                    keyboardEnabled = false
+                )
+            }
             for(i in 30 downTo 1){
                 state.value = state.value.copy(
                     timer = i,
