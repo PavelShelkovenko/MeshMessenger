@@ -8,7 +8,7 @@ import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
-import com.example.meshmessenger.presentation.onboarding.LoginViewModel
+import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
