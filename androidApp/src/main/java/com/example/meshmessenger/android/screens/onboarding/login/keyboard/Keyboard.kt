@@ -31,7 +31,6 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
 
     val activity = LocalContext.current as? Activity
 
-
     Box(contentAlignment = BottomCenter,
         modifier = Modifier
             .padding(bottom = 20.dp)

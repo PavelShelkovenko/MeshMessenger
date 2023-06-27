@@ -1,5 +1,6 @@
 package com.example.meshmessenger.android.screens.onboarding.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,7 +18,8 @@ import com.example.meshmessenger.android.screens.onboarding.login.keyboard.Keybo
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
-import com.example.meshmessenger.presentation.onboarding.LoginViewModel
+import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
+import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
 import com.linecorp.abc.sharedstorage.SharedStorage
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 import org.koin.androidx.compose.koinViewModel
@@ -25,8 +27,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit   ) {
 
-    val textOfState by loginViewModel.textState.collectAsState()
-    val isKeyboardEnabled by loginViewModel.isKeyboardEnabled.collectAsState()
+    val state by loginViewModel.state.collectAsState()
+    val pinState = remember { mutableStateOf(state.pinState) }
+
     val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted))
@@ -39,9 +42,13 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
     )
 
     loginViewModel.actions.observeAsActions { action ->
-        when(action){
-            LoginViewModel.Action.AttemptsExceeded -> { loginViewModel.timer() }
-            LoginViewModel.Action.LoginSuccess -> { loginSuccess() }
+        when(action) {
+            LoginViewModel.Action.AttemptsExceeded -> {
+                loginViewModel.onEvent(LoginEvent.AttemptsExceeded)
+            }
+            LoginViewModel.Action.LoginSuccess -> {
+                loginSuccess()
+            }
         }
     }
 
@@ -76,7 +83,7 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             .fillMaxWidth()
     ) {
 
-        Text(text = textOfState,
+        Text(text = state.informText,
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
@@ -91,25 +98,24 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
         )
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        PinState(loginViewModel)
+        Log.e("LOL", "1")
+        PinState(pinState, loginViewModel)
     }
 
-    Keyboard(isKeyboardEnabled) { value ->
-        loginViewModel.changePinValue(value)
+    Keyboard(state.keyboardEnabled) { value ->
+        loginViewModel.onEvent(LoginEvent.PinChanged(value))
     }
 }
 
 @Composable
-fun PinState(loginViewModel: LoginViewModel) {
-
-    val pinState: String by loginViewModel.pin.collectAsState()
+fun PinState(currentPin: MutableState<String>, loginViewModel: LoginViewModel) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        if (pinState == "") {
+        if (currentPin.value == "") {
             for (i in 0 until 4) {
                 Icon(
                     painter = painterResource(id = R.drawable.empty_circle),
@@ -120,7 +126,7 @@ fun PinState(loginViewModel: LoginViewModel) {
             }
         }
 
-        if (pinState.length == 1) {
+        if (currentPin.value.length == 1) {
 
             for (i in 0 until 1) {
                 Icon(
@@ -141,7 +147,7 @@ fun PinState(loginViewModel: LoginViewModel) {
             }
         }
 
-        if (pinState.length == 2) {
+        if (currentPin.value.length == 2) {
 
             for (i in 0 until 2) {
                 Icon(
@@ -162,7 +168,7 @@ fun PinState(loginViewModel: LoginViewModel) {
             }
         }
 
-        if (pinState.length == 3) {
+        if (currentPin.value.length == 3) {
 
             for (i in 0 until 3) {
                 Icon(
@@ -183,7 +189,7 @@ fun PinState(loginViewModel: LoginViewModel) {
             }
         }
 
-        if (pinState.length == 4) {
+        if (currentPin.value.length == 4) {
 
             for (i in 0 until 4) {
                 Icon(
@@ -193,8 +199,7 @@ fun PinState(loginViewModel: LoginViewModel) {
                     modifier = Modifier.padding(10.dp)
                 )
             }
-
-            loginViewModel.signIN()
+            loginViewModel.onEvent(LoginEvent.LoginAttempt(currentPin.value))
         }
     }
 }
