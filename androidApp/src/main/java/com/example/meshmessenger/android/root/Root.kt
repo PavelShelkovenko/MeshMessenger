@@ -54,8 +54,8 @@ fun Root(
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
             if (event == Lifecycle.Event.ON_CREATE) {
-                val loginValue: String = secureStore.string(forKey = "login") ?: " "
-                //val pswValue: String = secureStore.string(forKey = "password") ?: ""
+                val loginValue: String = secureStore.string(forKey = "login") ?: ""
+                val pswValue: String = secureStore.string(forKey = "password") ?: ""
                 if (loginValue == "") {
                     callRegister()
                 } else if ( saveTime() ) {
