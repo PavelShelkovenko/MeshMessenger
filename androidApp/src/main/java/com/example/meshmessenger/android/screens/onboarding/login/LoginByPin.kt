@@ -20,8 +20,9 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
 import com.example.meshmessenger.presentation.onboarding.login.LoginState
 import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
-import com.linecorp.abc.sharedstorage.SharedStorage
+import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -30,6 +31,8 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
     val state by loginViewModel.state.collectAsState()
 
     val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
+
+    val securedStore: KVault = get()
 
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted))
     val progress by animateLottieCompositionAsState(
@@ -89,7 +92,7 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        Text(text = SharedStorage.secureLoad("login", "Unknown user"),
+        Text(text = securedStore.string(forKey = "login") ?: "Unknown user",
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,

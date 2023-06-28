@@ -21,8 +21,8 @@ class Application : Application()  {
             module {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
-                viewModel { LoginViewModel() }
-                viewModel { RegistrationViewModel(sharedStrings = get()) }
+                viewModel { LoginViewModel(securedStore = get()) }
+                viewModel { RegistrationViewModel(sharedStrings = get(), securedStore = get()) }
                 viewModel { ChatViewModel(databaseRepository = get()) }
                 viewModel { MessageViewModel(databaseRepository = get()) }
                 single {

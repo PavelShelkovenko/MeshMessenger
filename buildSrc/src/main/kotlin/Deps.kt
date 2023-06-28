@@ -86,6 +86,9 @@ object Deps {
 
         // Kable
         const val kable = "com.juul.kable:core:${Versions.kableVersion}"
+
+        //Kvault
+        const val kvault = "com.liftric:kvault:${Versions.kvaultVersion}"
     }
 
     object IOS {

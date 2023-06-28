@@ -26,7 +26,8 @@ import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
-import com.linecorp.abc.sharedstorage.SharedStorage
+import com.liftric.kvault.KVault
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -48,13 +49,14 @@ fun Root(
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
+    val secureStore: KVault = get()
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START) {
-                val pswValue: String = SharedStorage.secureLoad("login", "")
-                val loginValue: String = SharedStorage.secureLoad("password", "")
-                if (pswValue == "" || loginValue == "") {
+            if (event == Lifecycle.Event.ON_CREATE) {
+                val loginValue: String = secureStore.string(forKey = "login") ?: " "
+                //val pswValue: String = secureStore.string(forKey = "password") ?: ""
+                if (loginValue == "") {
                     callRegister()
                 } else if ( saveTime() ) {
                     callPin()
