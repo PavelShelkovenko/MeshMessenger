@@ -28,12 +28,6 @@ kotlin {
             export(Deps.Multiplatform.mokoSharedRes)
             export(Deps.Multiplatform.mokoGraphics)
         }
-        binaries
-            .filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
-            .forEach {
-                it.transitiveExport = true
-                //it.export(Deps.Multiplatform.sharedStorage)
-            }
     }
 
     cocoapods {
@@ -63,9 +57,6 @@ kotlin {
                 implementation(Deps.Multiplatform.ktorCore)
                 implementation(Deps.Multiplatform.ktorSerialization)
                 implementation(Deps.Multiplatform.ktorSerializationJson)
-
-                // Shared Storage
-                //implementation(Deps.Multiplatform.sharedStorage)
 
                 // SQLDelight
                 implementation(Deps.Multiplatform.sqlDelightRuntime)
@@ -106,10 +97,6 @@ kotlin {
                 implementation(Deps.Android.coroutines)
                 api(Deps.Android.coroutines)
 
-                // Shared Storage
-                //implementation(Deps.Android.sharedStorage)
-                //api(Deps.Android.sharedStorage)
-
                 // MOKO-MVVM
                 api(Deps.Android.mokoFlowCompose)
 
@@ -134,10 +121,6 @@ kotlin {
 
                 // SQLDelight
                 implementation(Deps.IOS.sqlDelightIOSDriver)
-
-                // Shared Storage
-                //implementation(Deps.IOS.sharedStorage)
-                //api(Deps.IOS.sharedStorage)
 
                 //Kvault
                 implementation(Deps.Multiplatform.kvault)
@@ -174,3 +157,4 @@ android {
         minSdk = Versions.minSdk
     }
 }
+
