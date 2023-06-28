@@ -43,9 +43,6 @@ object Deps {
         const val koinAndroidCompose = "io.insert-koin:koin-androidx-compose:${Versions.koinVersion}"
         const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
 
-        // Shared Storage
-        const val sharedStorage = "com.linecorp.abc:kmm-shared-storage:${Versions.sharedStorageVersion}"
-
         // MOKO-MVVM
         const val mokoFlowCompose = "dev.icerock.moko:mvvm-flow-compose:${Versions.mokoMvvmVersion}"
 
@@ -69,8 +66,6 @@ object Deps {
         const val sqlDelightRuntime = "com.squareup.sqldelight:runtime:${Versions.sqlDelightVersion}"
         const val sqlDelightCoroutinesExtensions = "com.squareup.sqldelight:coroutines-extensions:${Versions.sqlDelightVersion}"
 
-        // Shared Storage
-        const val sharedStorage = "com.linecorp.abc:kmm-shared-storage:${Versions.sharedStorageVersion}"
 
         // Koin
         const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
@@ -99,8 +94,6 @@ object Deps {
         // SQLdelight
         const val sqlDelightIOSDriver = "com.squareup.sqldelight:native-driver:${Versions.sqlDelightVersion}"
 
-        // Shared Storage
-        const val sharedStorage = "com.linecorp.abc:kmm-shared-storage:${Versions.sharedStorageVersion}"
     }
 
 }

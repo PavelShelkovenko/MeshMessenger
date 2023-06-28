@@ -28,9 +28,6 @@ object Versions {
     const val sqlDelightVersion = "1.5.5"
     const val sqlDelightGradleVersion = "1.5.5"
 
-    // Shared Storage
-    const val sharedStorageVersion = "1.0.2"
-
     // Koin
     const val koinVersion = "3.4.0"
 
