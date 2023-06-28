@@ -32,7 +32,7 @@ kotlin {
             .filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
             .forEach {
                 it.transitiveExport = true
-                it.export(Deps.Multiplatform.sharedStorage)
+                //it.export(Deps.Multiplatform.sharedStorage)
             }
     }
 
@@ -65,7 +65,7 @@ kotlin {
                 implementation(Deps.Multiplatform.ktorSerializationJson)
 
                 // Shared Storage
-                implementation(Deps.Multiplatform.sharedStorage)
+                //implementation(Deps.Multiplatform.sharedStorage)
 
                 // SQLDelight
                 implementation(Deps.Multiplatform.sqlDelightRuntime)
@@ -83,6 +83,9 @@ kotlin {
 
                 //kable
                 implementation(Deps.Multiplatform.kable)
+
+                //Kvault
+                implementation(Deps.Multiplatform.kvault)
             }
         }
         val commonTest by getting {
@@ -104,11 +107,14 @@ kotlin {
                 api(Deps.Android.coroutines)
 
                 // Shared Storage
-                implementation(Deps.Android.sharedStorage)
-                api(Deps.Android.sharedStorage)
+                //implementation(Deps.Android.sharedStorage)
+                //api(Deps.Android.sharedStorage)
 
                 // MOKO-MVVM
                 api(Deps.Android.mokoFlowCompose)
+
+                // Kvault
+                implementation(Deps.Multiplatform.kvault)
             }
         }
         val androidUnitTest by getting
@@ -130,8 +136,11 @@ kotlin {
                 implementation(Deps.IOS.sqlDelightIOSDriver)
 
                 // Shared Storage
-                implementation(Deps.IOS.sharedStorage)
-                api(Deps.IOS.sharedStorage)
+                //implementation(Deps.IOS.sharedStorage)
+                //api(Deps.IOS.sharedStorage)
+
+                //Kvault
+                implementation(Deps.Multiplatform.kvault)
             }
         }
         val iosX64Test by getting

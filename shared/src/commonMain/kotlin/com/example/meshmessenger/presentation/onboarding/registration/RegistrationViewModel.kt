@@ -2,7 +2,7 @@ package com.example.meshmessenger.presentation.onboarding.registration
 
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.Strings
-import com.linecorp.abc.sharedstorage.SharedStorage
+import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.*
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.channels.Channel
@@ -11,7 +11,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 
-class RegistrationViewModel(private val sharedStrings: Strings) : ViewModel() {
+class RegistrationViewModel(
+    private val sharedStrings: Strings,
+    private val securedStore: KVault
+    ) : ViewModel() {
 
     private val validator: RegistrationValidator = RegistrationValidator(sharedStrings)
 
@@ -93,8 +96,8 @@ class RegistrationViewModel(private val sharedStrings: Strings) : ViewModel() {
 
     fun signUp() {
         viewModelScope.launch {
-            SharedStorage.secureSave(state.value.email, "login")      //шифруем данные
-            SharedStorage.secureSave(state.value.password, "password")//и записываем в encrypted sp
+            securedStore.set(key = "login", stringValue = state.value.email)      //шифруем данные
+            securedStore.set(key = "password", stringValue = state.value.password)//и записываем в encrypted sp
             _actions.send(Action.RegistrationSuccess)
         }
     }

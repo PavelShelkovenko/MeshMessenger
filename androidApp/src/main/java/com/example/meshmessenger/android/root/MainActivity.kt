@@ -19,7 +19,9 @@ import com.example.meshmessenger.android.theme.MeshAppTheme
 import com.example.meshmessenger.domain.utils.isTimeOut
 import com.example.meshmessenger.domain.utils.saveTime
 import com.example.meshmessenger.domain.utils.startDestinationDefine
+import com.liftric.kvault.KVault
 import dev.icerock.moko.resources.StringResource
+import org.koin.androidx.compose.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +40,11 @@ class MainActivity : ComponentActivity() {
             MeshAppTheme {
                 Surface(color = BackgroundColor, modifier = Modifier.fillMaxSize()) {
                     val navController = rememberNavController()
+                    val secureStore: KVault = get()
                     Root(
-                        startDestination = startDestinationDefine(),
-                        onStart = { isTimeOut() },
-                        onStop = { saveTime() },
+                        startDestination = startDestinationDefine(secureStore = secureStore),
+                        onStart = { isTimeOut(secureStore = secureStore) },
+                        onStop = { saveTime(secureStore = secureStore) },
                         callPin = {
                             navController.navigate("pin") {
                                 popUpTo(0)

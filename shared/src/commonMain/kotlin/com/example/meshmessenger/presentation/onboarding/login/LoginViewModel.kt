@@ -1,6 +1,6 @@
 package com.example.meshmessenger.presentation.onboarding.login
 
-import com.linecorp.abc.sharedstorage.SharedStorage
+import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.*
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.channels.Channel
@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
-class LoginViewModel: ViewModel() {
+class LoginViewModel(
+    private val securedStore: KVault
+): ViewModel() {
 
     var state: CMutableStateFlow<LoginState> =
         MutableStateFlow(LoginState()).cMutableStateFlow()
@@ -22,7 +24,7 @@ class LoginViewModel: ViewModel() {
     val isAnimAccessGrantedPlaying : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
 
     init {
-        val pinValue: String = SharedStorage.secureLoad("pin", "")
+        val pinValue: String = securedStore.string(forKey = "pin") ?: ""
         if (pinValue == "") {
             state.value = state.value.copy(
                 informText = "Создайте пин"
@@ -58,10 +60,10 @@ class LoginViewModel: ViewModel() {
             if (state.value.remainingAttempts > 0) {
                 if (state.value.informText == "Создайте пин") {
                     // засейвили пин в encryptedStorage
-                    SharedStorage.secureSave(pinAttempt, "pin")
+                    securedStore.set(key = "pin", stringValue = pinAttempt)
                     _actions.send(Action.LoginSuccess)
                 } else {
-                    val savedPin = SharedStorage.secureLoad("pin", "")   // тут выгрузили пин из encryptedStorage
+                    val savedPin = securedStore.string(forKey = "pin")   // тут выгрузили пин из encryptedStorage
                     if (savedPin == pinAttempt) {
                         isAnimAccessGrantedPlaying.value = true
                         delay(2000)

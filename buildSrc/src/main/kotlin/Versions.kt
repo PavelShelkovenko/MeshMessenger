@@ -44,4 +44,7 @@ object Versions {
 
     //Kable
     const val kableVersion = "0.24.0"
+
+    //Kvault
+    const val kvaultVersion = "1.10.0"
 }

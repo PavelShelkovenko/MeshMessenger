@@ -1,12 +1,12 @@
 package com.example.meshmessenger.domain.utils
 
-import com.linecorp.abc.sharedstorage.SharedStorage
+import com.liftric.kvault.KVault
 import kotlinx.datetime.Clock
 import kotlin.math.abs
 
-fun startDestinationDefine(): String {
-    val password = SharedStorage.secureLoad("password", "")
-    val login = SharedStorage.secureLoad("login", "")
+fun startDestinationDefine(secureStore: KVault): String {
+    val password = secureStore.string("password")
+    val login = secureStore.string("login")
 
     val startDestination = if (password != "" && login != "") {
         "pin"
@@ -16,15 +16,17 @@ fun startDestinationDefine(): String {
     return startDestination
 }
 
-fun saveTime() {
+fun saveTime(secureStore: KVault) {
     val currentMoment = Clock.System.now().epochSeconds.toInt()
-    SharedStorage.save(currentMoment, "timeOfLastExitFromApp")
+    secureStore.set("timeOfLastExitFromApp", currentMoment)
 }
 
-fun isTimeOut(): Boolean {
-    val time = SharedStorage.load("timeOfLastExitFromApp", Clock.System.now().epochSeconds.toInt())
-    if (abs(time + 5) < Clock.System.now().epochSeconds) {
-        return true
+fun isTimeOut(secureStore: KVault): Boolean {
+    val time = secureStore.int("timeOfLastExitFromApp")
+    if (time != null) {
+        if (abs(time + 5) < Clock.System.now().epochSeconds) {
+            return true
+        }
     }
     return false
 }
