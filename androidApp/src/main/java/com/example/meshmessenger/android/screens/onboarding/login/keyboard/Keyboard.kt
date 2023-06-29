@@ -64,7 +64,6 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
                     ),
                     modifier = Modifier
                         .padding(all = 10.dp),
-                        //.border(width = 1.dp, shape = CircleShape, color = IconsBlue),
                     contentPadding = PaddingValues(vertical = 14.dp),
                     elevation = ButtonDefaults.elevation(
                         defaultElevation = 0.dp,
