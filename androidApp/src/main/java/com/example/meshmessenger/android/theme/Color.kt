@@ -1,6 +1,8 @@
 package com.example.meshmessenger.android.theme
 
 import androidx.compose.ui.graphics.Color
+import com.example.meshmessenger.SharedRes
+import com.example.meshmessenger.android.root.colorResource
 
 val IconsBlue = Color(0xFF0E5E99)
 val Purple200 = Color(0xFFBB86FC)
@@ -15,3 +17,5 @@ val PlaceholderColor = Color(0xFFBBBBBB)
 val LightPrimaryColor = Color(0xFFFFF6EE)
 val White = Color(0xFFFFFFFF)
 val GreyOrdinary = Color(0xFFA1A1A1)
+
+

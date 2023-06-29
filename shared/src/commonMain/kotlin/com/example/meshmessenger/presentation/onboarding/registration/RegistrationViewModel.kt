@@ -1,7 +1,7 @@
 package com.example.meshmessenger.presentation.onboarding.registration
 
 import com.example.meshmessenger.SharedRes
-import com.example.meshmessenger.Strings
+import com.example.meshmessenger.resources.Strings
 import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.*
 import dev.icerock.moko.mvvm.viewmodel.ViewModel

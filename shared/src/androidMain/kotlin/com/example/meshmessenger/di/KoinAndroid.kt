@@ -1,6 +1,6 @@
 package com.example.meshmessenger.di
 
-import com.example.meshmessenger.Strings
+import com.example.meshmessenger.resources.Strings
 import com.example.meshmessenger.database.AppDatabase
 import com.liftric.kvault.KVault
 import com.squareup.sqldelight.android.AndroidSqliteDriver

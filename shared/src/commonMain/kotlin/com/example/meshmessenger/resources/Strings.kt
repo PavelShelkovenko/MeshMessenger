@@ -1,4 +1,4 @@
-package com.example.meshmessenger
+package com.example.meshmessenger.resources
 
 import dev.icerock.moko.resources.StringResource
 

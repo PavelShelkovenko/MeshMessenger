@@ -1,7 +1,7 @@
 package com.example.meshmessenger.presentation.onboarding.registration
 
 import com.example.meshmessenger.SharedRes
-import com.example.meshmessenger.Strings
+import com.example.meshmessenger.resources.Strings
 
 class RegistrationValidator(sharedString: Strings) {
 

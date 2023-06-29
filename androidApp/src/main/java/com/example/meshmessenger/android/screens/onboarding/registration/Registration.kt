@@ -21,6 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.* import androidx.compose.ui.text.style.TextAlign
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
+import com.example.meshmessenger.android.root.colorResource
+import com.example.meshmessenger.android.root.fontFamilyResource
 import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationEvent
@@ -51,8 +53,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
 
         Text(
             text = stringResource(id = SharedRes.strings.welcome),
-            fontFamily = Poppins,
-            color = PrimaryColor,
+            fontFamily = fontFamilyResource(fontResource = SharedRes.fonts.Onest.onest),
+            color = colorResource(resource = SharedRes.colors.PrimaryColor),
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
@@ -64,8 +66,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             modifier = Modifier
                 .fillMaxWidth(0.8f),
             text = state.errorText ?: "",
-            fontFamily = Poppins,
-            color = PrimaryColor,
+            fontFamily = fontFamilyResource(fontResource = SharedRes.fonts.Onest.onest),
+            color = colorResource(resource = SharedRes.colors.PrimaryColor),
             fontSize = 18.sp,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
@@ -84,9 +86,9 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 .fillMaxWidth()
                 .padding(horizontal = 20.dp),
             colors = TextFieldDefaults.textFieldColors(
-                textColor = PrimaryColor,
-                backgroundColor = Color.White,
-                cursorColor = PrimaryColor,
+                textColor = colorResource(resource = SharedRes.colors.PrimaryColor),
+                backgroundColor = colorResource(resource = SharedRes.colors.White),
+                cursorColor = colorResource(resource = SharedRes.colors.PrimaryColor),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -100,7 +102,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                     Icon(
                         painter = painterResource(id = R.drawable.ic_user),
                         contentDescription = "",
-                        tint = PrimaryColor,
+                        tint = colorResource(resource = SharedRes.colors.PrimaryColor),
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
@@ -108,7 +110,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                     Spacer(modifier = Modifier
                         .width(1.dp)
                         .height(24.dp)
-                        .background(BackgroundColor)
+                        .background(colorResource(resource = SharedRes.colors.PrimaryColor))
                     )
                 }
             },
@@ -118,7 +120,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = Poppins
+                fontFamily = fontFamilyResource(fontResource = SharedRes.fonts.Onest.onest)
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
                 capitalization = KeyboardCapitalization.Sentences,
@@ -143,9 +145,9 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 .padding(horizontal = 20.dp)
                 .padding(top = 20.dp),
             colors = TextFieldDefaults.textFieldColors(
-                textColor = PrimaryColor,
-                backgroundColor = Color.White,
-                cursorColor = PrimaryColor,
+                textColor = colorResource(resource = SharedRes.colors.PrimaryColor),
+                backgroundColor = colorResource(resource = SharedRes.colors.White),
+                cursorColor = colorResource(resource = SharedRes.colors.PrimaryColor),
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -159,7 +161,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                     Icon(
                         painter = painterResource(id = R.drawable.ic_password),
                         contentDescription = "password icon",
-                        tint = PrimaryColor,
+                        tint = colorResource(resource = SharedRes.colors.PrimaryColor),
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer( modifier = Modifier.width(6.dp)  )
@@ -168,7 +170,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                         modifier = Modifier
                             .width(1.dp)
                             .height(24.dp)
-                            .background(BackgroundColor)
+                            .background(colorResource(resource = SharedRes.colors.PrimaryColor))
                     )
                 }
             },
@@ -181,7 +183,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
             textStyle = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold,
-                fontFamily = Poppins
+                fontFamily = fontFamilyResource(fontResource = SharedRes.fonts.Onest.onest)
             ),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             keyboardActions = KeyboardActions(onNext = { focusManager.clearFocus() }),
@@ -192,14 +194,14 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                         Icon(
                             painter = painterResource(id = R.drawable.ic_eye_open),
                             contentDescription = "",
-                            tint = PrimaryColor,
+                            tint = colorResource(resource = SharedRes.colors.PrimaryColor),
                             modifier = Modifier.size(24.dp)
                         )
                     } else {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_eye_close),
                             contentDescription = "",
-                            tint = PrimaryColor,
+                            tint = colorResource(resource = SharedRes.colors.PrimaryColor),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -210,7 +212,7 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
         Button(
             onClick = registrationViewModel::signUp,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = PrimaryColor
+                backgroundColor = colorResource(resource = SharedRes.colors.PrimaryColor)
             ),
             modifier = Modifier
                 .wrapContentWidth()
@@ -228,8 +230,8 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
                 text = stringResource(id = SharedRes.strings.sign_up),
                 modifier = Modifier
                     .padding(horizontal = 20.dp),
-                fontFamily = Poppins,
-                color = LightPrimaryColor,
+                fontFamily = fontFamilyResource(fontResource = SharedRes.fonts.Onest.onest),
+                color = colorResource(resource = SharedRes.colors.LightPrimaryColor),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold
             )
