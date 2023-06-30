@@ -10,17 +10,17 @@ import SwiftUI
 import shared
 import Foundation
 
+let PrimaryColor: UIColor = SharedRes.colors().PrimaryColor.getUIColor()
+
+let OnestLarge: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 28.0)
+
+let OnestMedium: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 18.0)
+
 struct RegistrationView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
-    
-    let PrimaryColor: UIColor = SharedRes.colors().PrimaryColor.getUIColor()
-    
-    let OnestLarge: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 28.0)
-    
-    let OnestMedium: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 18.0)
-    
+
     var body: some View {
         VStack {
         
