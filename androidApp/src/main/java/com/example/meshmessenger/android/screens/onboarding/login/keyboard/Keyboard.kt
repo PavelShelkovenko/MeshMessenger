@@ -33,7 +33,6 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
 
     Box(contentAlignment = BottomCenter,
         modifier = Modifier
-            .padding(bottom = 20.dp)
             .fillMaxSize()
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
