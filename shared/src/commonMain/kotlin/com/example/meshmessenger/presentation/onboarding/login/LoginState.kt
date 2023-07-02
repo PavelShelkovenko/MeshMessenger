@@ -1,6 +1,8 @@
 package com.example.meshmessenger.presentation.onboarding.login
 
 data class LoginState(
+    val isAnimAccessGrantedPlaying: Boolean = false,
+    val userName: String = "",
     val informText: String = "",
     val remainingAttempts: Int = 5,
     val pinState: String = "",

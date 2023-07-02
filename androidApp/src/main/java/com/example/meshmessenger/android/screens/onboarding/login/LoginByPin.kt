@@ -20,28 +20,13 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
 import com.example.meshmessenger.presentation.onboarding.login.LoginState
 import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
-import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
-import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit) {
 
     val state by loginViewModel.state.collectAsState()
-
-    val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
-
-    val securedStore: KVault = get()
-
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted))
-    val progress by animateLottieCompositionAsState(
-        composition = composition,
-        iterations = 1,
-        isPlaying = isAnimAccessGrantedPlaying,
-        speed = 1.5f,
-        restartOnPlay = false
-    )
 
     loginViewModel.actions.observeAsActions { action ->
         when (action) {
@@ -55,6 +40,14 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
         }
     }
 
+    val progress by animateLottieCompositionAsState(
+        composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
+        iterations = 1,
+        isPlaying = state.isAnimAccessGrantedPlaying,
+        speed = 1.5f,
+        restartOnPlay = false
+    )
+
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -62,9 +55,9 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             .fillMaxSize()
             .padding(top = 50.dp)
     ) {
-        if (isAnimAccessGrantedPlaying) {
+        if (state.isAnimAccessGrantedPlaying) {
             LottieAnimation(
-                composition = composition,
+                composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
                 progress = { progress },
                 modifier = Modifier.size(92.dp)
             )
@@ -95,7 +88,7 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             textAlign = TextAlign.Center
         )
         Text(
-            text = securedStore.string(forKey = "login") ?: "Unknown user",
+            text = state.userName,
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
