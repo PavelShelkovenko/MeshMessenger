@@ -28,10 +28,10 @@ fun SingleKeyboardButton(btnText: String, isKeyboardEnabled: Boolean, onButtonCl
             backgroundColor = BackgroundColor
         ),
         modifier = Modifier
-            .padding(all = 10.dp)
+            .padding( all = 10.dp )
             .border( width =  1.dp, shape =  CircleShape, color = IconsBlue)
-            //.padding(all = 5.dp),
-        ,contentPadding = PaddingValues(vertical = 14.dp),
+        ,
+        contentPadding = PaddingValues(vertical = 14.dp),
         elevation = ButtonDefaults.elevation(
             defaultElevation = 0.dp,
             pressedElevation = 2.dp
@@ -53,5 +53,6 @@ fun SingleKeyboardButton(btnText: String, isKeyboardEnabled: Boolean, onButtonCl
 @Composable
 fun KeyboardButtonPreview() {
     SingleKeyboardButton("0",true) {
+
     }
 }

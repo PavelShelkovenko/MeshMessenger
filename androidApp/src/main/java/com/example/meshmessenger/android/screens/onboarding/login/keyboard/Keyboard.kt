@@ -32,8 +32,7 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
     val activity = LocalContext.current as? Activity
 
     Box(contentAlignment = BottomCenter,
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
@@ -61,8 +60,7 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = BackgroundColor
                     ),
-                    modifier = Modifier
-                        .padding(all = 10.dp),
+                    modifier = Modifier.padding(all = 10.dp),
                     contentPadding = PaddingValues(vertical = 14.dp),
                     elevation = ButtonDefaults.elevation(
                         defaultElevation = 0.dp,
