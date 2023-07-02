@@ -53,10 +53,10 @@ fun Root(
 
     DisposableEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_CREATE) {
+            if (event == Lifecycle.Event.ON_START) {
                 val loginValue: String = secureStore.string(forKey = "login") ?: ""
                 val pswValue: String = secureStore.string(forKey = "password") ?: ""
-                if (loginValue == "") {
+                if (loginValue == "" || pswValue == "") {
                     callRegister()
                 } else if ( saveTime() ) {
                     callPin()
