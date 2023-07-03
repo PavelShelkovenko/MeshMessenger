@@ -15,15 +15,13 @@ class LoginViewModel(
     private val securedStore: KVault
 ): ViewModel() {
 
-    var state: CMutableStateFlow<LoginState> =
-        MutableStateFlow(LoginState()).cMutableStateFlow()
+    val state: CMutableStateFlow<LoginState> = MutableStateFlow(LoginState()).cMutableStateFlow()
 
     private val _actions = Channel<Action>()
     val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
 
-    val isAnimAccessGrantedPlaying : CMutableStateFlow<Boolean> = MutableStateFlow(false).cMutableStateFlow()
-
     init {
+
         val pinValue: String = securedStore.string(forKey = "pin") ?: ""
         if (pinValue == "") {
             state.value = state.value.copy(
@@ -65,11 +63,11 @@ class LoginViewModel(
                 } else {
                     val savedPin = securedStore.string(forKey = "pin")   // тут выгрузили пин из encryptedStorage
                     if (savedPin == pinAttempt) {
-                        isAnimAccessGrantedPlaying.value = true
+                        state.value = state.value.copy(isAnimAccessGrantedPlaying = true)
                         delay(2000)
                         _actions.send(Action.LoginSuccess)
-                        isAnimAccessGrantedPlaying.value = false
-                    } else {
+                    }
+                    else {
                         state.value = state.value.copy(
                             informText = "Неверный пин \n осталось ${state.value.remainingAttempts} попыток",
                             remainingAttempts = state.value.remainingAttempts - 1,
@@ -82,6 +80,8 @@ class LoginViewModel(
             }
         }
     }
+
+
 
     private fun block(){
         viewModelScope.launch {
@@ -120,6 +120,8 @@ class LoginViewModel(
             }
         }
     }
+
+    fun getUserName() = securedStore.string(forKey = "login") ?: "Unknown user"
 
     sealed interface Action {
         object LoginSuccess : Action

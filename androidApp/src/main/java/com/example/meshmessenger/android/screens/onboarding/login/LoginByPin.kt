@@ -20,34 +20,28 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
 import com.example.meshmessenger.presentation.onboarding.login.LoginState
 import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
-import com.liftric.kvault.KVault
 import dev.icerock.moko.mvvm.flow.compose.observeAsActions
-import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit   ) {
+fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit) {
 
     val state by loginViewModel.state.collectAsState()
 
-    val isAnimAccessGrantedPlaying by loginViewModel.isAnimAccessGrantedPlaying.collectAsState()
-
-    val securedStore: KVault = get()
-
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted))
     val progress by animateLottieCompositionAsState(
-        composition = composition,
+        composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
         iterations = 1,
-        isPlaying = isAnimAccessGrantedPlaying,
+        isPlaying = state.isAnimAccessGrantedPlaying,
         speed = 1.5f,
         restartOnPlay = false
     )
 
     loginViewModel.actions.observeAsActions { action ->
-        when(action) {
+        when (action) {
             LoginViewModel.Action.AttemptsExceeded -> {
                 loginViewModel.onEvent(LoginEvent.AttemptsExceeded)
             }
+
             LoginViewModel.Action.LoginSuccess -> {
                 loginSuccess()
             }
@@ -61,10 +55,10 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             .fillMaxSize()
             .padding(top = 50.dp)
     ) {
-        if(isAnimAccessGrantedPlaying){
+        if (state.isAnimAccessGrantedPlaying) {
             LottieAnimation(
-                composition = composition,
-                progress =  { progress },
+                composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
+                progress = { progress },
                 modifier = Modifier.size(92.dp)
             )
         } else {
@@ -85,14 +79,16 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             .fillMaxWidth()
     ) {
 
-        Text(text = state.informText,
+        Text(
+            text = state.informText,
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
-        Text(text = securedStore.string(forKey = "login") ?: "Unknown user",
+        Text(
+            text = loginViewModel.getUserName(),
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
@@ -111,98 +107,32 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
 }
 
 @Composable
-fun PinState(state: LoginState,loginAttempt: (String) -> Unit) {
+fun PinState(state: LoginState, loginAttempt: (String) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-        if (state.pinState == "") {
-            for (i in 0 until 4) {
-                Icon(
-                    painter = painterResource(id = R.drawable.empty_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        }
-
-        if (state.pinState.length == 1) {
-
-            for (i in 0 until 1) {
-                Icon(
-                    painter = painterResource(id = R.drawable.full_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-
-            for (i in 0 until 3) {
-                Icon(
-                    painter = painterResource(id = R.drawable.empty_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        }
-
-        if (state.pinState.length == 2) {
-
-            for (i in 0 until 2) {
-                Icon(
-                    painter = painterResource(id = R.drawable.full_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-
-            for (i in 0 until 2) {
-                Icon(
-                    painter = painterResource(id = R.drawable.empty_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        }
-
-        if (state.pinState.length == 3) {
-
-            for (i in 0 until 3) {
-                Icon(
-                    painter = painterResource(id = R.drawable.full_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-
-            for (i in 0 until 1) {
-                Icon(
-                    painter = painterResource(id = R.drawable.empty_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        }
-
         if (state.pinState.length == 4) {
+            loginAttempt(state.pinState)
+        }
+        repeat(4) {
 
-            for (i in 0 until 4) {
+            if(it < state.pinState.length){
                 Icon(
                     painter = painterResource(id = R.drawable.full_circle),
                     contentDescription = "",
                     tint = PrimaryColor,
                     modifier = Modifier.padding(10.dp)
                 )
+            } else {
+                Icon(
+                    painter = painterResource(id = R.drawable.empty_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
             }
-            loginAttempt(state.pinState)
         }
     }
 }
