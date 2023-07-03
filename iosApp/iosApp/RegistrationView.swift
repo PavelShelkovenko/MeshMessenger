@@ -10,12 +10,6 @@ import SwiftUI
 import shared
 import Foundation
 
-let PrimaryColor: UIColor = SharedRes.colors().PrimaryColor.getUIColor()
-
-let OnestLarge: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 28.0)
-
-let OnestMedium: UIFont = SharedRes.fontsOnest().onest.uiFont(withSize: 18.0)
-
 struct RegistrationView: View {
     @State private var email = ""
     @State private var password = ""
@@ -33,7 +27,7 @@ struct RegistrationView: View {
             Spacer().frame(height: 20)
 
             HStack {
-                Image(systemName: "person.crop.circle.fill")
+                Image(resource: \.ic_person_24)
                     .foregroundColor(Color(PrimaryColor))
                     
                 TextField("Email", text: $email)
@@ -49,7 +43,7 @@ struct RegistrationView: View {
             Spacer().frame(height: 20)
 
             HStack {
-                Image(systemName: "lock.fill")
+                Image(resource: \.ic_password_24)
                     .foregroundColor(Color(PrimaryColor))
                     
 
@@ -69,7 +63,7 @@ struct RegistrationView: View {
                     .padding()
                     .font(Font(OnestMedium))
                     .frame(minWidth: 150)
-                    .background(Color(SharedRes.colors().PrimaryColor.getUIColor()))
+                    .background(Color(PrimaryColor))
                     .foregroundColor(.white)
                     .cornerRadius(40)
                     .multilineTextAlignment(.center)
@@ -77,7 +71,7 @@ struct RegistrationView: View {
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(SharedRes.colors().BackgroundColor.getUIColor()))
+        .background(Color(BackgroundColor))
         .edgesIgnoringSafeArea(.all)
     }
         
