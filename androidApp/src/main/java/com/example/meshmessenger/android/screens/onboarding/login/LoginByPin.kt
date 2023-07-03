@@ -24,21 +24,9 @@ import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit) {
+fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: () -> Unit   ) {
 
     val state by loginViewModel.state.collectAsState()
-
-    loginViewModel.actions.observeAsActions { action ->
-        when (action) {
-            LoginViewModel.Action.AttemptsExceeded -> {
-                loginViewModel.onEvent(LoginEvent.AttemptsExceeded)
-            }
-
-            LoginViewModel.Action.LoginSuccess -> {
-                loginSuccess()
-            }
-        }
-    }
 
     val progress by animateLottieCompositionAsState(
         composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
@@ -48,6 +36,17 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
         restartOnPlay = false
     )
 
+    loginViewModel.actions.observeAsActions { action ->
+        when(action) {
+            LoginViewModel.Action.AttemptsExceeded -> {
+                loginViewModel.onEvent(LoginEvent.AttemptsExceeded)
+            }
+            LoginViewModel.Action.LoginSuccess -> {
+                loginSuccess()
+            }
+        }
+    }
+
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -55,10 +54,10 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             .fillMaxSize()
             .padding(top = 50.dp)
     ) {
-        if (state.isAnimAccessGrantedPlaying) {
+        if(state.isAnimAccessGrantedPlaying){
             LottieAnimation(
                 composition = rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.access_granted)).value,
-                progress = { progress },
+                progress =  { progress },
                 modifier = Modifier.size(92.dp)
             )
         } else {
@@ -88,7 +87,7 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
             textAlign = TextAlign.Center
         )
         Text(
-            text = state.userName,
+            text =  loginViewModel.getUserName(),
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
@@ -107,27 +106,15 @@ fun LoginByPin(loginViewModel: LoginViewModel = koinViewModel(), loginSuccess: (
 }
 
 @Composable
-fun PinState(state: LoginState, loginAttempt: (String) -> Unit) {
+fun PinState(state: LoginState,loginAttempt: (String) -> Unit) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        if (state.pinState.length == 4) {
-            loginAttempt(state.pinState)
-            println("оп оп ${state.pinState}")
-        }
-
-        repeat(4) {
-            if (it < state.pinState.length) {
-                Icon(
-                    painter = painterResource(id = R.drawable.full_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            } else {
+        if (state.pinState == "") {
+            for (i in 0 until 4) {
                 Icon(
                     painter = painterResource(id = R.drawable.empty_circle),
                     contentDescription = "",
@@ -137,7 +124,81 @@ fun PinState(state: LoginState, loginAttempt: (String) -> Unit) {
             }
         }
 
+        if (state.pinState.length == 1) {
+
+            for (i in 0 until 1) {
+                Icon(
+                    painter = painterResource(id = R.drawable.full_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            for (i in 0 until 3) {
+                Icon(
+                    painter = painterResource(id = R.drawable.empty_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
+
+        if (state.pinState.length == 2) {
+
+            for (i in 0 until 2) {
+                Icon(
+                    painter = painterResource(id = R.drawable.full_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            for (i in 0 until 2) {
+                Icon(
+                    painter = painterResource(id = R.drawable.empty_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
+
+        if (state.pinState.length == 3) {
+
+            for (i in 0 until 3) {
+                Icon(
+                    painter = painterResource(id = R.drawable.full_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+
+            for (i in 0 until 1) {
+                Icon(
+                    painter = painterResource(id = R.drawable.empty_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+        }
+
+        if (state.pinState.length == 4) {
+
+            for (i in 0 until 4) {
+                Icon(
+                    painter = painterResource(id = R.drawable.full_circle),
+                    contentDescription = "",
+                    tint = PrimaryColor,
+                    modifier = Modifier.padding(10.dp)
+                )
+            }
+            loginAttempt(state.pinState)
+        }
     }
 }
-
 

@@ -22,9 +22,6 @@ class LoginViewModel(
 
     init {
 
-        state.value = state.value.copy(
-            userName = securedStore.string(forKey = "login") ?: "Unknown user"
-        )
         val pinValue: String = securedStore.string(forKey = "pin") ?: ""
         if (pinValue == "") {
             state.value = state.value.copy(
@@ -69,7 +66,6 @@ class LoginViewModel(
                         state.value = state.value.copy(isAnimAccessGrantedPlaying = true)
                         delay(2000)
                         _actions.send(Action.LoginSuccess)
-                        //state.value = state.value.copy(isAnimAccessGrantedPlaying = false)
                     }
                     else {
                         state.value = state.value.copy(
@@ -84,6 +80,8 @@ class LoginViewModel(
             }
         }
     }
+
+
 
     private fun block(){
         viewModelScope.launch {
@@ -122,6 +120,8 @@ class LoginViewModel(
             }
         }
     }
+
+    fun getUserName() = securedStore.string(forKey = "login") ?: "Unknown user"
 
     sealed interface Action {
         object LoginSuccess : Action
