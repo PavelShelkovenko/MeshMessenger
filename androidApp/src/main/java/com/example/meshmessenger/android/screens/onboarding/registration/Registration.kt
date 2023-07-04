@@ -19,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.* import androidx.compose.ui.text.style.TextAlign
+import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.root.colorResource
@@ -26,23 +27,15 @@ import com.example.meshmessenger.android.root.fontFamilyResource
 import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationEvent
-import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
-import dev.icerock.moko.mvvm.flow.compose.observeAsActions
 
 
 @Composable
-fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: () -> Unit) {
+fun Registration(registrationViewModel: AndroidRegistrationViewModel, onAccountCreated: () -> Unit) {
 
     val state by registrationViewModel.state.collectAsState()
 
     var isPasswordOpen by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-
-    registrationViewModel.actions.observeAsActions { action ->
-        when (action) {
-            is RegistrationViewModel.Action.RegistrationSuccess -> onLoginSuccess()
-        }
-    }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -210,7 +203,10 @@ fun Registration(registrationViewModel: RegistrationViewModel, onLoginSuccess: (
         )
 
         Button(
-            onClick = registrationViewModel::signUp,
+            onClick = {
+                registrationViewModel.signUp()
+                onAccountCreated()
+            },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = colorResource(resource = SharedRes.colors.PrimaryColor)
             ),

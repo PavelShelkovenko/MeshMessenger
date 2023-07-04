@@ -18,6 +18,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.android.screens.BleUI
 import com.example.meshmessenger.android.screens.chats.ChatsListScreen
 import com.example.meshmessenger.android.screens.messages.MessagesListScreen
@@ -40,7 +41,7 @@ fun Root(
     callRegister: () -> Unit,
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    registrationViewModel: RegistrationViewModel = koinViewModel(),
+    registrationViewModel: AndroidRegistrationViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
     messageViewModel: MessageViewModel = koinViewModel(),
     bluetoothManager: BluetoothManager,
@@ -75,7 +76,7 @@ fun Root(
         composable("register") {
             Registration(
                 registrationViewModel = registrationViewModel,
-                onLoginSuccess = {
+                onAccountCreated = {
                     navController.navigate("pin") {
                         popUpTo(0)
                         launchSingleTop = true
