@@ -35,7 +35,11 @@ import java.util.*
 
 @SuppressLint("MutableCollectionMutableState")
 @Composable
-fun BleUI( bluetoothAdapter: BluetoothAdapter, bluetoothManager: BluetoothManager, bluetoothLeAdvertiser: BluetoothLeAdvertiser) {
+fun BleUI(
+    bluetoothAdapter: BluetoothAdapter? = null,
+    bluetoothManager: BluetoothManager? = null,
+    bluetoothLeAdvertiser: BluetoothLeAdvertiser? = null
+) {
 
     val textExample = remember { mutableStateOf("Здесь мы должны получить строку") }
     val listOfAdvertisements: MutableList<AndroidAdvertisement> = mutableListOf()
@@ -73,11 +77,11 @@ fun BleUI( bluetoothAdapter: BluetoothAdapter, bluetoothManager: BluetoothManage
         }
 
         Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
-            Button(onClick = {  startAdvertising(bluetoothLeAdvertiser, bluetoothManager, bluetoothAdapter, context )  }) { Text("Advertising Start") }
+            Button(onClick = {  startAdvertising(bluetoothLeAdvertiser!!, bluetoothManager!!, bluetoothAdapter!!, context )  }) { Text("Advertising Start") }
 
             Spacer(modifier = Modifier.width(5.dp))
 
-            Button(onClick = { stopAdvertising(bluetoothLeAdvertiser) }) { Text("Stop Advertising") }
+            Button(onClick = { stopAdvertising(bluetoothLeAdvertiser!!) }) { Text("Stop Advertising") }
         }
 
         Text(textExample.value)

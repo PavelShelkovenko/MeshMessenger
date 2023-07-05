@@ -3,14 +3,13 @@ package com.example.meshmessenger.android.root
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.example.meshmessenger.AndroidLoginViewModel
 import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
-import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
-import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,7 +21,7 @@ class Application : Application()  {
             module {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
-                viewModel { LoginViewModel(securedStore = get()) }
+                viewModel { AndroidLoginViewModel(securedStore = get()) }
                 viewModel { AndroidRegistrationViewModel(sharedStrings = get(), securedStore = get()) }
                 viewModel { ChatViewModel(databaseRepository = get()) }
                 viewModel { MessageViewModel(databaseRepository = get()) }

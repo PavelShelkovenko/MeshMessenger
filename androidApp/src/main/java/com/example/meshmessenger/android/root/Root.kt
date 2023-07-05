@@ -26,7 +26,6 @@ import com.example.meshmessenger.android.screens.onboarding.registration.Registr
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
 import com.example.meshmessenger.presentation.chat.ChatViewModel
 import com.example.meshmessenger.presentation.message.MessageViewModel
-import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import com.liftric.kvault.KVault
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
@@ -44,9 +43,9 @@ fun Root(
     registrationViewModel: AndroidRegistrationViewModel = koinViewModel(),
     chatViewModel: ChatViewModel = koinViewModel(),
     messageViewModel: MessageViewModel = koinViewModel(),
-    bluetoothManager: BluetoothManager,
-    bluetoothAdapter: BluetoothAdapter,
-    bluetoothLeAdvertiser: BluetoothLeAdvertiser,
+//    bluetoothManager: BluetoothManager,
+//    bluetoothAdapter: BluetoothAdapter,
+//    bluetoothLeAdvertiser: BluetoothLeAdvertiser,
 ) {
     val saveTime by rememberUpdatedState(onStart)
     val pullOutTime by rememberUpdatedState(onStop)
@@ -115,9 +114,9 @@ fun Root(
         }
         composable("ble") {
             BleUI(
-                bluetoothManager = bluetoothManager,
-                bluetoothLeAdvertiser = bluetoothLeAdvertiser,
-                bluetoothAdapter = bluetoothAdapter
+//                bluetoothManager = bluetoothManager,
+//                bluetoothLeAdvertiser = bluetoothLeAdvertiser,
+//                bluetoothAdapter = bluetoothAdapter
             )
         }
     }
