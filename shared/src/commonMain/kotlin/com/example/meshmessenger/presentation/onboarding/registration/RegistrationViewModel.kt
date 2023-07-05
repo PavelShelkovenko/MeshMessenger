@@ -1,39 +1,53 @@
 package com.example.meshmessenger.presentation.onboarding.registration
 
 import com.example.meshmessenger.SharedRes
+import com.example.meshmessenger.domain.utils.toCommonStateFlow
 import com.example.meshmessenger.resources.Strings
 import com.liftric.kvault.KVault
-import dev.icerock.moko.mvvm.flow.*
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
 class RegistrationViewModel(
     private val sharedStrings: Strings,
-    private val securedStore: KVault
-    ) : ViewModel() {
+    private val securedStore: KVault,
+    private val coroutineScope: CoroutineScope?
+) {
 
     private val validator: RegistrationValidator = RegistrationValidator(sharedStrings)
+    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
 
-    var state: CMutableStateFlow<RegistrationState> =
-        MutableStateFlow(RegistrationState()).cMutableStateFlow()
-
-    private val _actions = Channel<Action>()
-    val actions: CFlow<Action> get() = _actions.receiveAsFlow().cFlow()
+    private val _state = MutableStateFlow(RegistrationState())
+    val state = _state.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        RegistrationState()
+    ).toCommonStateFlow()
 
     fun onEvent(event: RegistrationEvent) {
-        when(event) {
+        when (event) {
             is RegistrationEvent.EmailChanged -> {
-                state.value = state.value.copy(email = event.email)
+                _state.update {
+                    it.copy(
+                        email = event.email
+                    )
+                }
             }
             is RegistrationEvent.PasswordChanged -> {
-                state.value = state.value.copy(password = event.password)
+                _state.update {
+                    it.copy(
+                        password = event.password
+                    )
+                }
             }
             is RegistrationEvent.ErrorTextChanged -> {
-                state.value = state.value.copy(errorText = event.error)
+                _state.update {
+                    it.copy(
+                        errorText = event.error
+                    )
+                }
             }
             is RegistrationEvent.SignUp -> {
                 signUp()
@@ -42,68 +56,72 @@ class RegistrationViewModel(
     }
 
 
-    fun validateEmail(): Boolean {
-        val emailResult = validator.validateEmail.execute(state.value.email)
+    fun validateEmail() {
+        val emailResult = validator.validateEmail.execute(_state.value.email)
         val emailError = emailResult.errorMessage
         if (emailError != null) {
-            state.value = state.value.copy(
-                emailError = emailError,
-                errorText = emailError
-            )
-            return false
+            _state.update {
+                it.copy(
+                    emailError = emailError,
+                    errorText = emailError
+                )
+            }
+            return
         }
-        state.value = state.value.copy(
-            emailError = emailError,
-            errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
-        )
-        return true
+        _state.update {
+            it.copy(
+                emailError = emailError,
+                errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
+            )
+        }
+        return
     }
 
-    fun validatePassword(): Boolean {
-        val passwordResult = validator.validatePassword.execute(state.value.password)
+    fun validatePassword() {
+        val passwordResult = validator.validatePassword.execute(_state.value.password)
         val passwordError = passwordResult.errorMessage
         if (passwordError != null) {
-            state.value = state.value.copy(
-                passwordError = passwordError,
-                errorText = passwordError
-            )
-            return false
+            _state.update {
+                it.copy(
+                    passwordError = passwordError,
+                    errorText = passwordError
+                )
+            }
+            return
         }
-        state.value = state.value.copy(
-            passwordError = passwordError,
-            errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
-        )
-        return true
+        _state.update {
+            it.copy(
+                passwordError = passwordError,
+                errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
+            )
+        }
+        return
     }
 
     fun validateData(): Boolean {
-
-        if (state.value.emailError == "" && state.value.passwordError == "") {
-            state.value = state.value.copy(
-                errorText = sharedStrings.get(SharedRes.strings.write_your_data, listOf())
-            )
+        if (_state.value.emailError == "" && _state.value.passwordError == "") {
+            _state.update {
+                it.copy(
+                    errorText = sharedStrings.get(SharedRes.strings.write_your_data, listOf())
+                )
+            }
             return false
         }
-
-        if (state.value.emailError == null && state.value.passwordError == null) {
-            state.value = state.value.copy(
-                errorText = sharedStrings.get(SharedRes.strings.join_us, listOf())
-            )
+        if (state.value.emailError == null && _state.value.passwordError == null) {
+            _state.update {
+                it.copy(
+                    errorText = sharedStrings.get(SharedRes.strings.join_us, listOf())
+                )
+            }
             return true
         }
         return false
     }
 
-    fun signUp() {
+    private fun signUp() {
         viewModelScope.launch {
-            securedStore.set(key = "login", stringValue = state.value.email)      //шифруем данные
-            securedStore.set(key = "password", stringValue = state.value.password)//и записываем в encrypted sp
-            _actions.send(Action.RegistrationSuccess)
+            securedStore.set(key = "login", stringValue = _state.value.email)
+            securedStore.set(key = "password", stringValue = _state.value.password)
         }
-    }
-
-
-    interface Action {
-        object RegistrationSuccess: Action
     }
 }

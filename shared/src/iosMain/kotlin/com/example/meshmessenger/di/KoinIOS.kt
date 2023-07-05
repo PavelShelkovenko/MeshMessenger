@@ -29,9 +29,9 @@ actual val platformModule = module {
 
     single<SqlDriver> { NativeSqliteDriver(AppDatabase.Schema, "appDatabase.db") }
     single { Strings() }
-    single {  KVault("<serviceName>", "<accessGroup>") }
+    single {  KVault() }
     single { LoginViewModel(securedStore = get()) }
-    single { RegistrationViewModel(sharedStrings = get(), securedStore = get()) }
+    single { RegistrationViewModel(sharedStrings = get(), securedStore = get(), null) }
     single { ChatViewModel(databaseRepository = get()) }
     single { MessageViewModel(databaseRepository = get()) }
 }

@@ -3,6 +3,7 @@ package com.example.meshmessenger.android.root
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.android.BuildConfig
 import com.example.meshmessenger.di.initKoin
@@ -22,7 +23,7 @@ class Application : Application()  {
                 single<Context> { this@Application }
                 single<AppInfo> { AndroidAppInfo }
                 viewModel { LoginViewModel(securedStore = get()) }
-                viewModel { RegistrationViewModel(sharedStrings = get(), securedStore = get()) }
+                viewModel { AndroidRegistrationViewModel(sharedStrings = get(), securedStore = get()) }
                 viewModel { ChatViewModel(databaseRepository = get()) }
                 viewModel { MessageViewModel(databaseRepository = get()) }
                 single {
