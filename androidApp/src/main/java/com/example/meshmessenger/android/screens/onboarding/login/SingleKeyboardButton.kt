@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.screens.onboarding.login.keyboard
+package com.example.meshmessenger.android.screens.onboarding.login
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.screens.onboarding.login.keyboard
+package com.example.meshmessenger.android.screens.onboarding.login
 
 import android.app.Activity
 import androidx.compose.foundation.layout.*
@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.meshmessenger.AndroidLoginViewModel
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.root.stringResource
@@ -24,10 +24,11 @@ import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.android.theme.ReemKufi
+import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
 
 
 @Composable
-fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
+fun Keyboard(loginViewModel: AndroidLoginViewModel, isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
 
     val activity = LocalContext.current as? Activity
 
@@ -81,7 +82,9 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
                 SingleKeyboardButton(btnText = "0", isKeyboardEnabled, onButtonClick = onButtonClick)
 
                 Button(
-                    onClick = { onButtonClick("<-") },
+                    onClick = {
+                              loginViewModel.onEvent(LoginEvent.PinDropLast)
+                    },
                     colors = ButtonDefaults.buttonColors( backgroundColor = BackgroundColor ),
                     modifier = Modifier.padding(all = 10.dp),
                     contentPadding = PaddingValues( vertical = 14.dp ),
@@ -97,18 +100,9 @@ fun Keyboard(isKeyboardEnabled: Boolean, onButtonClick: (String) -> Unit) {
                         contentDescription = "",
                         tint = PrimaryColor,
                         modifier = Modifier.size(24.dp)
-
                     )
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun KeyboardPreview() {
-    Keyboard(true) {
-
     }
 }

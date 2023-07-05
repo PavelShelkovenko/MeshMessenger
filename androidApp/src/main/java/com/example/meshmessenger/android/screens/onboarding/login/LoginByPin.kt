@@ -13,12 +13,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.meshmessenger.AndroidLoginViewModel
 import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.screens.onboarding.login.keyboard.Keyboard
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Poppins
 import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
-import com.example.meshmessenger.presentation.onboarding.login.LoginState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -75,39 +73,10 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         }
     }
 
-    Keyboard(state.keyboardEnabled) { value ->
-        loginViewModel.onEvent(LoginEvent.PinChanged(value))
+    Keyboard(loginViewModel, state.keyboardEnabled ) { value ->
+        loginViewModel.onEvent(LoginEvent.PinOneElementAdd(value))
     }
 }
 
-@Composable
-fun PinState(state: LoginState, loginAttempt: (String) -> Unit) {
 
-    Row(
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (state.pinState.length == 4) {
-            loginAttempt(state.pinState)
-        }
-        repeat(4) {
-
-            if (it < state.pinState.length) {
-                Icon(
-                    painter = painterResource(id = R.drawable.full_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            } else {
-                Icon(
-                    painter = painterResource(id = R.drawable.empty_circle),
-                    contentDescription = "",
-                    tint = PrimaryColor,
-                    modifier = Modifier.padding(10.dp)
-                )
-            }
-        }
-    }
-}
 

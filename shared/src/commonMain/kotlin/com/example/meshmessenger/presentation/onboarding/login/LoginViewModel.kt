@@ -44,41 +44,37 @@ class LoginViewModel(
 
     fun onEvent(event: LoginEvent) {
         when (event) {
-            is LoginEvent.PinChanged -> {
-                changePinValue(event.value)
+            is LoginEvent.PinOneElementAdd -> {
+                pinOneElementAdd(event.value)
             }
             is LoginEvent.LoginAttempt -> {
-                tryLogin(event.pinAttempt)
+                loginAttempt(event.pinAttempt)
             }
             is LoginEvent.LoginSuccess -> {
-                _state.update {
-                    it.copy(
-                        nextScreenNavigation = true
-                    )
-                }
+                _state.update { it.copy(nextScreenNavigation = true) }
             }
+
+            is LoginEvent.PinDropLast -> {
+                pinDropLast()
+            }
+
             is LoginEvent.AttemptsExceeded -> {
                 block()
             }
         }
     }
 
-    private fun changePinValue(newValue: String) {
+    private fun pinOneElementAdd(newValue: String) {
         val pinState = _state.value.pinState
-        if(pinState.length < 4) {
-            if (newValue == "<-") {
-                _state.update {
-                    it.copy(
-                        pinState = pinState.dropLast(1)
-                    )
-                }
-            } else {
-                _state.update {
-                    it.copy(
-                        pinState = pinState.plus(newValue)
-                    )
-                }
-            }
+        if(pinState.length < 4){
+            _state.update { it.copy(pinState = pinState.plus(newValue)) }
+        }
+    }
+
+    private fun pinDropLast() {
+        val pinState = _state.value.pinState
+        _state.update {
+            it.copy(pinState = pinState.dropLast(1))
         }
     }
 
@@ -112,7 +108,7 @@ class LoginViewModel(
 
     fun getUserName() = securedStore.string(forKey = "login") ?: "Unknown user"
 
-    private fun tryLogin(pinAttempt: String) {
+    private fun loginAttempt(pinAttempt: String) {
         viewModelScope.launch {
             if (_state.value.remainingAttempts > 0) {
                 if (_state.value.informText == "Создайте пин") {
