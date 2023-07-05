@@ -9,7 +9,7 @@
 import Foundation
 import shared
 
-extension RegistrationView {
+extension RegistrationScreen {
     @MainActor class IOSRegistrationViewModel: ObservableObject {
     
         private let viewModel: RegistrationViewModel
@@ -32,6 +32,18 @@ extension RegistrationView {
             self.viewModel.onEvent(event: event)
         }
                 
+        func validatePassword() {
+            self.viewModel.validatePassword()
+        }
+        
+        func validateEmail() {
+            self.viewModel.validateEmail()
+        }
+        
+        func validateData() -> Bool {
+            self.viewModel.validateData()
+        }
+        
         func startObserving() {
             handle = viewModel.state.subscribe(onCollect: { state in
                 if let state = state {

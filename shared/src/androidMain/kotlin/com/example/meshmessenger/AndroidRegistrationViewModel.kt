@@ -26,15 +26,11 @@ class AndroidRegistrationViewModel(
         viewModel.onEvent(event)
     }
 
-    fun signUp() {
-        viewModel.signUp()
-    }
-
-    fun validateEmail(): Boolean {
+    fun validateEmail() {
        return viewModel.validateEmail()
     }
 
-    fun validatePassword(): Boolean {
+    fun validatePassword() {
         return viewModel.validatePassword()
     }
 

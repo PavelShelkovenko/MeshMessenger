@@ -6,7 +6,6 @@ import com.example.meshmessenger.resources.Strings
 import com.liftric.kvault.KVault
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -57,7 +56,7 @@ class RegistrationViewModel(
     }
 
 
-    fun validateEmail(): Boolean {
+    fun validateEmail() {
         val emailResult = validator.validateEmail.execute(_state.value.email)
         val emailError = emailResult.errorMessage
         if (emailError != null) {
@@ -67,7 +66,7 @@ class RegistrationViewModel(
                     errorText = emailError
                 )
             }
-            return false
+            return
         }
         _state.update {
             it.copy(
@@ -75,10 +74,10 @@ class RegistrationViewModel(
                 errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
             )
         }
-        return true
+        return
     }
 
-    fun validatePassword(): Boolean {
+    fun validatePassword() {
         val passwordResult = validator.validatePassword.execute(_state.value.password)
         val passwordError = passwordResult.errorMessage
         if (passwordError != null) {
@@ -88,7 +87,7 @@ class RegistrationViewModel(
                     errorText = passwordError
                 )
             }
-            return false
+            return
         }
         _state.update {
             it.copy(
@@ -96,7 +95,7 @@ class RegistrationViewModel(
                 errorText = sharedStrings.get(SharedRes.strings.empty_string, listOf())
             )
         }
-        return true
+        return
     }
 
     fun validateData(): Boolean {
@@ -119,7 +118,7 @@ class RegistrationViewModel(
         return false
     }
 
-    fun signUp() {
+    private fun signUp() {
         viewModelScope.launch {
             securedStore.set(key = "login", stringValue = _state.value.email)
             securedStore.set(key = "password", stringValue = _state.value.password)

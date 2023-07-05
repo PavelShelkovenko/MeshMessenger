@@ -204,7 +204,7 @@ fun Registration(registrationViewModel: AndroidRegistrationViewModel, onAccountC
 
         Button(
             onClick = {
-                registrationViewModel.signUp()
+                registrationViewModel.onEvent(RegistrationEvent.SignUp)
                 onAccountCreated()
             },
             colors = ButtonDefaults.buttonColors(

@@ -12,11 +12,15 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		377244135BC75EB26D5D0CE6 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD8CC2C832CC51C003D27A1F /* Pods_iosApp.framework */; };
 		55072D6A2A54AE9E0076F09C /* IOSRegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */; };
-		5519CF402A3D15FF0036A0F1 /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */; };
+		5519CF402A3D15FF0036A0F1 /* RegistrationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5519CF3F2A3D15FF0036A0F1 /* RegistrationScreen.swift */; };
 		556E71022A532F04004AFE6D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71012A532F04004AFE6D /* Colors.swift */; };
 		556E71042A532F0D004AFE6D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71032A532F0D004AFE6D /* Fonts.swift */; };
 		556E71062A532F1C004AFE6D /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71052A532F1C004AFE6D /* Images.swift */; };
 		556E710A2A5336FA004AFE6D /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71092A5336FA004AFE6D /* Koin.swift */; };
+		558630302A5580D5002C4E5E /* SignUpButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5586302F2A5580D5002C4E5E /* SignUpButton.swift */; };
+		558630322A5582E8002C4E5E /* EmailTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558630312A5582E8002C4E5E /* EmailTextField.swift */; };
+		558630342A558B7F002C4E5E /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558630332A558B7F002C4E5E /* PasswordTextField.swift */; };
+		558630372A55925B002C4E5E /* ErrorText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558630362A55925B002C4E5E /* ErrorText.swift */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,11 +29,15 @@
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
 		55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSRegistrationViewModel.swift; sourceTree = "<group>"; };
-		5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		5519CF3F2A3D15FF0036A0F1 /* RegistrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationScreen.swift; sourceTree = "<group>"; };
 		556E71012A532F04004AFE6D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		556E71032A532F0D004AFE6D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		556E71052A532F1C004AFE6D /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		556E71092A5336FA004AFE6D /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
+		5586302F2A5580D5002C4E5E /* SignUpButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpButton.swift; sourceTree = "<group>"; };
+		558630312A5582E8002C4E5E /* EmailTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTextField.swift; sourceTree = "<group>"; };
+		558630332A558B7F002C4E5E /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
+		558630362A55925B002C4E5E /* ErrorText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorText.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +84,52 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		5586302A2A558037002C4E5E /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5586302D2A558083002C4E5E /* login */,
+				5586302B2A55804D002C4E5E /* registration */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
+		5586302B2A55804D002C4E5E /* registration */ = {
+			isa = PBXGroup;
+			children = (
+				5586302E2A5580B5002C4E5E /* components */,
+				5519CF3F2A3D15FF0036A0F1 /* RegistrationScreen.swift */,
+				55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */,
+			);
+			path = registration;
+			sourceTree = "<group>";
+		};
+		5586302C2A558073002C4E5E /* di */ = {
+			isa = PBXGroup;
+			children = (
+				556E71092A5336FA004AFE6D /* Koin.swift */,
+			);
+			path = di;
+			sourceTree = "<group>";
+		};
+		5586302D2A558083002C4E5E /* login */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF82242A565900829871 /* ContentView.swift */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
+		5586302E2A5580B5002C4E5E /* components */ = {
+			isa = PBXGroup;
+			children = (
+				5586302F2A5580D5002C4E5E /* SignUpButton.swift */,
+				558630312A5582E8002C4E5E /* EmailTextField.swift */,
+				558630332A558B7F002C4E5E /* PasswordTextField.swift */,
+				558630362A55925B002C4E5E /* ErrorText.swift */,
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -97,15 +151,13 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				5586302C2A558073002C4E5E /* di */,
+				5586302A2A558037002C4E5E /* onboarding */,
 				556E71002A532EF5004AFE6D /* resources */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */,
-				556E71092A5336FA004AFE6D /* Koin.swift */,
-				55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -251,13 +303,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5519CF402A3D15FF0036A0F1 /* RegistrationView.swift in Sources */,
+				5519CF402A3D15FF0036A0F1 /* RegistrationScreen.swift in Sources */,
 				556E71062A532F1C004AFE6D /* Images.swift in Sources */,
 				556E710A2A5336FA004AFE6D /* Koin.swift in Sources */,
 				55072D6A2A54AE9E0076F09C /* IOSRegistrationViewModel.swift in Sources */,
 				556E71042A532F0D004AFE6D /* Fonts.swift in Sources */,
+				558630302A5580D5002C4E5E /* SignUpButton.swift in Sources */,
+				558630322A5582E8002C4E5E /* EmailTextField.swift in Sources */,
 				556E71022A532F04004AFE6D /* Colors.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				558630372A55925B002C4E5E /* ErrorText.swift in Sources */,
+				558630342A558B7F002C4E5E /* PasswordTextField.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
