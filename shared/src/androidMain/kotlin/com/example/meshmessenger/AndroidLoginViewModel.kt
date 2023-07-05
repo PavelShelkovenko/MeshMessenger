@@ -3,7 +3,7 @@ package com.example.meshmessenger
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.meshmessenger.presentation.onboarding.login.LoginEvent
-import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel2
+import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
 import com.liftric.kvault.KVault
 
 class AndroidLoginViewModel(
@@ -11,7 +11,7 @@ class AndroidLoginViewModel(
 ) : ViewModel() {
 
     private val viewModel by lazy {
-        LoginViewModel2(
+        LoginViewModel(
             securedStore = securedStore,
             coroutineScope = viewModelScope
         )

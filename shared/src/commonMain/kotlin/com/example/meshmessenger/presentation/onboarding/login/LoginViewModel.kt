@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class LoginViewModel2(
+class LoginViewModel(
     private val securedStore: KVault,
     private val coroutineScope: CoroutineScope?
 ) {

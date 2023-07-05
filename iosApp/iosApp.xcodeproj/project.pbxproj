@@ -17,7 +17,8 @@
 		556E71042A532F0D004AFE6D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71032A532F0D004AFE6D /* Fonts.swift */; };
 		556E71062A532F1C004AFE6D /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71052A532F1C004AFE6D /* Images.swift */; };
 		556E710A2A5336FA004AFE6D /* Koin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556E71092A5336FA004AFE6D /* Koin.swift */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		63FB91D82A55A903006B8CF5 /* IOSLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB91D72A55A903006B8CF5 /* IOSLoginViewModel.swift */; };
+		63FB91DA2A55AABE006B8CF5 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63FB91D92A55AABE006B8CF5 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +31,9 @@
 		556E71032A532F0D004AFE6D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		556E71052A532F1C004AFE6D /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		556E71092A5336FA004AFE6D /* Koin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Koin.swift; sourceTree = "<group>"; };
+		63FB91D72A55A903006B8CF5 /* IOSLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLoginViewModel.swift; sourceTree = "<group>"; };
+		63FB91D92A55AABE006B8CF5 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89F5A3B0242337C88ED2B124 /* Pods-iosApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.debug.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AF59ED31D4AC2CF2F0A9A925 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -99,13 +101,14 @@
 			children = (
 				556E71002A532EF5004AFE6D /* resources */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */,
 				556E71092A5336FA004AFE6D /* Koin.swift */,
 				55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */,
+				63FB91D72A55A903006B8CF5 /* IOSLoginViewModel.swift */,
+				63FB91D92A55AABE006B8CF5 /* LoginView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -251,14 +254,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63FB91D82A55A903006B8CF5 /* IOSLoginViewModel.swift in Sources */,
 				5519CF402A3D15FF0036A0F1 /* RegistrationView.swift in Sources */,
 				556E71062A532F1C004AFE6D /* Images.swift in Sources */,
+				63FB91DA2A55AABE006B8CF5 /* LoginView.swift in Sources */,
 				556E710A2A5336FA004AFE6D /* Koin.swift in Sources */,
 				55072D6A2A54AE9E0076F09C /* IOSRegistrationViewModel.swift in Sources */,
 				556E71042A532F0D004AFE6D /* Fonts.swift in Sources */,
 				556E71022A532F04004AFE6D /* Colors.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
