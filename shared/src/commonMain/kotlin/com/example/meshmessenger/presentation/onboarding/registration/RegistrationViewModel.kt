@@ -79,7 +79,7 @@ class RegistrationViewModel(
     }
 
     fun validatePassword(): Boolean {
-        val passwordResult = validator.validatePassword.execute(state.value.password)
+        val passwordResult = validator.validatePassword.execute(_state.value.password)
         val passwordError = passwordResult.errorMessage
         if (passwordError != null) {
             _state.update {
@@ -100,7 +100,7 @@ class RegistrationViewModel(
     }
 
     fun validateData(): Boolean {
-        if (_state.value.emailError == "" && state.value.passwordError == "") {
+        if (_state.value.emailError == "" && _state.value.passwordError == "") {
             _state.update {
                 it.copy(
                     errorText = sharedStrings.get(SharedRes.strings.write_your_data, listOf())
@@ -108,7 +108,7 @@ class RegistrationViewModel(
             }
             return false
         }
-        if (state.value.emailError == null && state.value.passwordError == null) {
+        if (state.value.emailError == null && _state.value.passwordError == null) {
             _state.update {
                 it.copy(
                     errorText = sharedStrings.get(SharedRes.strings.join_us, listOf())
@@ -121,8 +121,8 @@ class RegistrationViewModel(
 
     fun signUp() {
         viewModelScope.launch {
-            securedStore.set(key = "login", stringValue = state.value.email)
-            securedStore.set(key = "password", stringValue = state.value.password)
+            securedStore.set(key = "login", stringValue = _state.value.email)
+            securedStore.set(key = "password", stringValue = _state.value.password)
         }
     }
 }

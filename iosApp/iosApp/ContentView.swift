@@ -78,8 +78,6 @@ struct ContentView: View {
                         .foregroundColor(Color(PrimaryColor)
                     )
                 }
-                
-                
 
                 SingleKeyboardButton(text : "0", pin: $pin)
                 

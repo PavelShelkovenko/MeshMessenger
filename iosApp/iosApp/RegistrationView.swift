@@ -11,13 +11,20 @@ import shared
 import Foundation
 
 struct RegistrationView: View {
+    
+    @ObservedObject var viewModel: IOSRegistrationViewModel
+    
     @State private var email = ""
     @State private var password = ""
     @State private var confirmPassword = ""
 
+    init() {
+        self.viewModel = IOSRegistrationViewModel()
+    }
+    
     var body: some View {
         VStack {
-        
+            
             Text(Strings().get(id: SharedRes.strings().welcome, args: []))
                 .font(Font(OnestLarge))
                 .padding()
@@ -26,6 +33,9 @@ struct RegistrationView: View {
                 
             Spacer().frame(height: 20)
 
+            Text(viewModel.state.email)
+            
+            
             HStack {
                 Image(resource: \.ic_person_24)
                     .foregroundColor(Color(PrimaryColor))
@@ -73,10 +83,15 @@ struct RegistrationView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(BackgroundColor))
         .edgesIgnoringSafeArea(.all)
+        .onAppear {
+            viewModel.startObserving()
+        }.onDisappear {
+            viewModel.dispose()
+        }
     }
-        
+    
     func registerUser() {
-        // perform user registration logic here
+        viewModel.onEvent(event: RegistrationEvent.EmailChanged(email: "emaiaiaiaial"))
     }
 }
 

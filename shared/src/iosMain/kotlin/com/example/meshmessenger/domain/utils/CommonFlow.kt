@@ -22,9 +22,9 @@ actual open class CommonFlow<T> actual constructor(
         onCollect: (T) -> Unit
     ): DisposableHandle {
         return subscribe(
-            coroutineScope = GlobalScope,
-            dispatcher = Dispatchers.Main,
-            onCollect = onCollect
+            GlobalScope,
+            Dispatchers.Main,
+            onCollect
         )
     }
 }

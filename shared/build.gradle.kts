@@ -55,9 +55,9 @@ kotlin {
                 implementation(Deps.Multiplatform.kotlinDateTime)
 
                 // Ktor
-                implementation(Deps.Multiplatform.ktorCore)
-                implementation(Deps.Multiplatform.ktorSerialization)
-                implementation(Deps.Multiplatform.ktorSerializationJson)
+                //implementation(Deps.Multiplatform.ktorCore)
+                //implementation(Deps.Multiplatform.ktorSerialization)
+                //implementation(Deps.Multiplatform.ktorSerializationJson)
 
                 // SQLDelight
                 implementation(Deps.Multiplatform.sqlDelightRuntime)
@@ -89,7 +89,7 @@ kotlin {
             dependencies {
 
                 // Ktor
-                implementation(Deps.Android.ktorAndroid)
+                //implementation(Deps.Android.ktorAndroid)
 
                 // SQLDelight
                 implementation(Deps.Android.sqlDelightAndroidDriver)
@@ -118,7 +118,7 @@ kotlin {
             dependencies {
 
                 // Ktor
-                implementation(Deps.IOS.ktorIOS)
+                //implementation(Deps.IOS.ktorIOS)
 
                 // SQLDelight
                 implementation(Deps.IOS.sqlDelightIOSDriver)
