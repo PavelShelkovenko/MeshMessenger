@@ -40,6 +40,11 @@ class LoginViewModel(
                 )
             }
         }
+        _state.update {
+            it.copy(
+                userName = securedStore.string(forKey = "login") ?: "Unknown user"
+            )
+        }
     }
 
     fun onEvent(event: LoginEvent) {
@@ -47,9 +52,7 @@ class LoginViewModel(
             is LoginEvent.PinOneElementAdd -> {
                 pinOneElementAdd(event.value)
             }
-            is LoginEvent.LoginAttempt -> {
-                loginAttempt(event.pinAttempt)
-            }
+
             is LoginEvent.LoginSuccess -> {
                 _state.update { it.copy(nextScreenNavigation = true) }
             }
@@ -57,17 +60,13 @@ class LoginViewModel(
             is LoginEvent.PinDropLast -> {
                 pinDropLast()
             }
-
-            is LoginEvent.AttemptsExceeded -> {
-                block()
-            }
         }
     }
 
     private fun pinOneElementAdd(newValue: String) {
         val pinState = _state.value.pinState
-        if(pinState.length < 4){
-            _state.update { it.copy(pinState = pinState.plus(newValue)) }
+        if(pinState.length < 4) { _state.update { it.copy(pinState = pinState.plus(newValue)) }
+            if(_state.value.pinState.length == 4){ loginAttempt(_state.value.pinState) }
         }
     }
 
@@ -106,8 +105,6 @@ class LoginViewModel(
         }
     }
 
-    fun getUserName() = securedStore.string(forKey = "login") ?: "Unknown user"
-
     private fun loginAttempt(pinAttempt: String) {
         viewModelScope.launch {
             if (_state.value.remainingAttempts > 0) {
@@ -130,7 +127,7 @@ class LoginViewModel(
                     }
                 }
             } else {
-                onEvent(LoginEvent.AttemptsExceeded)
+                block()
             }
         }
     }

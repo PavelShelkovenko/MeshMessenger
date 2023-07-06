@@ -16,6 +16,7 @@ extension LoginScreen {
 
         @Published var state: LoginState = LoginState(
             nextScreenNavigation: false,
+            userName: "",
             informText: "",
             remainingAttempts: 5,
             pinState: "",

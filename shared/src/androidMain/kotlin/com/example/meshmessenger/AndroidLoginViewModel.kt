@@ -22,8 +22,4 @@ class AndroidLoginViewModel(
     fun onEvent(event: LoginEvent){
         return viewModel.onEvent(event)
     }
-
-    fun getUserName(): String {
-        return viewModel.getUserName()
-    }
 }

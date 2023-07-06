@@ -14,37 +14,37 @@ struct RegistrationScreen: View {
     
     @ObservedObject var viewModel: IOSRegistrationViewModel
     @State private var showLoginScreen = false
-        
+
     init() {
         self.viewModel = IOSRegistrationViewModel()
         viewModel.validateData()
     }
-    
+
     var body: some View {
         NavigationView {
             VStack {
-                
+
                 if showLoginScreen {
                     NavigationLink(destination: LoginScreen(), isActive: $showLoginScreen) {
                         EmptyView()
                     }
                     .hidden()
                 }
-                
+
                 Text(welcome_string)
                     .font(Font(OnestLarge))
                     .padding()
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(PrimaryColor))
-                
+
                 Spacer().frame(height: 5)
-                
+
                 ErrorText(error: Binding(
                     get: { viewModel.state.errorText ?? "" },
                     set: { value in }
                 )
                 )
-                
+
                 EmailTextField(
                     email: Binding(
                         get: { viewModel.state.email },
@@ -56,9 +56,9 @@ struct RegistrationScreen: View {
                             viewModel.validateData()
                         })
                 )
-                
+
                 Spacer().frame(height: 20)
-                
+
                 PasswordTextField(
                     password: Binding(
                         get: { viewModel.state.password },
@@ -70,9 +70,9 @@ struct RegistrationScreen: View {
                             viewModel.validateData()
                         })
                 )
-                
+
                 Spacer().frame(height: 20)
-                
+
                 SignUpButton(onClick: {
                     registerUser()
                 })
