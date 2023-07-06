@@ -13,16 +13,32 @@ import shared
 struct PasswordTextField: View {
     
     @Binding var password: String
-
+    @State private var showPassword = false
+    
     var body: some View {
         HStack {
             Image(resource: \.ic_password_24)
                 .foregroundColor(Color(PrimaryColor))
             
-            TextField("Password", text: $password)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .font(Font(OnestMedium))
+            if showPassword {
+                TextField(password_string, text: $password)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .font(Font(OnestMedium))
+                
+            } else {
+                SecureField(password_string, text: $password)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .font(Font(OnestMedium))
+                }
+    
+            Spacer()
+            Button(action: { showPassword.toggle() } ) {
+            Image(systemName: showPassword ? "eye.fill" : "eye.slash.fill")
+                    .foregroundColor(Color(PrimaryColor))
+                    .padding(.trailing, 12)
+            }
         }
         .padding()
         .background(RoundedRectangle(cornerRadius: 10).fill(Color.white))

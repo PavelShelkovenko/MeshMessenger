@@ -9,7 +9,7 @@
 import Foundation
 import shared
 
-extension LoginView {
+extension LoginScreen {
     @MainActor class IOSLoginViewModel: ObservableObject {
     
         private let viewModel: LoginViewModel

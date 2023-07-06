@@ -15,7 +15,7 @@ struct SignUpButton: View {
     
     var body: some View {
         Button(action: onClick) {
-            Text(Strings().get(id: SharedRes.strings().sign_up, args: []))
+            Text(sign_up_string)
                 .padding()
                 .font(Font(OnestMedium))
                 .frame(minWidth: 150)

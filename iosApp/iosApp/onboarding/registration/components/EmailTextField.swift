@@ -21,7 +21,7 @@ struct EmailTextField: View {
             Image(resource: \.ic_person_24)
                 .foregroundColor(Color(PrimaryColor))
                         
-            TextField("Email", text: $email)
+            TextField(username_string, text: $email)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
