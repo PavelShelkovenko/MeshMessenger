@@ -52,6 +52,7 @@ class LoginViewModel(
             is LoginEvent.PinOneElementAdd -> {
                 pinOneElementAdd(event.value)
             }
+
             is LoginEvent.LoginSuccess -> {
                 _state.update { it.copy(nextScreenNavigation = true) }
             }
@@ -59,26 +60,13 @@ class LoginViewModel(
             is LoginEvent.PinDropLast -> {
                 pinDropLast()
             }
-
-            is LoginEvent.AttemptsExceeded -> {
-                block()
-            }
         }
     }
 
     private fun pinOneElementAdd(newValue: String) {
         val pinState = _state.value.pinState
-
-        println(" $pinState .  ${_state.value.pinState}")
-        if(pinState.length < 4) {
-            _state.update { it.copy(pinState = pinState.plus(newValue))
-            }
-
-            println(" $pinState .  ${_state.value.pinState}")
-
+        if(pinState.length < 4) { _state.update { it.copy(pinState = pinState.plus(newValue)) }
             if(_state.value.pinState.length == 4){ loginAttempt(_state.value.pinState) }
-            println(" $pinState  . ${_state.value.pinState}")
-
         }
     }
 
@@ -139,7 +127,7 @@ class LoginViewModel(
                     }
                 }
             } else {
-                onEvent(LoginEvent.AttemptsExceeded)
+                block()
             }
         }
     }

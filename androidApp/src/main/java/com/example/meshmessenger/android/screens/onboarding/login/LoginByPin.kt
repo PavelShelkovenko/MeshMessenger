@@ -70,9 +70,6 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
         PinState(state)
-//        { pinAttempt ->
-//            loginViewModel.onEvent(LoginEvent.LoginAttempt(pinAttempt))
-//        }
     }
 
     Keyboard(loginViewModel, state.keyboardEnabled ) { value ->

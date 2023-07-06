@@ -14,9 +14,7 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginState
 
 @Composable
-fun PinState(state: LoginState,
-             //loginAttempt: (String) -> Unit
-) {
+fun PinState(state: LoginState ) {
 
     Row(
         horizontalArrangement = Arrangement.Center,

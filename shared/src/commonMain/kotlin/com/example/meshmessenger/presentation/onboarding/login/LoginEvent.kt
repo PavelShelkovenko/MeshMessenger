@@ -6,5 +6,4 @@ sealed class LoginEvent {
     object PinDropLast: LoginEvent()
 
     object LoginSuccess: LoginEvent()
-    object AttemptsExceeded: LoginEvent()
 }
