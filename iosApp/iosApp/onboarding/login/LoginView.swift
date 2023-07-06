@@ -53,7 +53,7 @@ struct LoginView: View {
             Spacer()
             
             HStack {
-                SingleKeyboardButton(text : "1", pin: $pin, vm: IOSLoginViewModel )
+                SingleKeyboardButton(text : "1", pin: $pin)
 
                 SingleKeyboardButton(text : "2", pin: $pin)
                 
@@ -117,7 +117,7 @@ struct LoginView: View {
     }
 }
 
-func SingleKeyboardButton(text: String,  pin: Binding<String>, vm: LoginView.IOSLoginViewModel  ) -> some View {
+func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
  
         HStack {
             Button(action: {

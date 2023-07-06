@@ -78,6 +78,49 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
+		6395BBA82A56C3FC00E4EC2D /* di */ = {
+			isa = PBXGroup;
+			children = (
+				556E71092A5336FA004AFE6D /* Koin.swift */,
+			);
+			path = di;
+			sourceTree = "<group>";
+		};
+		6395BBAA2A56C4DE00E4EC2D /* onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				6395BBAD2A56C52E00E4EC2D /* registration */,
+				6395BBAC2A56C52600E4EC2D /* login */,
+			);
+			path = onboarding;
+			sourceTree = "<group>";
+		};
+		6395BBAC2A56C52600E4EC2D /* login */ = {
+			isa = PBXGroup;
+			children = (
+				63FB91D72A55A903006B8CF5 /* IOSLoginViewModel.swift */,
+				63FB91D92A55AABE006B8CF5 /* LoginView.swift */,
+			);
+			path = login;
+			sourceTree = "<group>";
+		};
+		6395BBAD2A56C52E00E4EC2D /* registration */ = {
+			isa = PBXGroup;
+			children = (
+				6395BBAE2A56C56700E4EC2D /* components */,
+				55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */,
+				5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */,
+			);
+			path = registration;
+			sourceTree = "<group>";
+		};
+		6395BBAE2A56C56700E4EC2D /* components */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = components;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -99,16 +142,13 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				6395BBAA2A56C4DE00E4EC2D /* onboarding */,
+				6395BBA82A56C3FC00E4EC2D /* di */,
 				556E71002A532EF5004AFE6D /* resources */,
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				5519CF3F2A3D15FF0036A0F1 /* RegistrationView.swift */,
-				556E71092A5336FA004AFE6D /* Koin.swift */,
-				55072D692A54AE9E0076F09C /* IOSRegistrationViewModel.swift */,
-				63FB91D72A55A903006B8CF5 /* IOSLoginViewModel.swift */,
-				63FB91D92A55AABE006B8CF5 /* LoginView.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
