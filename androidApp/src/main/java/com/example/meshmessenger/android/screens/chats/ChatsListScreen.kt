@@ -26,6 +26,7 @@ import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.root.stringResource
 import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
+import com.example.meshmessenger.android.theme.Onest
 import com.example.meshmessenger.android.theme.White
 import com.example.meshmessenger.presentation.chat.Channel
 import com.example.meshmessenger.presentation.chat.ChatViewModel
@@ -45,7 +46,10 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
                     Text(
                         text = stringResource(id = SharedRes.strings.topAppBar_text),
                         fontSize = 20.sp,
-                        color = Color.Black)
+                        color = Color.Black,
+                        fontFamily = Onest
+                    )
+
                     },
                 navigationIcon = {
                     IconButton(onClick = { /*TODO*/ }) {
@@ -68,18 +72,16 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
 
 @Composable
 fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChatViewModel) {
-    Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
-
+    Surface {
         Row(
             modifier = Modifier
-                .fillMaxWidth(0.95F)
-                .background(White)
+                .fillMaxWidth()
+                .background(Color.White)
                 .clickable {
                     navController.navigate("messagesList/${channel.name + " " + channel.surname}") {
                         launchSingleTop = true
                     }
                 }
-
         ) {
 
             AsyncImage(
@@ -87,7 +89,7 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
                     .data(channel.imageURL)
                     .crossfade(true)
                     .build(),
-                null,
+                contentDescription =  null,
                 modifier = Modifier
                     .padding(all = 10.dp)
                     .size(50.dp)
@@ -95,9 +97,18 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
                 contentScale = ContentScale.Crop
             )
             Column(modifier = Modifier.padding(all = 5.dp)) {
-                Text(channel.name + " " + channel.surname)
+                Text(
+                    text = channel.name + " " + channel.surname,
+                    fontFamily = Onest
+
+                )
                 Spacer(modifier = Modifier.height(10.dp))
-                Text(channel.lastMessage, modifier = Modifier.padding(start = 15.dp), fontSize = 15.sp )
+                Text(
+                    text = channel.lastMessage,
+                    modifier = Modifier.padding(start = 15.dp),
+                    fontSize = 15.sp,
+                    fontFamily = Onest
+                )
             }
 
             Row(
@@ -107,15 +118,13 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.End
             ) {
-                Text(chatViewModel.channelsListExample[0].time)
+                Text(
+                    text = chatViewModel.channelsListExample[0].time,
+                    fontFamily = Onest
+                )
             }
         }
     }
-    Spacer(
-        modifier = Modifier
-            .height(5.dp)
-            .background(BackgroundColor)
-    )
 }
 
 @Composable

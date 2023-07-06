@@ -10,7 +10,7 @@ import dev.icerock.moko.mvvm.flow.cStateFlow
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class MessageViewModel(val databaseRepository: DatabaseRepository) : ViewModel() {
+class MessageViewModel(private val databaseRepository: DatabaseRepository) : ViewModel() {
 
     val textMessage: CMutableStateFlow<String> = MutableStateFlow("").cMutableStateFlow()
     private val _listOfMessages: CMutableStateFlow<MutableList<Message>> =
