@@ -9,7 +9,7 @@
 import SwiftUI
 import shared
 
-struct LoginView: View {
+struct LoginScreen: View {
     
     @ObservedObject var viewModel: IOSLoginViewModel
     
@@ -139,8 +139,8 @@ func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
     }
 
 
-struct ContentView_Previews: PreviewProvider {
+struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginScreen()
     }
 }

@@ -13,75 +13,85 @@ import Foundation
 struct RegistrationScreen: View {
     
     @ObservedObject var viewModel: IOSRegistrationViewModel
-    
+    @State private var showLoginScreen = false
+        
     init() {
         self.viewModel = IOSRegistrationViewModel()
         viewModel.validateData()
     }
     
     var body: some View {
-        VStack {
-            
-            Text(Strings().get(id: SharedRes.strings().welcome, args: []))
-                .font(Font(OnestLarge))
-                .padding()
-                .multilineTextAlignment(.center)
-                .foregroundColor(Color(PrimaryColor))
+        NavigationView {
+            VStack {
                 
-            Spacer().frame(height: 5)
-
-            ErrorText(error: Binding(
+                if showLoginScreen {
+                    NavigationLink(destination: LoginScreen(), isActive: $showLoginScreen) {
+                        EmptyView()
+                    }
+                    .hidden()
+                }
+                
+                Text(welcome_string)
+                    .font(Font(OnestLarge))
+                    .padding()
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(PrimaryColor))
+                
+                Spacer().frame(height: 5)
+                
+                ErrorText(error: Binding(
                     get: { viewModel.state.errorText ?? "" },
                     set: { value in }
                 )
-            )
-                        
-            EmailTextField(
-                email: Binding(
-                    get: { viewModel.state.email },
-                    set: { value in
-                    viewModel.onEvent(
-                        event: RegistrationEvent.EmailChanged(email: value)
-                    )
-                    viewModel.validateEmail()
-                    viewModel.validateData()
+                )
+                
+                EmailTextField(
+                    email: Binding(
+                        get: { viewModel.state.email },
+                        set: { value in
+                            viewModel.onEvent(
+                                event: RegistrationEvent.EmailChanged(email: value)
+                            )
+                            viewModel.validateEmail()
+                            viewModel.validateData()
+                        })
+                )
+                
+                Spacer().frame(height: 20)
+                
+                PasswordTextField(
+                    password: Binding(
+                        get: { viewModel.state.password },
+                        set: { value in
+                            viewModel.onEvent(
+                                event: RegistrationEvent.PasswordChanged(password: value)
+                            )
+                            viewModel.validatePassword()
+                            viewModel.validateData()
+                        })
+                )
+                
+                Spacer().frame(height: 20)
+                
+                SignUpButton(onClick: {
+                    registerUser()
                 })
-            )
-            
-            Spacer().frame(height: 20)
-            
-            PasswordTextField(
-                password: Binding(
-                    get: { viewModel.state.password },
-                    set: { value in
-                    viewModel.onEvent(
-                        event: RegistrationEvent.PasswordChanged(password: value)
-                    )
-                    viewModel.validatePassword()
-                    viewModel.validateData()
-                })
-            )
-
-            Spacer().frame(height: 20)
-            
-            SignUpButton(onClick: {
-                viewModel.onEvent(event: RegistrationEvent.SignUp())
-            })
-            .disabled(!viewModel.validateData())
-        }
-        .padding(.horizontal, 16)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(BackgroundColor))
-        .edgesIgnoringSafeArea(.all)
-        .onAppear {
-            viewModel.startObserving()
-        }.onDisappear {
-            viewModel.dispose()
+                .disabled(!viewModel.validateData())
+            }
+            .padding(.horizontal, 16)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(BackgroundColor))
+            .edgesIgnoringSafeArea(.all)
+            .onAppear {
+                viewModel.startObserving()
+            }.onDisappear {
+                viewModel.dispose()
+            }
         }
     }
-    
     func registerUser() {
         viewModel.onEvent(event: RegistrationEvent.SignUp())
+        showLoginScreen = true
     }
 }
 
