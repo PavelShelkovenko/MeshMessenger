@@ -30,7 +30,7 @@ actual val platformModule = module {
     single<SqlDriver> { NativeSqliteDriver(AppDatabase.Schema, "appDatabase.db") }
     single { Strings() }
     single {  KVault() }
-    single { LoginViewModel(securedStore = get()) }
+    single { LoginViewModel(securedStore = get(), null) }
     single { RegistrationViewModel(sharedStrings = get(), securedStore = get(), null) }
     single { ChatViewModel(databaseRepository = get()) }
     single { MessageViewModel(databaseRepository = get()) }

@@ -1,4 +1,4 @@
-package com.example.meshmessenger.android.screens.onboarding.login.keyboard
+package com.example.meshmessenger.android.screens.onboarding.login
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,9 +24,7 @@ fun SingleKeyboardButton(btnText: String, isKeyboardEnabled: Boolean, onButtonCl
 
     Button(
         onClick = { onButtonClick(btnText) },
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = BackgroundColor
-        ),
+        colors = ButtonDefaults.buttonColors(backgroundColor = BackgroundColor),
         modifier = Modifier
             .padding( all = 10.dp )
             .border( width =  1.dp, shape =  CircleShape, color = IconsBlue)

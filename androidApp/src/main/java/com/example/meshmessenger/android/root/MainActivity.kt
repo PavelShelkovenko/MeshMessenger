@@ -8,7 +8,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.MutatePriority
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -38,12 +37,12 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bluetoothManager: BluetoothManager by lazy {
-            getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-        }
-        val bluetoothAdapter: BluetoothAdapter by lazy { bluetoothManager.adapter }
-        val bleAdvertiser by lazy { bluetoothAdapter.bluetoothLeAdvertiser }
-
+//        val bluetoothManager: BluetoothManager by lazy {
+//            getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+//        }
+//        val bluetoothAdapter: BluetoothAdapter by lazy { bluetoothManager.adapter }
+//        val bleAdvertiser by lazy { bluetoothAdapter.bluetoothLeAdvertiser }
+//
         val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
 
 
@@ -70,9 +69,9 @@ class MainActivity : ComponentActivity() {
                         },
                         navController = navController,
                         pickMultiMedia = pickMultiMedia,
-                        bluetoothAdapter = bluetoothAdapter,
-                        bluetoothLeAdvertiser = bleAdvertiser,
-                        bluetoothManager = bluetoothManager
+//                        bluetoothAdapter = bluetoothAdapter,
+//                        bluetoothLeAdvertiser = bleAdvertiser,
+//                        bluetoothManager = bluetoothManager
                     )
                 }
             }
@@ -109,7 +108,6 @@ fun FontResource.asFont(
         style = style,
     )
 }
-
 
 
 

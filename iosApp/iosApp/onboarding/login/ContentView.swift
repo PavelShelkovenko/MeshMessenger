@@ -1,14 +1,27 @@
+//
+//  LoginView.swift
+//  iosApp
+//
+//  Created by macuser on 05.07.2023.
+//  Copyright © 2023 orgName. All rights reserved.
+//
+
 import SwiftUI
 import shared
 
-
-
-struct ContentView: View {
-	let greet = Greeting().greet()
+struct LoginView: View {
     
-    @State private var pin = ""
+    @ObservedObject var viewModel: IOSLoginViewModel
+    
+    
+    init() {
+        self.viewModel = IOSLoginViewModel()
+    }
 
-	var body: some View {
+    @State  var pin = ""
+
+    
+    var body: some View {
         VStack {
             Spacer()
 
@@ -96,17 +109,22 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(SharedRes.colors().BackgroundColor.getUIColor()))
         .edgesIgnoringSafeArea(.all)
-
-	}
+        .onAppear {
+            viewModel.startObserving()
+        }.onDisappear {
+            viewModel.dispose()
+        }
+    }
 }
 
-func SingleKeyboardButton(text: String,  pin: Binding<String>) -> some View {
+func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
  
         HStack {
             Button(action: {
-                if(pin.wrappedValue.count < 4){
-                    pin.wrappedValue.append(text)
-                }
+//                if(pin.wrappedValue.count < 4){
+//                    pin.wrappedValue.append(text)
+//                }
+                
             
             }) {
                 Text(text)
@@ -122,7 +140,7 @@ func SingleKeyboardButton(text: String,  pin: Binding<String>) -> some View {
 
 
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        LoginView()
+    }
 }
