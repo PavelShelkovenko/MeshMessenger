@@ -53,10 +53,6 @@ class LoginViewModel(
                 pinOneElementAdd(event.value)
             }
 
-            is LoginEvent.LoginSuccess -> {
-                _state.update { it.copy(nextScreenNavigation = true) }
-            }
-
             is LoginEvent.PinDropLast -> {
                 pinDropLast()
             }
@@ -111,10 +107,14 @@ class LoginViewModel(
                 if (_state.value.informText == "Создайте пин") {
                     securedStore.set(key = "pin", stringValue = pinAttempt)
                     _state.update { it.copy(nextScreenNavigation = true) }
+
                 } else {
                     val savedPin = securedStore.string(forKey = "pin")
                     if (savedPin == pinAttempt) {
                         _state.update { it.copy(nextScreenNavigation = true) }
+                        delay(10)
+                        _state.update { it.copy(nextScreenNavigation = false) }
+
                     }
                     else {
                         _state.update {

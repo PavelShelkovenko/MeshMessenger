@@ -28,6 +28,10 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         loginSuccess()
     }
 
+    SideEffect {
+        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    }
+
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,

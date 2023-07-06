@@ -1,5 +1,6 @@
 package com.example.meshmessenger.android.screens.chats
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -24,9 +26,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.root.stringResource
-import com.example.meshmessenger.android.theme.BackgroundColor
 import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Onest
+import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.android.theme.White
 import com.example.meshmessenger.presentation.chat.Channel
 import com.example.meshmessenger.presentation.chat.ChatViewModel
@@ -49,8 +51,7 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
                         color = Color.Black,
                         fontFamily = Onest
                     )
-
-                    },
+                },
                 navigationIcon = {
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(Icons.Filled.Menu, contentDescription = "Menu", tint = IconsBlue)
@@ -69,71 +70,73 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
 }
 
 
-
 @Composable
 fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChatViewModel) {
-    Surface {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.White)
+            .clickable {
+                navController.navigate("messagesList/${channel.name + " " + channel.surname}") {
+                    launchSingleTop = true
+                }
+            },
+
+    ) {
+
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(channel.imageURL)
+                .crossfade(true)
+                .build(),
+            contentDescription = "avatar image",
+            modifier = Modifier
+                .padding(all = 10.dp)
+                .size(50.dp)
+                .clip(CircleShape),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(modifier = Modifier.padding(start = 5.dp, end = 5.dp)) {
+            Text(
+                modifier = Modifier.padding(top = 5.dp),
+                text = channel.name + " " + channel.surname,
+                fontFamily = Onest
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = channel.lastMessage,
+                modifier = Modifier.padding(start = 15.dp),
+                fontSize = 15.sp,
+                fontFamily = Onest,
+                color = PlaceholderColor,
+            )
+        }
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.White)
-                .clickable {
-                    navController.navigate("messagesList/${channel.name + " " + channel.surname}") {
-                        launchSingleTop = true
-                    }
-                }
+                .fillMaxSize()
+                .padding(start = 5.dp, top = 5.dp, end = 5.dp),
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.End
         ) {
-
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(channel.imageURL)
-                    .crossfade(true)
-                    .build(),
-                contentDescription =  null,
-                modifier = Modifier
-                    .padding(all = 10.dp)
-                    .size(50.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
+            Text(
+                text = chatViewModel.channelsListExample[0].time,
+                fontFamily = Onest
             )
-            Column(modifier = Modifier.padding(all = 5.dp)) {
-                Text(
-                    text = channel.name + " " + channel.surname,
-                    fontFamily = Onest
-
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(
-                    text = channel.lastMessage,
-                    modifier = Modifier.padding(start = 15.dp),
-                    fontSize = 15.sp,
-                    fontFamily = Onest
-                )
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(all = 5.dp),
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(
-                    text = chatViewModel.channelsListExample[0].time,
-                    fontFamily = Onest
-                )
-            }
         }
     }
+    GreyHorizontalLine()
 }
+
 
 @Composable
 fun BleUICard(navController: NavController) {
     Surface(elevation = 20.dp, shape = RoundedCornerShape(8.dp)) {
-
         Row(
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically ,
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .padding(all = 20.dp)
                 .fillMaxWidth(0.95F)
@@ -146,6 +149,26 @@ fun BleUICard(navController: NavController) {
         ) {
             Text(
                 text = stringResource(id = SharedRes.strings.work_BLE)
+            )
+        }
+    }
+}
+
+@Composable
+fun GreyHorizontalLine() {
+    Box(modifier = Modifier.fillMaxWidth()) {
+
+        Canvas(modifier = Modifier.fillMaxWidth()) {
+            val startY = size.height
+            val startX = 0f
+            val endX = size.width
+            val color = PlaceholderColor
+
+            drawLine(
+                color = color,
+                start = Offset(startX, startY),
+                end = Offset(endX, startY),
+                strokeWidth = 0.5f
             )
         }
     }

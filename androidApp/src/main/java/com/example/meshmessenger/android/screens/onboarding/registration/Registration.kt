@@ -37,6 +37,11 @@ fun Registration(registrationViewModel: AndroidRegistrationViewModel, onAccountC
     var isPasswordOpen by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
+
+    SideEffect {
+        println("???????????????????????????????")
+    }
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.meshmessenger.android.theme.Onest
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.data.Message
 
@@ -46,7 +47,8 @@ fun OneMessageOnPrivateChat(message: Message) {
                     Text(
                         text = message.text,
                         maxLines = Int.MAX_VALUE,
-                        modifier = Modifier.wrapContentWidth() //размер зависит от текста
+                        modifier = Modifier.wrapContentWidth(), //размер зависит от текста
+                        fontFamily = Onest,
                     )
                 }
 
@@ -61,8 +63,10 @@ fun OneMessageOnPrivateChat(message: Message) {
                         TextAlign.End
                     } else {
                         TextAlign.Start
-                    }
-                )
+                    },
+                    fontFamily = Onest,
+
+                    )
             }
         }
     }

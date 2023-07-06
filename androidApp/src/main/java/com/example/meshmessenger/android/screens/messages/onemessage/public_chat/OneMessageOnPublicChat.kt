@@ -19,6 +19,7 @@ import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.screens.messages.roundedCornerShapeDefine
+import com.example.meshmessenger.android.theme.Onest
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.data.Message
 
@@ -75,8 +76,10 @@ fun OneMessageOnPublicChat(message: Message) {
                             maxLines = 1,
                             fontSize = 10.sp,
                             color = PlaceholderColor,
-                            modifier = Modifier.padding(end = 10.dp, top = 2.dp)
-                        )
+                            modifier = Modifier.padding(end = 10.dp, top = 2.dp),
+                            fontFamily = Onest,
+
+                            )
                     }
                 }
 
@@ -91,8 +94,10 @@ fun OneMessageOnPublicChat(message: Message) {
                             Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
                         } else {
                             Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp)
-                        }
-                    )
+                        },
+                        fontFamily = Onest,
+
+                        )
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -122,8 +127,10 @@ fun OneMessageOnPublicChat(message: Message) {
                             Modifier.padding(end = 2.dp)
                         } else {
                             Modifier.padding(start = 2.dp)
-                        }
-                    )
+                        },
+                        fontFamily = Onest,
+
+                        )
 
                     Spacer(modifier = Modifier.width(2.dp))
 
