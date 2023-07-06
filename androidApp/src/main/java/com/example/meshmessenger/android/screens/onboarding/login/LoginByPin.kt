@@ -59,8 +59,9 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center
         )
+
         Text(
-            text = loginViewModel.getUserName(),
+            text = state.userName,
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
@@ -68,9 +69,10 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         )
         Spacer(modifier = Modifier.fillMaxHeight(0.1f))
 
-        PinState(state) { pinAttempt ->
-            loginViewModel.onEvent(LoginEvent.LoginAttempt(pinAttempt))
-        }
+        PinState(state)
+//        { pinAttempt ->
+//            loginViewModel.onEvent(LoginEvent.LoginAttempt(pinAttempt))
+//        }
     }
 
     Keyboard(loginViewModel, state.keyboardEnabled ) { value ->

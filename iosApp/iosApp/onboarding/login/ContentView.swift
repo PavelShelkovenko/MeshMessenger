@@ -12,20 +12,26 @@ import shared
 struct LoginView: View {
     
     @ObservedObject var viewModel: IOSLoginViewModel
-    
-    
+  
     init() {
         self.viewModel = IOSLoginViewModel()
     }
 
-    @State  var pin = ""
-
-    
     var body: some View {
+        
+        @State  var pin = viewModel.state.pinState
+        
         VStack {
             Spacer()
 
-            Text("Создайте  PIN")
+            Text(viewModel.state.informText)
+                .font(Font(OnestLarge))
+                .padding()
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(PrimaryColor)
+                )
+            
+            Text( viewModel.state.userName )
                 .font(Font(OnestLarge))
                 .padding()
                 .multilineTextAlignment(.center)
@@ -33,22 +39,22 @@ struct LoginView: View {
                 )
             
             HStack {
-                ForEach(0..<4) { index in
-                    if(index < pin.count){
-                        Circle()
-                             .foregroundColor(Color(PrimaryColor))
-                             .frame(width: 20, height: 20)
-                             .padding(10)
-
-                    } else {
-                        Circle()
-                       .fill(Color(SharedRes.colors().BackgroundColor.getUIColor()))
-                       .frame(width: 20, height:  20)
-                       .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
-                       .padding(10)
+              ForEach(0..<4) { index in
+                        if(index < pin.count){
+                            Circle()
+                                .foregroundColor(Color(PrimaryColor))
+                                .frame(width: 20, height: 20)
+                                .padding(10)
+                            
+                        } else {
+                            Circle()
+                                .fill(Color(SharedRes.colors().BackgroundColor.getUIColor()))
+                                .frame(width: 20, height:  20)
+                                .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
+                                .padding(10)
+                        }
                     }
-
-                }
+                
             }
             Spacer()
             
@@ -95,10 +101,8 @@ struct LoginView: View {
                 SingleKeyboardButton(text : "0", pin: $pin)
                 
                 Button {
-                    if(pin.count > 0){
-                        pin.removeLast()
-                    }
-                } label: {
+                    viewModel.onEvent(event: LoginEvent.PinDropLast() )
+                    } label: {
                     Image(systemName: "arrow.left")
                         .frame(width: 85, height: 85)
                         .foregroundColor(Color(PrimaryColor))
@@ -115,29 +119,25 @@ struct LoginView: View {
             viewModel.dispose()
         }
     }
-}
-
-func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
- 
-        HStack {
-            Button(action: {
-//                if(pin.wrappedValue.count < 4){
-//                    pin.wrappedValue.append(text)
-//                }
+    
+    func SingleKeyboardButton(text: String,  pin: Binding<String>) -> some View {
+     
+            HStack {
+                Button(action: {
+                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text))
+                }) {
+                    Text(text)
+                        .fontWeight(.bold)
+                        .font(.title)
+                        .foregroundColor(Color(PrimaryColor))
+                        .frame(width: 85, height: 85)
+                        .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
+                }
                 
-            
-            }) {
-                Text(text)
-                    .fontWeight(.bold)
-                    .font(.title)
-                    .foregroundColor(Color(PrimaryColor))
-                    .frame(width: 85, height: 85)
-                    .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
-            }
-            
         }
     }
-
+    
+}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

@@ -22,6 +22,7 @@ struct RegistrationScreen: View {
     var body: some View {
         VStack {
             
+
             Text(Strings().get(id: SharedRes.strings().welcome, args: []))
                 .font(Font(OnestLarge))
                 .padding()

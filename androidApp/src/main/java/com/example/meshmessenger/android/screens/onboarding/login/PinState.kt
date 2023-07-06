@@ -14,15 +14,14 @@ import com.example.meshmessenger.android.theme.PrimaryColor
 import com.example.meshmessenger.presentation.onboarding.login.LoginState
 
 @Composable
-fun PinState(state: LoginState, loginAttempt: (String) -> Unit) {
+fun PinState(state: LoginState,
+             //loginAttempt: (String) -> Unit
+) {
 
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (state.pinState.length == 4) {
-            loginAttempt(state.pinState)
-        }
         repeat(4) {
 
             if (it < state.pinState.length) {
