@@ -26,6 +26,7 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
 
     if (state.nextScreenNavigation) {
         loginSuccess()
+        state.nextScreenNavigation = false
     }
 
     SideEffect {

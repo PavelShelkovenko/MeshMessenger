@@ -20,19 +20,14 @@ fun startDestinationDefine(secureStore: KVault): String {
 fun saveTime(secureStore: KVault) {
     val currentMoment = Clock.System.now().epochSeconds.toInt()
     secureStore.set("timeOfLastExitFromApp", currentMoment)
-    println("$currentMoment")
-
 }
 
 fun isTimeOut(secureStore: KVault): Boolean {
     val time = secureStore.int("timeOfLastExitFromApp")
     if (time != null) {
         if (abs(time + 5) < Clock.System.now().epochSeconds) {
-            println("true")
             return true
         }
     }
-    println("false")
-
     return false
 }
