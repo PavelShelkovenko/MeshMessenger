@@ -3,8 +3,8 @@ package com.example.meshmessenger.di
 import com.example.meshmessenger.AppInfo
 import com.example.meshmessenger.resources.Strings
 import com.example.meshmessenger.database.AppDatabase
-import com.example.meshmessenger.presentation.chat.ChatViewModel
-import com.example.meshmessenger.presentation.message.MessageViewModel
+import com.example.meshmessenger.presentation.channelScreen.ChannelViewModel
+import com.example.meshmessenger.presentation.chatScreen.ChatViewModel
 import com.example.meshmessenger.presentation.onboarding.login.LoginViewModel
 import com.example.meshmessenger.presentation.onboarding.registration.RegistrationViewModel
 import com.liftric.kvault.KVault
@@ -32,14 +32,14 @@ actual val platformModule = module {
     single {  KVault() }
     single { LoginViewModel(securedStore = get(), null) }
     single { RegistrationViewModel(sharedStrings = get(), securedStore = get(), null) }
-    single { ChatViewModel(databaseRepository = get()) }
-    single { MessageViewModel(databaseRepository = get()) }
+    single { ChannelViewModel(databaseRepository = get()) }
+    single { ChatViewModel(databaseRepository = get(), null) }
 }
 
 @Suppress("unused") // Called from Swift
 object KotlinDependencies : KoinComponent {
     fun getRegistrationViewModel() = getKoin().get<RegistrationViewModel>()
     fun getLoginViewModel() = getKoin().get<LoginViewModel>()
-    fun getChatViewModel() = getKoin().get<ChatViewModel>()
-    fun getMessageViewModel() = getKoin().get<MessageViewModel>()
+    fun getChatViewModel() = getKoin().get<ChannelViewModel>()
+    fun getMessageViewModel() = getKoin().get<ChatViewModel>()
 }

@@ -16,11 +16,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.meshmessenger.presentation.message.MessageViewModel
+import com.example.meshmessenger.AndroidChatViewModel
+import com.example.meshmessenger.presentation.chatScreen.ChatEvent
 
 
 @Composable
-fun EmojiPicker(messageViewModel: MessageViewModel) {
+fun EmojiPicker(chatViewModel: AndroidChatViewModel) {
     LazyVerticalGrid(
         modifier = Modifier.height(150.dp),
         columns = GridCells.Adaptive(minSize = 42.dp)
@@ -30,7 +31,7 @@ fun EmojiPicker(messageViewModel: MessageViewModel) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable(onClick = {
-                        messageViewModel.textMessage.value = messageViewModel.textMessage.value + emoji
+                        chatViewModel.onEvent(ChatEvent.TextChanged(emoji))
                     })
                     .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
                     .padding(8.dp),

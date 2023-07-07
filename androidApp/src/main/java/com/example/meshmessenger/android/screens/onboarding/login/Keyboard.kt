@@ -32,7 +32,8 @@ fun Keyboard(loginViewModel: AndroidLoginViewModel, isKeyboardEnabled: Boolean, 
 
     val activity = LocalContext.current as? Activity
 
-    Box(contentAlignment = BottomCenter,
+    Box(
+        contentAlignment = BottomCenter,
         modifier = Modifier.fillMaxSize()
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {

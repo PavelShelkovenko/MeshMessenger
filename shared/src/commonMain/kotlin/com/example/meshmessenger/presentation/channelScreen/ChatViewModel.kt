@@ -1,9 +1,9 @@
-package com.example.meshmessenger.presentation.chat
+package com.example.meshmessenger.presentation.channelScreen
 
 import com.example.meshmessenger.domain.database_repository.DatabaseRepository
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
 
-class ChatViewModel(private val databaseRepository: DatabaseRepository): ViewModel() {
+class ChannelViewModel(private val databaseRepository: DatabaseRepository): ViewModel() {
 
     val channelsListExample = arrayListOf(
         Channel(2, "https://randompicturegenerator.com/img/people-generator/g167cc57243fe6f6c729e12865ad5dfa85070cba34876f0383cf9ed9dc743ebe29bb4b8f8cfdb8fd31780cf03757b94c0_640.jpg","Для приватных", "чатов", "будем", "10:23"),

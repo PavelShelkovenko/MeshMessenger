@@ -1,8 +1,5 @@
 package com.example.meshmessenger.android.root
 
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothManager
-import android.bluetooth.le.BluetoothLeAdvertiser
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.compose.runtime.Composable
@@ -18,14 +15,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.meshmessenger.AndroidChatViewModel
 import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.android.screens.BleUI
 import com.example.meshmessenger.android.screens.chats.ChatsListScreen
 import com.example.meshmessenger.android.screens.messages.MessagesListScreen
 import com.example.meshmessenger.android.screens.onboarding.registration.Registration
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
-import com.example.meshmessenger.presentation.chat.ChatViewModel
-import com.example.meshmessenger.presentation.message.MessageViewModel
+import com.example.meshmessenger.presentation.channelScreen.ChannelViewModel
 import com.liftric.kvault.KVault
 import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
@@ -41,8 +38,8 @@ fun Root(
     navController: NavHostController,
     pickMultiMedia: ActivityResultLauncher<PickVisualMediaRequest>,
     registrationViewModel: AndroidRegistrationViewModel = koinViewModel(),
-    chatViewModel: ChatViewModel = koinViewModel(),
-    messageViewModel: MessageViewModel = koinViewModel(),
+    chatViewModel: ChannelViewModel = koinViewModel(),
+    messageViewModel: AndroidChatViewModel = koinViewModel(),
 //    bluetoothManager: BluetoothManager,
 //    bluetoothAdapter: BluetoothAdapter,
 //    bluetoothLeAdvertiser: BluetoothLeAdvertiser,
@@ -109,7 +106,7 @@ fun Root(
                 navController,
                 backStackEntry.arguments?.getString("chatName"),
                 pickMultiMedia,
-                messageViewModel = messageViewModel
+                chatViewModel = messageViewModel
             )
         }
         composable("ble") {

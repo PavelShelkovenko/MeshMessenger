@@ -8,3 +8,6 @@ import com.example.meshmessenger.domain.models.user.UserDataSource
 
 interface DatabaseRepository: MessageDataSource, UserDataSource, ChatDataSource,
     ChatMembersDataSource, AttachmentDataSource
+
+
+

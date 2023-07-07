@@ -31,6 +31,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
+import com.example.meshmessenger.AndroidChatViewModel
 import com.example.meshmessenger.SharedRes
 import com.example.meshmessenger.android.R
 import com.example.meshmessenger.android.root.stringResource
@@ -38,7 +39,7 @@ import com.example.meshmessenger.android.screens.messages.onemessage.private_cha
 import com.example.meshmessenger.android.screens.messages.onemessage.public_chat.OneMessageOnPublicChat
 import com.example.meshmessenger.android.theme.*
 import com.example.meshmessenger.data.Message
-import com.example.meshmessenger.presentation.message.MessageViewModel
+import com.example.meshmessenger.presentation.chatScreen.ChatEvent
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -52,13 +53,12 @@ fun MessagesListScreen(
     navController: NavController,
     chatName: String?,
     pickMedia: ActivityResultLauncher<PickVisualMediaRequest>,
-    messageViewModel: MessageViewModel
+    chatViewModel: AndroidChatViewModel
 ) {
 
-    val textOfMessage = messageViewModel.textMessage.collectAsState()
+    val state = chatViewModel.state.collectAsState()
 
     val isEmojiKeyboardEnabled = remember { mutableStateOf(false) }
-    val messagesList by messageViewModel.listOfMessages.collectAsState()
 
     val listState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -145,8 +145,8 @@ fun MessagesListScreen(
                         }
                     }
                     TextField(
-                        value = textOfMessage.value,
-                        onValueChange = { messageViewModel.textMessage.value = it },
+                        value = state.value.textOfMessage,
+                        onValueChange = { chatViewModel.onEvent(ChatEvent.TextChanged(it)) },
 
                         modifier = Modifier
                             .background(Color.White)
@@ -186,7 +186,7 @@ fun MessagesListScreen(
                                         .size(30.dp)
                                 )
                             }
-                            if (textOfMessage.value.isBlank()) {
+                            if ( state.value.textOfMessage.isBlank()) {
                                 IconButton(onClick = { /*TODO*/ }) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.microphone),
@@ -201,14 +201,15 @@ fun MessagesListScreen(
                             } else {
                                 IconButton(
                                     onClick = {
-                                        messageViewModel.sendMessage(
-                                            Message(
-                                                1, textOfMessage.value,
-                                                authorName = "Артур",
-                                                time = "12.23",
-                                                authorSurname = "Рахимзянов"
-                                            )
-                                        )
+                                        chatViewModel.onEvent(ChatEvent.MessageSend(Message(
+                                            id = 1,
+                                            text = state.value.textOfMessage,
+                                            authorName = "Артур",
+                                            time = "12.23",
+                                            authorSurname = "Рахимзянов"
+                                        )))
+
+
                                     }) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.send),
@@ -224,7 +225,7 @@ fun MessagesListScreen(
                     }
                 }
                 if ( isEmojiKeyboardEnabled.value ) {
-                    EmojiPicker(messageViewModel)
+                    EmojiPicker(chatViewModel)
                 }
             }
         },
@@ -238,9 +239,9 @@ fun MessagesListScreen(
             state = listState
         ) {
             coroutineScope.launch {
-                listState.scrollToItem(messagesList.lastIndex)
+                listState.scrollToItem(state.value.messagesList.lastIndex)
             }
-            items(messagesList) { message ->
+            items(state.value.messagesList) { message ->
                 when (chatName) {
                     "Для приватных чатов" -> {
                         Spacer(modifier = Modifier.height(1.dp))

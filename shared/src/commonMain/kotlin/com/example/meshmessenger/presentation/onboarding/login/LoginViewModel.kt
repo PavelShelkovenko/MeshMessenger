@@ -112,8 +112,6 @@ class LoginViewModel(
                     val savedPin = securedStore.string(forKey = "pin")
                     if (savedPin == pinAttempt) {
                         _state.update { it.copy(nextScreenNavigation = true) }
-                        delay(10)
-                        _state.update { it.copy(nextScreenNavigation = false) }
 
                     }
                     else {

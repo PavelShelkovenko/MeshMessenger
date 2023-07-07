@@ -30,11 +30,11 @@ import com.example.meshmessenger.android.theme.IconsBlue
 import com.example.meshmessenger.android.theme.Onest
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.android.theme.White
-import com.example.meshmessenger.presentation.chat.Channel
-import com.example.meshmessenger.presentation.chat.ChatViewModel
+import com.example.meshmessenger.presentation.channelScreen.Channel
+import com.example.meshmessenger.presentation.channelScreen.ChannelViewModel
 
 @Composable
-fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) {
+fun ChatsListScreen(navController: NavController, chatViewModel: ChannelViewModel) {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -71,7 +71,7 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChatViewModel) 
 
 
 @Composable
-fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChatViewModel) {
+fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChannelViewModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

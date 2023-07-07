@@ -29,9 +29,7 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         state.nextScreenNavigation = false
     }
 
-    SideEffect {
-        println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    }
+
 
     Column(
         verticalArrangement = Arrangement.Top,
