@@ -99,12 +99,12 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
 
         Column(modifier = Modifier.padding(start = 5.dp, end = 5.dp)) {
             Text(
-                modifier = Modifier.padding(top = 5.dp),
+                modifier = Modifier.padding(top = 10.dp),
                 text = channel.name + " " + channel.surname,
                 fontFamily = Onest
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(5.dp))
 
             Text(
                 text = channel.lastMessage,
@@ -118,13 +118,15 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 5.dp, top = 5.dp, end = 5.dp),
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
             Text(
-                text = chatViewModel.channelsListExample[0].time,
-                fontFamily = Onest
-            )
+                text = channel.time,
+                fontFamily = Onest,
+                color = PlaceholderColor,
+                fontSize = 15.sp
+                )
         }
     }
     GreyHorizontalLine()
