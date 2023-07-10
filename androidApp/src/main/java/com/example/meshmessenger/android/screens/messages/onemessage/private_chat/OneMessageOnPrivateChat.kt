@@ -1,11 +1,13 @@
 package com.example.meshmessenger.android.screens.messages.onemessage.private_chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,20 +30,21 @@ fun OneMessageOnPrivateChat(message: Message) {
             shape = ShapesOfPrivateTextMessages(isMyMessage = isMyMessage),
             elevation = 5.dp,
             modifier = Modifier
-                .wrapContentWidth()
-                .widthIn(max = 320.dp, min = 60.dp)    //чтобы задать макс и мин длину, через fraction не работает
-                .padding(all = 2.dp), //для отсутпа между сообщениями
+                         .wrapContentWidth()
+                         .widthIn(max = 320.dp, min = 60.dp)
+                         .padding(all = 2.dp)
         ) {
             Column(
+                modifier = Modifier.background(Color.White),
                 horizontalAlignment = if (isMyMessage) Alignment.End else Alignment.Start,
                 verticalArrangement = Arrangement.Center
             ) {
                 Box(
                     contentAlignment = if (isMyMessage) Alignment.CenterEnd else Alignment.CenterStart,
                     modifier = if (isMyMessage) {
-                        Modifier.padding(start = 5.dp, end = 25.dp, top = 15.dp)
+                        Modifier.padding(start = 15.dp, end = 25.dp, top = 15.dp)
                     } else {
-                        Modifier.padding(start = 25.dp, end = 5.dp, top = 15.dp)
+                        Modifier.padding(start = 25.dp, end = 15.dp, top = 15.dp)
                     }
                 ) {
                     Text(
@@ -49,6 +52,7 @@ fun OneMessageOnPrivateChat(message: Message) {
                         maxLines = Int.MAX_VALUE,
                         modifier = Modifier.wrapContentWidth(), //размер зависит от текста
                         fontFamily = Onest,
+                        color = Color.Black
                     )
                 }
 
@@ -64,9 +68,8 @@ fun OneMessageOnPrivateChat(message: Message) {
                     } else {
                         TextAlign.Start
                     },
-                    fontFamily = Onest,
-
-                    )
+                    fontFamily = Onest
+                )
             }
         }
     }

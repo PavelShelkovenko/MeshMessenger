@@ -13,7 +13,7 @@ fun startDestinationDefine(secureStore: KVault): String {
     } else {
         "register"
     }
-    println(startDestination)
+
     return startDestination
 }
 

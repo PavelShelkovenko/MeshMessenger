@@ -1,6 +1,5 @@
-package com.example.meshmessenger.android.screens.chats
+package com.example.meshmessenger.android.screens.channels
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -15,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -33,8 +31,9 @@ import com.example.meshmessenger.android.theme.White
 import com.example.meshmessenger.presentation.channelScreen.Channel
 import com.example.meshmessenger.presentation.channelScreen.ChannelViewModel
 
+
 @Composable
-fun ChatsListScreen(navController: NavController, chatViewModel: ChannelViewModel) {
+fun ChannelsListScreen(navController: NavController, chatViewModel: ChannelViewModel) {
 
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -64,14 +63,14 @@ fun ChatsListScreen(navController: NavController, chatViewModel: ChannelViewMode
         item { Spacer(modifier = Modifier.height(5.dp)) }
 
         items(chatViewModel.channelsListExample) { channel ->
-            ChanelOnly(channel, navController, chatViewModel)
+            ChanelOnly(channel, navController)
         }
     }
 }
 
 
 @Composable
-fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: ChannelViewModel) {
+fun ChanelOnly(channel: Channel, navController: NavController) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -129,7 +128,7 @@ fun ChanelOnly(channel: Channel, navController: NavController, chatViewModel: Ch
                 )
         }
     }
-    GreyHorizontalLine()
+    Spacer(modifier = Modifier.height(0.5.dp).background(PlaceholderColor))
 }
 
 
@@ -151,26 +150,6 @@ fun BleUICard(navController: NavController) {
         ) {
             Text(
                 text = stringResource(id = SharedRes.strings.work_BLE)
-            )
-        }
-    }
-}
-
-@Composable
-fun GreyHorizontalLine() {
-    Box(modifier = Modifier.fillMaxWidth()) {
-
-        Canvas(modifier = Modifier.fillMaxWidth()) {
-            val startY = size.height
-            val startX = 0f
-            val endX = size.width
-            val color = PlaceholderColor
-
-            drawLine(
-                color = color,
-                start = Offset(startX, startY),
-                end = Offset(endX, startY),
-                strokeWidth = 0.5f
             )
         }
     }

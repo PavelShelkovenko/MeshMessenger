@@ -11,27 +11,39 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.meshmessenger.AndroidChatViewModel
+import com.example.meshmessenger.android.root.BackPressHandler
 import com.example.meshmessenger.presentation.chatScreen.ChatEvent
-
+import com.example.meshmessenger.presentation.chatScreen.ChatState
 
 @Composable
-fun EmojiPicker(chatViewModel: AndroidChatViewModel) {
+fun EmojiPicker(
+    chatViewModel: AndroidChatViewModel,
+    isEmojiKeyboardEnabled: MutableState<Boolean>,
+    state: State<ChatState>
+) {
+    BackPressHandler {
+        isEmojiKeyboardEnabled.value = false
+    }
+
     LazyVerticalGrid(
         modifier = Modifier.height(150.dp),
         columns = GridCells.Adaptive(minSize = 42.dp)
     ) {
         items(emojis) { emoji ->
+
             Text(
                 modifier = Modifier
                     .clip(CircleShape)
                     .clickable(onClick = {
-                        chatViewModel.onEvent(ChatEvent.TextChanged(emoji))
+                        chatViewModel.onEvent(ChatEvent.TextChanged(state.value.textOfMessage + emoji))
                     })
                     .sizeIn(minWidth = 42.dp, minHeight = 42.dp)
                     .padding(8.dp),
@@ -44,6 +56,7 @@ fun EmojiPicker(chatViewModel: AndroidChatViewModel) {
         }
     }
 }
+
 
 
 const val EMOJI_COLUMNS = 10

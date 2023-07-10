@@ -18,7 +18,7 @@ import androidx.navigation.navArgument
 import com.example.meshmessenger.AndroidChatViewModel
 import com.example.meshmessenger.AndroidRegistrationViewModel
 import com.example.meshmessenger.android.screens.BleUI
-import com.example.meshmessenger.android.screens.chats.ChatsListScreen
+import com.example.meshmessenger.android.screens.channels.ChannelsListScreen
 import com.example.meshmessenger.android.screens.messages.MessagesListScreen
 import com.example.meshmessenger.android.screens.onboarding.registration.Registration
 import com.example.meshmessenger.android.screens.onboarding.login.LoginByPin
@@ -83,15 +83,15 @@ fun Root(
         composable("pin") {
             LoginByPin(
                 loginSuccess = {
-                    navController.navigate("chatListScreen") {
+                    navController.navigate("channelsListScreen") {
                         popUpTo(0)
                         launchSingleTop = true
                     }
                 }
             )
         }
-        composable("chatListScreen") {
-            ChatsListScreen(
+        composable("channelsListScreen") {
+            ChannelsListScreen(
                 navController,
                 chatViewModel = chatViewModel
             )

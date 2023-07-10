@@ -3,7 +3,6 @@ package com.example.meshmessenger.android.root
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
 import android.content.Context
-
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -44,7 +43,6 @@ class MainActivity : ComponentActivity() {
 //        val bleAdvertiser by lazy { bluetoothAdapter.bluetoothLeAdvertiser }
 //
         val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { uri -> }
-
 
         setContent {
             MeshAppTheme {
@@ -94,7 +92,7 @@ fun colorResource(resource: ColorResource): Color {
 fun fontFamilyResource(fontResource: FontResource): FontFamily {
     return fontResource.asFont()
         ?.let { FontFamily(it) }
-        ?:  FontFamily.Default
+        ?: FontFamily.Default
 }
 
 @Composable

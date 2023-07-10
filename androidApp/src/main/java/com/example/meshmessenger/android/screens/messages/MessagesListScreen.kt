@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +26,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -42,11 +45,10 @@ import com.example.meshmessenger.data.Message
 import com.example.meshmessenger.presentation.chatScreen.ChatEvent
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalFoundationApi::class)
 @SuppressLint(
     "UnusedMaterialScaffoldPaddingParameter",
     "MutableCollectionMutableState",
-    "CoroutineCreationDuringComposition"
 )
 @Composable
 fun MessagesListScreen(
@@ -72,7 +74,7 @@ fun MessagesListScreen(
         topBar = {
             TopAppBar(backgroundColor = Color.White) {
                 IconButton(onClick = {
-                    navController.navigate("chatListScreen") {
+                    navController.navigate("channelsListScreen") {
                         popUpTo(0)
                         launchSingleTop = true
                     }
@@ -144,9 +146,13 @@ fun MessagesListScreen(
                             }
                         }
                     }
+
                     TextField(
                         value = state.value.textOfMessage,
-                        onValueChange = { chatViewModel.onEvent(ChatEvent.TextChanged(it)) },
+                        onValueChange = {
+                            chatViewModel.onEvent(ChatEvent.TextChanged(it))
+                        },
+
 
                         modifier = Modifier
                             .background(Color.White)
@@ -166,6 +172,7 @@ fun MessagesListScreen(
                             Text(text = stringResource(id = SharedRes.strings.message), color = PlaceholderColor)
                         },
                     )
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -225,7 +232,7 @@ fun MessagesListScreen(
                     }
                 }
                 if ( isEmojiKeyboardEnabled.value ) {
-                    EmojiPicker(chatViewModel)
+                    EmojiPicker(chatViewModel, isEmojiKeyboardEnabled, state)
                 }
             }
         },
