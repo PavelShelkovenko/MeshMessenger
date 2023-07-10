@@ -11,7 +11,7 @@ import SwiftUI
 import shared
 
 
-struct NavUp: View {
+struct ChannelNavBar: View {
     var body: some View {
         
         VStack() {

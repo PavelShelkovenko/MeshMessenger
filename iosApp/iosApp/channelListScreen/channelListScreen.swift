@@ -17,7 +17,7 @@ struct ChannelListScreen: View {
         NavigationView {
             ScrollView {
                 
-                NavUp()
+                ChannelNavBar()
                 
                 ForEach( channelList ) { channel in
                     

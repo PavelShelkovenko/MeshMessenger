@@ -39,6 +39,7 @@ class ChatViewModel(
                     it.copy( textOfMessage = event.textChanged )
                 }
             }
+
             is ChatEvent.MessageSend -> {
                 sendMessage(event.message)
             }
