@@ -1,5 +1,6 @@
 package com.example.meshmessenger.android.screens.messages.onemessage.public_chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
@@ -9,28 +10,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.transform.CircleCropTransformation
-import com.example.meshmessenger.android.R
-import com.example.meshmessenger.android.screens.messages.roundedCornerShapeDefine
+import com.example.meshmessenger.android.screens.messages.onemessage.private_chat.ShapesOfPrivateTextMessages
 import com.example.meshmessenger.android.theme.Onest
 import com.example.meshmessenger.android.theme.PlaceholderColor
 import com.example.meshmessenger.data.Message
 
 @Composable
 fun OneMessageOnPublicChat(message: Message) {
+    val isMyMessage = message.id == 1
+
     Row(
         verticalAlignment = Alignment.Bottom,
-        horizontalArrangement = if (message.id == 1) Arrangement.End else Arrangement.Start, //
-        modifier = Modifier.fillMaxSize() //пришлось задать весь размер иначе witdhIn не работает, а считает слева
+        horizontalArrangement = if (isMyMessage) Arrangement.End else Arrangement.Start,
+        modifier = Modifier.fillMaxSize()
     ) {
-        if (message.id != 1) {
+
+        if (!isMyMessage) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .transformations(CircleCropTransformation())
@@ -47,100 +51,58 @@ fun OneMessageOnPublicChat(message: Message) {
             )
         }
 
-        Surface(
-            shape = roundedCornerShapeDefine(id = message.id),
-            elevation = 5.dp,
-
-            modifier = Modifier
-                .wrapContentWidth()
-                .widthIn(max = 300.dp, min = 80.dp)
-                .padding(end = 15.dp, bottom = 15.dp, start = 5.dp)
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = if (isMyMessage) Alignment.End else Alignment.Start,
         ) {
-
-            Spacer(modifier = Modifier.width(5.dp))
-
-            Column(
-                modifier = Modifier.wrapContentWidth(),
-                horizontalAlignment = if (message.id == 1) Alignment.End else Alignment.Start,
-                verticalArrangement = Arrangement.Center
+            Surface(
+                shape = ShapesOfPrivateTextMessages(isMyMessage = isMyMessage),
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .widthIn(max = 320.dp, min = 60.dp)
+                    .padding(all = 2.dp)
             ) {
-                if (message.id != 1) {
+                Column(
+                    modifier = Modifier.background(Color.White),
+                    horizontalAlignment = if (isMyMessage) Alignment.End else Alignment.Start,
+                    verticalArrangement = Arrangement.Center
+                ) {
                     Box(
-                        modifier = Modifier
-                            .wrapContentWidth()
-                            .padding(start = 10.dp),
-                        contentAlignment = Alignment.Center
+                        contentAlignment = if (isMyMessage) Alignment.CenterEnd else Alignment.CenterStart,
+                        modifier = if (isMyMessage) {
+                            Modifier.padding(start = 15.dp, end = 25.dp, top = 15.dp, bottom = 15.dp )
+                        } else {
+                            Modifier.padding(start = 25.dp, end = 15.dp, top = 15.dp, bottom = 15.dp)
+                        }
                     ) {
                         Text(
-                            text = message.authorName,
-                            maxLines = 1,
-                            fontSize = 10.sp,
-                            color = PlaceholderColor,
-                            modifier = Modifier.padding(end = 10.dp, top = 2.dp),
+                            text = message.text,
+                            maxLines = Int.MAX_VALUE,
+                            modifier = Modifier.wrapContentWidth(), //размер зависит от текста
                             fontFamily = Onest,
-
-                            )
-                    }
-                }
-
-                Box(
-                    contentAlignment = if (message.id == 1) Alignment.CenterEnd else Alignment.CenterStart,
-                    modifier = Modifier.wrapContentWidth()
-                ) {
-                    Text(
-                        text = message.text,
-                        maxLines = Int.MAX_VALUE,
-                        modifier = if (message.id == 1) {
-                            Modifier.padding(start = 5.dp, end = 5.dp, top = 16.dp)
-                        } else {
-                            Modifier.padding(start = 5.dp, end = 5.dp, top = 5.dp)
-                        },
-                        fontFamily = Onest,
-
+                            color = Color.Black
                         )
-                }
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = if (message.id == 1) {
-                        Modifier
-                            .wrapContentWidth()
-                            .padding(end = 2.dp)
-                    } else {
-                        Modifier
-                            .wrapContentWidth()
-                            .padding(start = 2.dp)
-                    },
-                    horizontalArrangement = if (message.id == 1) {
-                        Arrangement.End
-                    } else {
-                        Arrangement.Start
                     }
-                ) {
-                    Text(
-                        text = message.time,
-                        maxLines = 1,
-                        fontSize = 10.sp,
-                        color = PlaceholderColor,
-                        modifier = if (message.id == 1) {
-                            Modifier.padding(end = 2.dp)
-                        } else {
-                            Modifier.padding(start = 2.dp)
-                        },
-                        fontFamily = Onest,
-
-                        )
-
-                    Spacer(modifier = Modifier.width(2.dp))
-
-                    Icon(
-                        painter = painterResource(id = R.drawable.check_all),
-                        contentDescription = "status icon",
-                        modifier = Modifier.size(16.dp)
-                    )
                 }
             }
+
+            Text(
+                text = message.time,
+                maxLines = 1,
+                fontSize = 14.sp,
+                color = PlaceholderColor,
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp),
+
+                textAlign = if (isMyMessage) {
+                    TextAlign.End
+                } else {
+                    TextAlign.Start
+                },
+                fontFamily = Onest
+            )
+
         }
+
     }
 }
