@@ -17,44 +17,12 @@ struct ChannelListScreen: View {
         NavigationView {
             ScrollView {
                 
-                NavUp()
+                ChannelNavBar()
                 
                 ForEach( channelList ) { channel in
                     
-                    NavigationLink(destination:ChatScreen()) {
-                        
-                        HStack(spacing: 16)  {
-                            
-                            WebImage( url: URL(string: channel.imageURL))
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 48, height: 48)
-                                .clipped()
-                                .cornerRadius(48)
-                            
-                            VStack(alignment: .leading) {
-                                Text(channel.name + " " + channel.surname)
-                                    .font(Font(OnestMedium))
-                                    .foregroundColor(Color.black)
-
-                                
-                                Text(channel.lastMessage)
-                                    .padding(.horizontal, 10)
-                                    .font(Font(OnestSmall))
-                                    .foregroundColor(Color(.lightGray))
-                            }
-                            
-                            Spacer()
-                            
-                            Text(channel.time)
-                                .font(Font(OnestSmall))
-                                .foregroundColor(Color(.lightGray))
-
-                        }.padding(.horizontal)
-                        
-                        Divider()
-                        
-                    }
+                    ChannelItem(channel: channel)
+                    
                 }
                 
             }.navigationBarHidden(true)
@@ -64,26 +32,6 @@ struct ChannelListScreen: View {
     
 }
 
-
-struct NavUp: View {
-    var body: some View {
-        
-        VStack() {
-            HStack() {
-                Image( systemName: "line.3.horizontal" )
-                    .font(.system(size: 32))
-                Text("Mesh мессенджер")
-                    .padding(.horizontal, 25)
-                    .padding(.vertical, 5)
-                    .font(Font(OnestLarge))
-                
-            }
-        }
-    }
-}
-    
-    
-    
 struct channelListScreen: PreviewProvider {
     static var previews: some View {
         ChannelListScreen()

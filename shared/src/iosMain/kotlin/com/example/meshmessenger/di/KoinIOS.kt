@@ -14,7 +14,7 @@ import org.koin.core.KoinApplication
 import org.koin.core.component.KoinComponent
 import org.koin.dsl.module
 
-
+@Suppress("unused")
 fun initKoinIos(
     appInfo: AppInfo,
     doOnStartup: () -> Unit
@@ -40,6 +40,6 @@ actual val platformModule = module {
 object KotlinDependencies : KoinComponent {
     fun getRegistrationViewModel() = getKoin().get<RegistrationViewModel>()
     fun getLoginViewModel() = getKoin().get<LoginViewModel>()
-    fun getChatViewModel() = getKoin().get<ChannelViewModel>()
-    fun getMessageViewModel() = getKoin().get<ChatViewModel>()
+    fun getChannelViewModel() = getKoin().get<ChannelViewModel>()
+    fun getChatViewModel() = getKoin().get<ChatViewModel>()
 }
