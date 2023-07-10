@@ -9,6 +9,8 @@
 import SwiftUI
 import shared
 import Foundation
+import SDWebImage
+import SDWebImageSwiftUI
 
 struct ChatScreen: View {
     
@@ -19,8 +21,13 @@ struct ChatScreen: View {
         
         VStack() {
             HStack() {
-                Image( systemName: "person.circle.fill" )
-                    .font(.system(size: 24))
+                WebImage(url: URL(string: "https://randompicturegenerator.com/img/people-generator/g167cc57243fe6f6c729e12865ad5dfa85070cba34876f0383cf9ed9dc743ebe29bb4b8f8cfdb8fd31780cf03757b94c0_640.jpg"))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 24, height: 24)
+                    .clipped()
+                    .cornerRadius(24)
+                
                 Text("Имя Фамилия")
                     .padding(.horizontal, 25)
                     .padding(.vertical, 1)
@@ -33,16 +40,72 @@ struct ChatScreen: View {
             ScrollView {
 
                 ForEach(messageList){ message in
-                    HStack {
-                        Spacer()
+                    if(message.idd == 1) {
                         HStack {
-                            Text(message.text)
-                                .foregroundColor(Color.black)
-                                .font(Font(OnestMedium))
-                        }.padding()
-                            .background(Color.white)
-                            .cornerRadius(8)
-                    }.padding(.horizontal)
+
+                            Spacer()
+                            
+                            VStack(alignment: .trailing) {
+                                HStack( ) {
+                                    Text(message.text)
+                                        .foregroundColor(Color.black)
+                                        .font(Font(OnestMedium))
+                                    
+                                
+                                }.padding()
+                                 .background(Color.white)
+                                 .cornerRadius(8)
+                                
+                                Text(message.time)
+                                    .foregroundColor(Color(.lightGray))
+                                    .font(Font(OnestSmall))
+                                
+                            }
+            
+
+                            
+                      
+                        }.padding(.leading, 50)
+                         .padding(.trailing)
+                        
+                    } else {
+                        HStack(alignment: .bottom) {
+                            
+                            WebImage(url: URL(string: "https://randompicturegenerator.com/img/people-generator/g167cc57243fe6f6c729e12865ad5dfa85070cba34876f0383cf9ed9dc743ebe29bb4b8f8cfdb8fd31780cf03757b94c0_640.jpg"))
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 24, height: 24)
+                                .clipped()
+                                .cornerRadius(24)
+                            
+                            VStack(alignment: .leading) {
+                                HStack() {
+                                    VStack(alignment: .leading) {
+                                        Text(message.authorName)
+                                            .foregroundColor(Color(.lightGray))
+                                            .font(Font(OnestSmall))
+                                        
+                                        Text(message.text)
+                                            .foregroundColor(Color.black)
+                                            .font(Font(OnestMedium))
+                                    }
+                                    
+                                }.padding()
+                                 .background(Color.white)
+                                 .cornerRadius(8)
+                                
+                                Text(message.time)
+                                    .foregroundColor(Color(.lightGray))
+                                    .font(Font(OnestSmall))
+                                
+                            }
+                            
+                            Spacer()
+                            
+                        }.padding(.trailing, 50)
+                         .padding(.leading)
+
+                    }
                 }
                 
                 HStack { Spacer() }
@@ -102,13 +165,13 @@ struct ChatScreen: View {
         Message(idd: 1, text: "Привет", time: "11:38", authorName:  "Артур", authorSurname: "Рахимзянов"),
 
         Message(idd: 1, text: "Чем занимаешься ? Я пользуюсь приложением MeshApp !",time:  "11:34", authorName:  "Артур", authorSurname: "Рахимзянов"),
-        Message(idd: 2, text: "Привет ", time: "11:34",  authorName: "Дмитрий", authorSurname:"Смирнов"),
+        Message(idd: 2, text: "Привет ", time: "11:34",  authorName: "Дима", authorSurname:"Смирнов"),
         Message(idd: 2,text: "Чем занимаешься ? Я пользуюсь приложением MeshApp !", time : "11:34", authorName:  "Дмитрий",authorSurname:  "Рахимзянов"),
 
         Message(idd: 1, text: "Привет вышел на улицу.", time: "11:39",  authorName: "Артур", authorSurname: "Рахимзянов"),
         Message(idd: 1,text: ".", time: "11:36", authorName:  "Артур", authorSurname: "Рахимзянов"),
 
-        Message(idd: 2, text: "Это очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень большое сообщение",time:  "11:37", authorName:  "Артур", authorSurname:  "Рахимзянов"),
+        Message(idd: 1, text: "Это очень очень очень очень очень очень очень очень очень очень очень очень очень очень очень большое сообщение",time:  "11:37", authorName:  "Артур", authorSurname:  "Рахимзянов"),
         Message(idd: 1, text: "Привет", time: "11:38", authorName:  "Артур", authorSurname: "Рахимзянов"),
 
         Message(idd: 1, text: "Чем занимаешься ? Я пользуюсь приложением MeshApp !",time:  "11:34", authorName:  "Артур", authorSurname: "Рахимзянов"),
