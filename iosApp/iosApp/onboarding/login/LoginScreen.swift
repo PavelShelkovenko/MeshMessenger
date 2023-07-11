@@ -12,19 +12,18 @@ import shared
 struct LoginScreen: View {
     
     @ObservedObject var viewModel: IOSLoginViewModel
-    
+
     
     init() {
         self.viewModel = IOSLoginViewModel()
     }
 
-
-    
     var body: some View {
         
         @State  var pin = viewModel.state.pinState
  
         VStack {
+
             Spacer()
 
             Text("Создайте  PIN")
