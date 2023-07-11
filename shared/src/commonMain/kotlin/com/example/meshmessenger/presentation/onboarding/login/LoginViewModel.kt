@@ -25,8 +25,8 @@ class LoginViewModel(
     ).toCommonStateFlow()
 
     init {
-
         val pinValue = securedStore.string(forKey = "pin") ?: ""
+
         if (pinValue == "") {
             _state.update {
                 it.copy(
@@ -39,11 +39,6 @@ class LoginViewModel(
                     informText = "Введите пин"
                 )
             }
-        }
-        _state.update {
-            it.copy(
-                userName = securedStore.string(forKey = "login") ?: "Unknown user"
-            )
         }
     }
 
@@ -58,6 +53,9 @@ class LoginViewModel(
             }
         }
     }
+
+    fun getUserName() = securedStore.string(forKey = "login") ?: "Unknown user"
+
 
     private fun pinOneElementAdd(newValue: String) {
         val pinState = _state.value.pinState
@@ -112,7 +110,6 @@ class LoginViewModel(
                     val savedPin = securedStore.string(forKey = "pin")
                     if (savedPin == pinAttempt) {
                         _state.update { it.copy(nextScreenNavigation = true) }
-
                     }
                     else {
                         _state.update {

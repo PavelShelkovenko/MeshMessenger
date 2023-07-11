@@ -18,7 +18,6 @@ struct ChatScreen: View {
     
     init() {
         self.viewModel = IOSChatViewModel()
-        print( viewModel.state.messagesList.count)
     }
     
     var body: some View {
@@ -31,19 +30,19 @@ struct ChatScreen: View {
                 ChatNavBar()
             }
         }
-            ScrollView {
+        ScrollView {
 
-                ForEach(messageList){ message in
-                    if(message.idd == 1) {
-                        HStack {
+            ForEach(messageList){ message in
+                if(message.idd == 1) {
+                    HStack {
 
-                            Spacer()
+                        Spacer()
                             
-                            VStack(alignment: .trailing) {
-                                HStack( ) {
+                        VStack(alignment: .trailing) {
+                            HStack( ) {
                                     Text(message.text)
-                                        .foregroundColor(Color.black)
-                                        .font(Font(OnestMedium))
+                                    .foregroundColor(Color.black)
+                                    .font(Font(OnestMedium))
                                     
                                 }.padding()
                                  .background(Color.white)
@@ -100,6 +99,7 @@ struct ChatScreen: View {
 
                 HStack { Spacer() }
             }
+        //.navigationBarBackButtonHidden(true)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(BackgroundColor))
             .edgesIgnoringSafeArea(.all)

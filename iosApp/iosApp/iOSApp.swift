@@ -4,13 +4,16 @@ import shared
 @main
 struct iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some Scene {
         WindowGroup {
-            ChannelListScreen()
+            LoginScreen()
         }
     }
 }
+
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions

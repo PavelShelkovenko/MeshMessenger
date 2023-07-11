@@ -16,7 +16,6 @@ extension LoginScreen {
 
         @Published var state: LoginState = LoginState(
             nextScreenNavigation: false,
-            userName: "",
             informText: "",
             remainingAttempts: 5,
             pinState: "",
@@ -42,6 +41,10 @@ extension LoginScreen {
                     self.state = state
                 }
             })
+        }
+        
+        func getUserName() -> String {
+            self.viewModel.getUserName()
         }
                     
         func dispose() {

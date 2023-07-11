@@ -41,9 +41,12 @@ struct ChannelItem: View {
                 
                 Spacer()
                 
-                Text(channel.time)
-                    .font(Font(OnestSmall))
-                    .foregroundColor(Color(.lightGray))
+                VStack {
+                    Text(channel.time)
+                        .font(Font(OnestSmall))
+                        .foregroundColor(Color(.lightGray))
+                
+                }
 
             }.padding(.horizontal)
         }
@@ -51,6 +54,7 @@ struct ChannelItem: View {
         Divider()
     }
 }
+
 
 
 

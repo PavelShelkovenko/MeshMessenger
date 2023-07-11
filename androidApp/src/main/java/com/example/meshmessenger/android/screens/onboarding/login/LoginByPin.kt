@@ -29,8 +29,6 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         state.nextScreenNavigation = false
     }
 
-
-
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -64,7 +62,7 @@ fun LoginByPin(loginViewModel: AndroidLoginViewModel = koinViewModel(), loginSuc
         )
 
         Text(
-            text = state.userName,
+            text = loginViewModel.getUserName(),
             fontFamily = Poppins,
             color = PrimaryColor,
             fontSize = 28.sp,
