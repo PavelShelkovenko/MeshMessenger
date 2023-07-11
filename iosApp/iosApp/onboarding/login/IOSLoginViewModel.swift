@@ -34,6 +34,10 @@ extension LoginScreen {
         func onEvent(event: LoginEvent) {
             self.viewModel.onEvent(event: event)
         }
+        
+        func getUserName() -> String {
+            self.viewModel.getUserName()
+        }
                 
         func startObserving() {
             handle = viewModel.state.subscribe(onCollect: { state in

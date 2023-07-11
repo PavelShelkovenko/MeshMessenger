@@ -18,14 +18,23 @@ struct LoginScreen: View {
         self.viewModel = IOSLoginViewModel()
     }
 
-    @State  var pin = ""
 
     
     var body: some View {
+        
+        @State  var pin = viewModel.state.pinState
+ 
         VStack {
             Spacer()
 
             Text("Создайте  PIN")
+                .font(Font(OnestLarge))
+                .padding()
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(PrimaryColor)
+                )
+            
+            Text(viewModel.getUserName())
                 .font(Font(OnestLarge))
                 .padding()
                 .multilineTextAlignment(.center)
@@ -53,62 +62,106 @@ struct LoginScreen: View {
             Spacer()
             
             HStack {
-                SingleKeyboardButton(text : "1", pin: $pin)
-
-                SingleKeyboardButton(text : "2", pin: $pin)
-                
-                SingleKeyboardButton(text : "3", pin: $pin)
-
-            }
-            
-            HStack {
-                SingleKeyboardButton(text : "4", pin: $pin)
-
-                SingleKeyboardButton(text : "5", pin: $pin)
-                
-                SingleKeyboardButton(text : "6", pin: $pin)
-
-            }
-            
-            HStack {
-                SingleKeyboardButton(text : "7", pin: $pin)
-
-                SingleKeyboardButton(text : "8", pin: $pin)
-                
-                SingleKeyboardButton(text : "9", pin: $pin)
-
-            }
-            
-            HStack {
-                
-                Button {
-                    exit(0)
-                } label: {
-                    Text("Выйти")
-                        .font(Font(OnestMedium))
-                        .frame(width: 85, height: 85)
-                        .multilineTextAlignment(.center)
-                        .foregroundColor(Color(PrimaryColor)
-                    )
-                }
-
-                SingleKeyboardButton(text : "0", pin: $pin)
-                
-                Button {
-                    if(pin.count > 0){
-                        pin.removeLast()
-                    }
-                } label: {
-                    Image(systemName: "arrow.left")
-                        .frame(width: 85, height: 85)
-                        .foregroundColor(Color(PrimaryColor))
-                }
-            }
+                            
+                            SingleKeyboardButton(
+                                text : "1",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            
+                            
+                                            
+                            SingleKeyboardButton(
+                                text : "2",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            
+                            SingleKeyboardButton(
+                                text : "3",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                        }
+                        
+                        HStack {
+                            SingleKeyboardButton(
+                                text : "4",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            SingleKeyboardButton(
+                                text : "5",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            SingleKeyboardButton(
+                                text : "6",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                        }
+                        
+                        HStack {
+                            SingleKeyboardButton(
+                                text : "7",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            SingleKeyboardButton(
+                                text : "8",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            SingleKeyboardButton(
+                                text : "9",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                        }
+                        
+                        HStack {
+                            
+                            Button {
+                                exit(0)
+                            } label: {
+                                Text("Выйти")
+                                    .font(Font(OnestMedium))
+                                    .frame(width: 85, height: 85)
+                                    .multilineTextAlignment(.center)
+                                    .foregroundColor(Color(PrimaryColor)
+                                    )
+                            }
+                            
+                            SingleKeyboardButton(
+                                text : "0",
+                                pinState: viewModel.state.pinState,
+                                onClick: { text in
+                                    viewModel.onEvent(event: LoginEvent.PinOneElementAdd(value: text ) )
+                                })
+                            Button {
+                                viewModel.onEvent(event: LoginEvent.PinDropLast() )
+                            } label: {
+                                Image(systemName: "arrow.left")
+                                    .frame(width: 85, height: 85)
+                                    .foregroundColor(Color(PrimaryColor))
+                            }
+                        }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(SharedRes.colors().BackgroundColor.getUIColor()))
         .edgesIgnoringSafeArea(.all)
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.startObserving()
         }.onDisappear {
@@ -117,15 +170,16 @@ struct LoginScreen: View {
     }
 }
 
-func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
- 
+struct SingleKeyboardButton : View {
+    
+    var text: String
+    @State var pinState : String
+    var onClick : (String) -> Void
+    
+    var body: some View {
         HStack {
             Button(action: {
-//                if(pin.wrappedValue.count < 4){
-//                    pin.wrappedValue.append(text)
-//                }
-                
-            
+                onClick(text)
             }) {
                 Text(text)
                     .fontWeight(.bold)
@@ -134,10 +188,9 @@ func SingleKeyboardButton(text: String,  pin: Binding<String> ) -> some View {
                     .frame(width: 85, height: 85)
                     .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
             }
-            
         }
     }
-
+}
 
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
