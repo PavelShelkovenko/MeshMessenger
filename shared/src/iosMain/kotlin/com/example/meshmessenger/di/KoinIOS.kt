@@ -38,6 +38,7 @@ actual val platformModule = module {
 
 @Suppress("unused") // Called from Swift
 object KotlinDependencies : KoinComponent {
+    fun getKVaultInstance() = getKoin().get<KVault>()
     fun getRegistrationViewModel() = getKoin().get<RegistrationViewModel>()
     fun getLoginViewModel() = getKoin().get<LoginViewModel>()
     fun getChannelViewModel() = getKoin().get<ChannelViewModel>()

@@ -5,11 +5,16 @@ import shared
 struct iOSApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    @Environment(\.scenePhase) var scenePhase
-
     var body: some Scene {
+        
+        let securedStore = KotlinDependencies().getKVaultInstance()
+        
         WindowGroup {
-            LoginScreen()
+            if (securedStore.string(forKey: "login") == nil) {
+                RegistrationScreen()
+            } else {
+                LoginScreen()
+            }
         }
     }
 }

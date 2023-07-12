@@ -28,6 +28,9 @@
 		639825332A582A8F00BBF249 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 639825322A582A8F00BBF249 /* SDWebImageMapKit */; };
 		639825362A582CBC00BBF249 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 639825352A582CBC00BBF249 /* SDWebImageSwiftUI */; };
 		639825382A5839B300BBF249 /* chatScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639825372A5839B300BBF249 /* chatScreen.swift */; };
+		639AC0192A5EB04D00D27DC1 /* MyMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639AC0182A5EB04D00D27DC1 /* MyMessage.swift */; };
+		639AC01B2A5EB12500D27DC1 /* OtherMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639AC01A2A5EB12500D27DC1 /* OtherMessage.swift */; };
+		639AC01D2A5EB86E00D27DC1 /* SingleKeyBoardButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 639AC01C2A5EB86E00D27DC1 /* SingleKeyBoardButton.swift */; };
 		63A8150F2A5C35C100C8AF86 /* channelNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A8150E2A5C35C100C8AF86 /* channelNavBar.swift */; };
 		63A815112A5C369A00C8AF86 /* Channel_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A815102A5C369A00C8AF86 /* Channel_Item.swift */; };
 		63A815142A5C386400C8AF86 /* ChatNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A815132A5C386400C8AF86 /* ChatNavBar.swift */; };
@@ -54,6 +57,9 @@
 		6395BBC12A56D91400E4EC2D /* IOSLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSLoginViewModel.swift; sourceTree = "<group>"; };
 		6398252D2A58056200BBF249 /* channelListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = channelListScreen.swift; sourceTree = "<group>"; };
 		639825372A5839B300BBF249 /* chatScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatScreen.swift; sourceTree = "<group>"; };
+		639AC0182A5EB04D00D27DC1 /* MyMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessage.swift; sourceTree = "<group>"; };
+		639AC01A2A5EB12500D27DC1 /* OtherMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherMessage.swift; sourceTree = "<group>"; };
+		639AC01C2A5EB86E00D27DC1 /* SingleKeyBoardButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleKeyBoardButton.swift; sourceTree = "<group>"; };
 		63A8150E2A5C35C100C8AF86 /* channelNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = channelNavBar.swift; sourceTree = "<group>"; };
 		63A815102A5C369A00C8AF86 /* Channel_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel_Item.swift; sourceTree = "<group>"; };
 		63A815132A5C386400C8AF86 /* ChatNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNavBar.swift; sourceTree = "<group>"; };
@@ -141,6 +147,7 @@
 			children = (
 				6395BBC12A56D91400E4EC2D /* IOSLoginViewModel.swift */,
 				7555FF82242A565900829871 /* LoginScreen.swift */,
+				639AC01C2A5EB86E00D27DC1 /* SingleKeyBoardButton.swift */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -169,10 +176,12 @@
 		63A815122A5C382400C8AF86 /* chat */ = {
 			isa = PBXGroup;
 			children = (
+				639AC0182A5EB04D00D27DC1 /* MyMessage.swift */,
 				63A815152A5C39F100C8AF86 /* UserInput.swift */,
 				63A815132A5C386400C8AF86 /* ChatNavBar.swift */,
 				639825372A5839B300BBF249 /* chatScreen.swift */,
 				63A815192A5C43F300C8AF86 /* IOSChatViewModel.swift */,
+				639AC01A2A5EB12500D27DC1 /* OtherMessage.swift */,
 			);
 			path = chat;
 			sourceTree = "<group>";
@@ -368,12 +377,15 @@
 				6398252E2A58056200BBF249 /* channelListScreen.swift in Sources */,
 				55072D6A2A54AE9E0076F09C /* IOSRegistrationViewModel.swift in Sources */,
 				556E71042A532F0D004AFE6D /* Fonts.swift in Sources */,
+				639AC0192A5EB04D00D27DC1 /* MyMessage.swift in Sources */,
 				63A815112A5C369A00C8AF86 /* Channel_Item.swift in Sources */,
 				6395BBC22A56D91400E4EC2D /* IOSLoginViewModel.swift in Sources */,
 				63A8150F2A5C35C100C8AF86 /* channelNavBar.swift in Sources */,
 				555434442A5703DE00DBC04A /* Strings.swift in Sources */,
+				639AC01D2A5EB86E00D27DC1 /* SingleKeyBoardButton.swift in Sources */,
 				63A815142A5C386400C8AF86 /* ChatNavBar.swift in Sources */,
 				558630302A5580D5002C4E5E /* SignUpButton.swift in Sources */,
+				639AC01B2A5EB12500D27DC1 /* OtherMessage.swift in Sources */,
 				558630322A5582E8002C4E5E /* EmailTextField.swift in Sources */,
 				556E71022A532F04004AFE6D /* Colors.swift in Sources */,
 				63A8151A2A5C43F300C8AF86 /* IOSChatViewModel.swift in Sources */,
@@ -511,6 +523,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = VA2846C2J4;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -533,7 +546,7 @@
 					shared,
 					"-lsqlite3",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -547,6 +560,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = VA2846C2J4;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -569,7 +583,7 @@
 					shared,
 					"-lsqlite3",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

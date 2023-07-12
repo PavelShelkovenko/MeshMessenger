@@ -68,7 +68,6 @@ struct LoginScreen: View {
                     })
                 
                 
-                                
                 SingleKeyboardButton(
                     text : "2",
                     pinState: viewModel.state.pinState,
@@ -166,31 +165,11 @@ struct LoginScreen: View {
     }
 }
 
-struct SingleKeyboardButton : View {
-    
-    var text: String
-    @State var pinState : String
-    var onClick : (String) -> Void
-    
-    var body: some View {
-        HStack {
-            Button(action: {
-                onClick(text)
-            }) {
-                Text(text)
-                    .fontWeight(.bold)
-                    .font(.title)
-                    .foregroundColor(Color(PrimaryColor))
-                    .frame(width: 85, height: 85)
-                    .overlay(Circle().stroke(Color(PrimaryColor), style: StrokeStyle(lineWidth: 2)))
-            }
-        }
+
+
+
+struct LoginScreen_Previews: PreviewProvider {
+    static var previews: some View {
+        LoginScreen()
     }
-    
-    struct LoginScreen_Previews: PreviewProvider {
-        static var previews: some View {
-            LoginScreen()
-        }
-    }
-    
 }
